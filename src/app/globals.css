@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ============================================================
+ * EGELPro Design System — Paleta "Nebulosa Profunda"
+ * Aurora + Glassmorphism, dual dark/light
+ *
+ * Modo por defecto: DARK (sin clase en <html>)
+ * Modo claro: agregar class="light" al <html>
+ *
+ * Todas las variables son HSL para soportar opacity vía Tailwind
+ * (color / <alpha-value> syntax)
+ * ============================================================
+ */
+
+@layer base {
+  /* ============== DARK MODE (default) ============== */
+  :root {
+    /* shadcn tokens semánticos */
+    --background:            232 65% 5%;     /* #060716 */
+    --foreground:            220 14% 96%;
+    --card:                  232 50% 9%;     /* #0E1126 */
+    --card-foreground:       220 14% 96%;
+    --popover:               232 50% 9%;
+    --popover-foreground:    220 14% 96%;
+    --primary:               260 100% 74%;   /* #9F7AFF electric purple */
+    --primary-foreground:    232 65% 5%;
+    --secondary:             232 35% 18%;
+    --secondary-foreground:  220 14% 96%;
+    --muted:                 232 30% 14%;
+    --muted-foreground:      220 10% 65%;
+    --accent:                190 100% 70%;   /* #6BE5FF cyan ice */
+    --accent-foreground:     232 65% 5%;
+    --destructive:           0 100% 71%;     /* #FF6B6B */
+    --destructive-foreground:220 14% 96%;
+    --border:                232 28% 22%;
+    --input:                 232 28% 22%;
+    --ring:                  260 100% 74%;
+    --radius:                14px;
+
+    /* Backgrounds escala */
+    --bg-base:               232 65% 5%;     /* #060716 */
+    --bg-surface:            232 50% 9%;     /* #0E1126 */
+    --bg-raised:             232 40% 15%;    /* #181B36 */
+    --bg-elevated:           232 38% 20%;    /* #1F2347 */
+    --bg-border:             232 28% 25%;    /* #2A2E55 */
+
+    /* Glass tokens */
+    --glass-bg:              232 40% 12%;
+    --glass-border:          232 50% 30%;
+    --glass-shine:           220 100% 95%;
+
+    /* Aurora gradient stops */
+    --aurora-1:              225 100% 68%;   /* #5B7CFF royal blue */
+    --aurora-2:              278 100% 71%;   /* #B66BFF cosmic violet */
+    --aurora-3:              340 100% 71%;   /* #FF6B9D nova pink */
+
+    /* Brand */
+    --brand-400:             260 100% 74%;   /* #9F7AFF */
+    --brand-500:             260 90%  65%;
+    --brand-600:             260 80%  55%;
+    --cyan-ice:              190 100% 70%;   /* #6BE5FF */
+
+    /* Semánticos */
+    --success:               142 71% 58%;    /* #4ADE80 */
+    --warning:               43 96% 56%;     /* #FBBF24 */
+    --danger:                0 100% 71%;     /* #FF6B6B */
+
+    /* Gamification */
+    --xp:                    51 100% 50%;    /* #FFD700 */
+    --streak:                21 100% 62%;    /* #FF8A3D */
+
+    /* Áreas EGEL */
+    --area-1:                225 100% 68%;   /* azul royal */
+    --area-2:                278 100% 71%;   /* violeta cosmic */
+    --area-3:                160 84%  56%;   /* mint laser */
+    --area-4:                51 100%  50%;   /* xp gold */
+
+    /* Shadow color (tinted con brand) */
+    --shadow-color:          260 80% 20%;
+  }
+
+  /* ============== LIGHT MODE ============== */
+  .light {
+    --background:            220 30% 98%;
+    --foreground:            232 65% 8%;
+    --card:                  0 0% 100%;
+    --card-foreground:       232 65% 8%;
+    --popover:               0 0% 100%;
+    --popover-foreground:    232 65% 8%;
+    --primary:               260 80% 55%;    /* darker purple para contraste */
+    --primary-foreground:    0 0% 100%;
+    --secondary:             220 14% 94%;
+    --secondary-foreground:  232 65% 8%;
+    --muted:                 220 14% 92%;
+    --muted-foreground:      232 20% 40%;
+    --accent:                190 90% 50%;
+    --accent-foreground:     0 0% 100%;
+    --destructive:           0 84% 55%;
+    --destructive-foreground:0 0% 100%;
+    --border:                220 14% 88%;
+    --input:                 220 14% 88%;
+    --ring:                  260 80% 55%;
+
+    --bg-base:               220 30% 98%;
+    --bg-surface:            0 0% 100%;
+    --bg-raised:             220 14% 96%;
+    --bg-elevated:           220 14% 92%;
+    --bg-border:             220 14% 88%;
+
+    --glass-bg:              0 0% 100%;
+    --glass-border:          220 14% 88%;
+    --glass-shine:           220 100% 60%;
+
+    --aurora-1:              225 90% 60%;
+    --aurora-2:              278 85% 60%;
+    --aurora-3:              340 90% 65%;
+
+    --brand-400:             260 80% 55%;
+    --brand-500:             260 75% 48%;
+    --brand-600:             260 70% 40%;
+    --cyan-ice:              190 90% 50%;
+
+    --success:               142 71% 45%;
+    --warning:               38 92% 50%;
+    --danger:                0 84% 55%;
+
+    --xp:                    43 95% 48%;
+    --streak:                21 90% 52%;
+
+    --area-1:                225 90% 60%;
+    --area-2:                278 85% 60%;
+    --area-3:                160 70% 45%;
+    --area-4:                43 95% 48%;
+
+    --shadow-color:          232 50% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+  html.light {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar custom (dark) */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-bg-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-bg-elevated;
+  }
+
+  /* Selection con tint primary */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Focus ring premium */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.7);
+  }
+
+  /* Safe area (iOS notch, Android gesture bar) */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@layer utilities {
+  .safe-top    { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-x      { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+}
+
+@layer components {
+  /* Glass card utility */
+  .glass {
+    background-color: hsl(var(--glass-bg) / 0.6);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid hsl(var(--glass-border) / 0.4);
+    box-shadow:
+      0 1px 0 0 hsl(var(--glass-shine) / 0.08) inset,
+      0 16px 48px -12px hsl(var(--shadow-color) / 0.35);
+  }
+
+  .glass-strong {
+    background-color: hsl(var(--glass-bg) / 0.85);
+    backdrop-filter: blur(32px) saturate(160%);
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
+    box-shadow:
+      0 1px 0 0 hsl(var(--glass-shine) / 0.12) inset,
+      0 24px 64px -16px hsl(var(--shadow-color) / 0.45);
+  }
+
+  /* Aurora gradient text utility */
+  .text-aurora {
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--aurora-1)),
+      hsl(var(--aurora-2)) 50%,
+      hsl(var(--aurora-3))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Shimmer utility (skeleton + buttons) */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--glass-shine) / 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Glow ring utility (para botones primary destacados) */
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px hsl(var(--brand-400) / 0.5),
+      0 0 24px -4px hsl(var(--brand-400) / 0.6);
+  }
+}
