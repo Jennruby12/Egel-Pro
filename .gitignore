@@ -55,3 +55,8 @@ public/worker-*.js.map
 public/fallback-*.js
 
 .vercel
+
+# Claude Code local settings (per-user, NO commitear — el CLAUDE.md si)
+.claude/settings.local.json
+.claude/skills/local/
+.claude/projects/
