@@ -9,10 +9,12 @@ export const config = {
   matcher: [
     /*
      * Excluir de middleware:
-     * - _next/static, _next/image, favicon.ico, archivos publicos
+     * - _next/static, _next/image, favicon.ico
      * - rutas API (manejan auth en su propio handler)
-     * Match en todo lo demas para refrescar sesion
+     * - Service Worker (sw.js, workbox-*.js, worker-*.js, fallback-*.js) — PWA next-pwa
+     * - manifest.json, robots.txt, sitemap.xml — archivos publicos del root
+     * - Cualquier archivo con extension de assets (imagenes, fuentes, .js, .css, .map, .json)
      */
-    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?|ttf)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/|sw\\.js|workbox-.*\\.js|worker-.*\\.js|fallback-.*\\.js|manifest\\.json|robots\\.txt|sitemap\\.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?|ttf|js|css|map|json|txt|xml)$).*)',
   ],
 }
