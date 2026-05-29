@@ -12,8 +12,10 @@ import {
   User,
   Settings,
   Sparkles,
+  LogOut,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+import { signOut } from '@/modules/auth/actions'
 import type { Role } from '@/types/global'
 
 type NavItem = {
@@ -97,8 +99,17 @@ export function Sidebar({ role }: { role: Role }) {
           })}
         </nav>
 
-        <div className="border-t border-bg-border/40 p-3 text-xs text-muted-foreground">
-          <p className="font-mono">EGELPro v0.2 · Aurora</p>
+        <div className="border-t border-bg-border/40 p-3 space-y-2">
+          <form action={signOut}>
+            <button
+              type="submit"
+              className="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-bg-raised/60 hover:text-danger"
+            >
+              <LogOut className="h-4 w-4 transition-colors group-hover:text-danger" />
+              <span>Cerrar sesion</span>
+            </button>
+          </form>
+          <p className="px-3 font-mono text-[10px] text-muted-foreground/70">EGELPro v0.2 · Aurora</p>
         </div>
       </div>
     </aside>

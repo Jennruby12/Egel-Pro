@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
+import { Zap, LogOut } from 'lucide-react'
 import { signOut } from '@/modules/auth/actions'
 import { MagicButton } from '@/components/ui/magic-button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
@@ -97,9 +97,20 @@ export function Header({ fullName, email, xpTotal, level, streakCurrent }: Heade
             </Tooltip>
 
             <form action={signOut}>
-              <MagicButton type="submit" variant="ghost" size="sm" className="hidden sm:inline-flex">
-                Salir
-              </MagicButton>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <MagicButton
+                    type="submit"
+                    variant="ghost"
+                    size="sm"
+                    aria-label="Cerrar sesion"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span className="hidden sm:inline">Salir</span>
+                  </MagicButton>
+                </TooltipTrigger>
+                <TooltipContent>Cerrar sesion</TooltipContent>
+              </Tooltip>
             </form>
           </div>
         </TooltipProvider>

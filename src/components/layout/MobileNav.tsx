@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, Brain, BookOpen, TrendingUp, User } from 'lucide-react'
+import { LayoutDashboard, Brain, BookOpen, TrendingUp, User, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+import { signOut } from '@/modules/auth/actions'
 
 const ITEMS = [
   { href: '/dashboard',    label: 'Inicio',    icon: LayoutDashboard },
@@ -22,7 +23,7 @@ export function MobileNav() {
       aria-label="Navegacion principal mobile"
     >
       <div className="glass-strong relative rounded-2xl shadow-elev-4">
-        <ul className="grid grid-cols-5 px-2 py-2">
+        <ul className="grid grid-cols-6 px-2 py-2">
           {ITEMS.map((item) => {
             const active =
               pathname === item.href || pathname.startsWith(`${item.href}/`)
@@ -54,6 +55,18 @@ export function MobileNav() {
               </li>
             )
           })}
+          <li>
+            <form action={signOut}>
+              <button
+                type="submit"
+                aria-label="Cerrar sesion"
+                className="relative flex w-full flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-medium text-muted-foreground transition-colors hover:text-danger"
+              >
+                <LogOut className="relative z-10 h-5 w-5" />
+                <span className="relative z-10">Salir</span>
+              </button>
+            </form>
+          </li>
         </ul>
       </div>
     </nav>
