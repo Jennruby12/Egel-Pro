@@ -13,7 +13,11 @@ import { AreaSelector } from './AreaSelector'
 import { startQuizSession } from '@/modules/quiz/actions'
 import type { QuizMode } from '@/types/global'
 
-export function StartQuizForm() {
+type StartQuizFormProps = {
+  availableCounts?: Record<number, number>
+}
+
+export function StartQuizForm({ availableCounts }: StartQuizFormProps = {}) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [mode, setMode] = useState<QuizMode | null>(null)
@@ -92,7 +96,7 @@ export function StartQuizForm() {
               </div>
 
               {allowAreaSelection ? (
-                <AreaSelector selected={areas} onChange={setAreas} />
+                <AreaSelector selected={areas} onChange={setAreas} availableCounts={availableCounts} />
               ) : (
                 <div className="rounded-lg border border-glass-border/30 bg-glass-bg/40 p-4 text-sm text-muted-foreground backdrop-blur-md">
                   {selectedMode.id === 'full_simulacro'

@@ -3,10 +3,28 @@ import { Sparkles } from 'lucide-react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { StartQuizForm } from '@/modules/quiz/components/StartQuizForm'
+import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = { title: 'Practicar' }
 
-export default function QuizPage() {
+async function getAvailableCounts(): Promise<Record<number, number>> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('questions')
+    .select('area')
+    .eq('section', 'disciplinar')
+    .eq('is_deleted', false)
+    .eq('is_active', true)
+  const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0 }
+  for (const row of data ?? []) {
+    counts[row.area] = (counts[row.area] ?? 0) + 1
+  }
+  return counts
+}
+
+export default async function QuizPage() {
+  const availableCounts = await getAvailableCounts()
+  const totalBank = Object.values(availableCounts).reduce((s, n) => s + n, 0)
   return (
     <div className="relative">
       <AuroraBackground variant="subtle" className="absolute inset-0 -z-10">
@@ -24,9 +42,12 @@ export default function QuizPage() {
         <p className="max-w-2xl text-base text-muted-foreground">
           Elige un modo y comienza a entrenar para el EGEL. Cada quiz suma XP, mantiene tu racha y te acerca a tu meta.
         </p>
+        <p className="text-xs text-muted-foreground/70">
+          Banco disciplinar disponible: <span className="font-semibold text-aurora-2">{totalBank.toLocaleString('es-MX')}</span> reactivos
+        </p>
       </header>
 
-      <StartQuizForm />
+      <StartQuizForm availableCounts={availableCounts} />
     </div>
   )
 }

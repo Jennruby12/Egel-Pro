@@ -8,6 +8,7 @@ import { DISCIPLINAR_AREAS } from '@/lib/constants/egel'
 type AreaSelectorProps = {
   selected: number[]
   onChange: (areas: number[]) => void
+  availableCounts?: Record<number, number>
 }
 
 type AreaStyle = {
@@ -49,7 +50,7 @@ const AREA_STYLES: Record<number, AreaStyle> = {
   },
 }
 
-export function AreaSelector({ selected, onChange }: AreaSelectorProps) {
+export function AreaSelector({ selected, onChange, availableCounts }: AreaSelectorProps) {
   function toggle(areaId: number) {
     if (selected.includes(areaId)) {
       onChange(selected.filter((a) => a !== areaId))
@@ -124,7 +125,13 @@ export function AreaSelector({ selected, onChange }: AreaSelectorProps) {
                     Area {area.area}: {area.name}
                   </p>
                   <p className="mt-0.5 text-xs opacity-70">
-                    {area.totalQuestions} reactivos · {area.subareas.length} subareas
+                    {availableCounts?.[area.area] !== undefined ? (
+                      <>
+                        <span className="font-semibold">{availableCounts[area.area]}</span> disponibles · {area.totalQuestions} oficiales · {area.subareas.length} subareas
+                      </>
+                    ) : (
+                      <>{area.totalQuestions} reactivos · {area.subareas.length} subareas</>
+                    )}
                   </p>
                 </div>
               </div>
