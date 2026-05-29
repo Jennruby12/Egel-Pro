@@ -4,9 +4,117 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { calculateXPWithBreakdown, type XPMode } from './lib/xp'
 import { detectLevelUp } from './lib/levels'
-import { updateStreak } from './lib/streaks'
+import { updateStreak, computeCurrentStreak } from './lib/streaks'
 import { unlockAchievements } from './lib/achievements'
 import type { AchievementType } from '@/lib/constants/gamification'
+
+/**
+ * Racha estilo TikTok: cada vez que el usuario abre la app, si no ha
+ * registrado actividad hoy, se inserta un registro minimo en streaks
+ * que mantiene viva la racha. Si ya pasaron mas de un dia desde la
+ * ultima actividad, la racha se rompe (recomputeCurrentStreak da 0)
+ * y empieza desde 1 con este touch.
+ *
+ * No requiere completar un quiz para sumar dia.
+ */
+export type TouchStreakResult = {
+  previousStreak: number
+  currentStreak: number
+  streakMax: number
+  didGrow: boolean
+  isNewMax: boolean
+  alreadyToday: boolean
+}
+
+export async function touchStreakIfNeeded(): Promise<
+  { success: true; data: TouchStreakResult } | { success: false; error: string }
+> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const today = new Date().toISOString().slice(0, 10)
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('streak_current, streak_max')
+    .eq('id', user.id)
+    .single()
+
+  const previousStreak = profile?.streak_current ?? 0
+  const previousMax = profile?.streak_max ?? 0
+
+  // Verificar si ya hay registro de hoy. Si si, no hacemos nada (idempotente).
+  const { data: todayRow } = await supabase
+    .from('streaks')
+    .select('date')
+    .eq('user_id', user.id)
+    .eq('date', today)
+    .maybeSingle()
+
+  if (todayRow) {
+    return {
+      success: true,
+      data: {
+        previousStreak,
+        currentStreak: previousStreak,
+        streakMax: previousMax,
+        didGrow: false,
+        isNewMax: false,
+        alreadyToday: true,
+      },
+    }
+  }
+
+  // Insertar touch minimo y recomputar
+  await supabase.from('streaks').insert({
+    user_id: user.id,
+    date: today,
+    xp_earned: 0,
+    questions_answered: 0,
+    daily_challenge_completed: false,
+  })
+
+  const { data: dates } = await supabase
+    .from('streaks')
+    .select('date')
+    .eq('user_id', user.id)
+    .order('date', { ascending: false })
+    .limit(60)
+
+  const newStreak = computeCurrentStreak(
+    today,
+    (dates ?? []).map((d) => d.date),
+  )
+  const newMax = Math.max(previousMax, newStreak)
+
+  await supabase
+    .from('profiles')
+    .update({
+      streak_current: newStreak,
+      streak_max: newMax,
+      last_activity_date: today,
+    })
+    .eq('id', user.id)
+
+  // Evaluar logros nuevos relacionados a racha
+  await unlockAchievements(supabase, user.id)
+
+  revalidatePath('/dashboard')
+  revalidatePath('/profile')
+
+  return {
+    success: true,
+    data: {
+      previousStreak,
+      currentStreak: newStreak,
+      streakMax: newMax,
+      didGrow: newStreak > previousStreak,
+      isNewMax: newMax > previousMax,
+      alreadyToday: false,
+    },
+  }
+}
 
 export type ProcessQuizCompletionInput = {
   sessionId: string

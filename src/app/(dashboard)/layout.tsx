@@ -8,6 +8,7 @@ import { OfflineIndicator } from '@/components/shared/OfflineIndicator'
 import { InstallPWABanner } from '@/components/shared/InstallPWABanner'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { XPGainPortal } from '@/modules/gamification/components/XPGainFloater'
+import { StreakTouch } from '@/modules/gamification/components/StreakTouch'
 import type { Role } from '@/types/global'
 
 export default async function DashboardLayout({
@@ -55,6 +56,8 @@ export default async function DashboardLayout({
           {/* Portal global de XP floaters — montado UNA sola vez por app.
               Cualquier componente puede invocar triggerXPGain(amount, origin). */}
           <XPGainPortal />
+          {/* Racha estilo TikTok: cada visita diaria mantiene viva la racha. */}
+          <StreakTouch />
         </div>
       </div>
     </AuroraBackground>
