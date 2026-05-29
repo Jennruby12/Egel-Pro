@@ -1,5 +1,6 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Palette } from 'lucide-react'
+import { Palette, Trophy, ChevronRight, Zap, Flame } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { GlassCard } from '@/components/ui/glass-card'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -24,9 +25,45 @@ export default async function ProfilePage() {
 
   if (!profile) redirect('/login')
 
+  // Posicion en ranking (XP)
+  const { data: rankData } = await supabase.rpc('get_my_rank', { p_user_id: user.id, p_sort_by: 'xp' })
+  const myRank = (rankData?.[0] as { rank: number; total_players: number } | undefined) ?? { rank: 0, total_players: 0 }
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <PageHeader title="Perfil" description="Gestiona tu cuenta y preferencias." gradient />
+
+      <Link
+        href="/leaderboard"
+        className="block rounded-xl border border-aurora-2/40 bg-aurora-2/10 p-4 backdrop-blur-md transition-all hover:border-aurora-2/60 hover:bg-aurora-2/15"
+      >
+        <div className="flex items-center gap-4">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-aurora-2/20 text-aurora-2">
+            <Trophy className="h-5 w-5" />
+          </span>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">Ranking global</p>
+            {myRank.rank > 0 ? (
+              <p className="text-xs text-muted-foreground">
+                Estas en la posicion <span className="font-bold text-aurora-2">#{myRank.rank}</span> de {myRank.total_players}
+              </p>
+            ) : (
+              <p className="text-xs text-muted-foreground">Completa quizzes para aparecer en el ranking</p>
+            )}
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <span className="inline-flex items-center gap-1 rounded-full bg-xp/15 px-2 py-0.5 text-xp">
+              <Zap className="h-3 w-3" fill="currentColor" />
+              {(profile.xp_total ?? 0).toLocaleString('es-MX')}
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-streak/15 px-2 py-0.5 text-streak">
+              <Flame className="h-3 w-3" />
+              {profile.streak_current ?? 0}
+            </span>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </div>
+      </Link>
 
       <GlassCard variant="elevated" padding="lg">
         <h2 className="mb-4 text-lg font-semibold">Avatar</h2>

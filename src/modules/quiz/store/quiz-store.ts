@@ -1,6 +1,7 @@
 'use client'
 
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import type { CorrectAnswer } from '@/types/global'
 
 export type QuizAnswerState = {
@@ -41,87 +42,108 @@ const INITIAL: Pick<QuizStoreState, 'sessionId' | 'totalQuestions' | 'currentInd
   startedAt: null,
 }
 
-export const useQuizStore = create<QuizStoreState>((set, get) => ({
-  ...INITIAL,
+// Persist en localStorage para sobrevivir refresh y offline.
+export const useQuizStore = create<QuizStoreState>()(
+  persist(
+    (set, get) => ({
+      ...INITIAL,
 
-  init: (sessionId, totalQuestions) =>
-    set({
-      sessionId,
-      totalQuestions,
-      currentIndex: 0,
-      answers: {},
-      startedAt: Date.now(),
-    }),
-
-  reset: () => set({ ...INITIAL }),
-
-  goToIndex: (index) => {
-    const total = get().totalQuestions
-    if (index < 0 || index >= total) return
-    set({ currentIndex: index })
-  },
-
-  next: () => {
-    const { currentIndex, totalQuestions } = get()
-    if (currentIndex < totalQuestions - 1) set({ currentIndex: currentIndex + 1 })
-  },
-
-  prev: () => {
-    const { currentIndex } = get()
-    if (currentIndex > 0) set({ currentIndex: currentIndex - 1 })
-  },
-
-  setAnswer: (questionId, userAnswer) => {
-    set((state) => ({
-      answers: {
-        ...state.answers,
-        [questionId]: {
-          questionId,
-          userAnswer,
-          isMarked: state.answers[questionId]?.isMarked ?? false,
-          timeSpentSeconds: state.answers[questionId]?.timeSpentSeconds ?? 0,
-        },
+      init: (sessionId, totalQuestions) => {
+        // Si ya hay una sesion persistida con el mismo sessionId, NO sobreescribir
+        // (asi sobrevive refresh / offline / cierre de tab).
+        const existing = get()
+        if (existing.sessionId === sessionId && existing.startedAt) return
+        set({
+          sessionId,
+          totalQuestions,
+          currentIndex: 0,
+          answers: {},
+          startedAt: Date.now(),
+        })
       },
-    }))
-  },
 
-  toggleMark: (questionId) => {
-    set((state) => {
-      const prev = state.answers[questionId]
-      return {
-        answers: {
-          ...state.answers,
-          [questionId]: {
-            questionId,
-            userAnswer: prev?.userAnswer ?? null,
-            isMarked: !(prev?.isMarked ?? false),
-            timeSpentSeconds: prev?.timeSpentSeconds ?? 0,
+      reset: () => set({ ...INITIAL }),
+
+      goToIndex: (index) => {
+        const total = get().totalQuestions
+        if (index < 0 || index >= total) return
+        set({ currentIndex: index })
+      },
+
+      next: () => {
+        const { currentIndex, totalQuestions } = get()
+        if (currentIndex < totalQuestions - 1) set({ currentIndex: currentIndex + 1 })
+      },
+
+      prev: () => {
+        const { currentIndex } = get()
+        if (currentIndex > 0) set({ currentIndex: currentIndex - 1 })
+      },
+
+      setAnswer: (questionId, userAnswer) => {
+        set((state) => ({
+          answers: {
+            ...state.answers,
+            [questionId]: {
+              questionId,
+              userAnswer,
+              isMarked: state.answers[questionId]?.isMarked ?? false,
+              timeSpentSeconds: state.answers[questionId]?.timeSpentSeconds ?? 0,
+            },
           },
-        },
-      }
-    })
-  },
+        }))
+      },
 
-  addTimeSpent: (questionId, seconds) => {
-    set((state) => {
-      const prev = state.answers[questionId]
-      return {
-        answers: {
-          ...state.answers,
-          [questionId]: {
-            questionId,
-            userAnswer: prev?.userAnswer ?? null,
-            isMarked: prev?.isMarked ?? false,
-            timeSpentSeconds: (prev?.timeSpentSeconds ?? 0) + seconds,
-          },
-        },
-      }
-    })
-  },
+      toggleMark: (questionId) => {
+        set((state) => {
+          const prev = state.answers[questionId]
+          return {
+            answers: {
+              ...state.answers,
+              [questionId]: {
+                questionId,
+                userAnswer: prev?.userAnswer ?? null,
+                isMarked: !(prev?.isMarked ?? false),
+                timeSpentSeconds: prev?.timeSpentSeconds ?? 0,
+              },
+            },
+          }
+        })
+      },
 
-  answeredCount: () =>
-    Object.values(get().answers).filter((a) => a.userAnswer !== null).length,
+      addTimeSpent: (questionId, seconds) => {
+        set((state) => {
+          const prev = state.answers[questionId]
+          return {
+            answers: {
+              ...state.answers,
+              [questionId]: {
+                questionId,
+                userAnswer: prev?.userAnswer ?? null,
+                isMarked: prev?.isMarked ?? false,
+                timeSpentSeconds: (prev?.timeSpentSeconds ?? 0) + seconds,
+              },
+            },
+          }
+        })
+      },
 
-  markedCount: () =>
-    Object.values(get().answers).filter((a) => a.isMarked).length,
-}))
+      answeredCount: () =>
+        Object.values(get().answers).filter((a) => a.userAnswer !== null).length,
+
+      markedCount: () =>
+        Object.values(get().answers).filter((a) => a.isMarked).length,
+    }),
+    {
+      name: 'egelpro-quiz-state-v1',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (s) => ({
+        sessionId: s.sessionId,
+        totalQuestions: s.totalQuestions,
+        currentIndex: s.currentIndex,
+        answers: s.answers,
+        startedAt: s.startedAt,
+      }),
+    },
+  ),
+)

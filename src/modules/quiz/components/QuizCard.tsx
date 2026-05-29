@@ -20,6 +20,7 @@ import { QuizControls } from './QuizControls'
 import { useQuizStore } from '@/modules/quiz/store/quiz-store'
 import { useQuizTimer } from '@/modules/quiz/hooks/useQuizTimer'
 import { submitAnswer, completeSession } from '@/modules/quiz/actions'
+import { enqueueAnswer, flushQueue, queueSize } from '@/modules/quiz/lib/offline-queue'
 import type { QuizQuestionForClient } from '@/modules/quiz/types'
 import type { CorrectAnswer } from '@/types/global'
 import { cn } from '@/lib/utils/cn'
@@ -92,23 +93,52 @@ export function QuizCard({
     onExpire: handleTimeUp,
   })
 
-  // Submit en background al cambiar la respuesta / marca
+  // Submit en background al cambiar la respuesta / marca. Si falla la red,
+  // encola en localStorage para reintentar al recuperar conexion.
   const submitInBackground = useCallback(
     async (questionId: string) => {
       const a = useQuizStore.getState().answers[questionId]
       if (!a) return
       const elapsed = Math.floor((Date.now() - enterTimeRef.current) / 1000)
-      await submitAnswer({
+      const payload = {
         sessionId,
         questionId,
         userAnswer: a.userAnswer,
         timeSpentSeconds: a.timeSpentSeconds + elapsed,
         orderInQuiz: currentIndex,
         isMarked: a.isMarked,
-      })
+      }
+      // Si el navegador esta offline, no intentamos siquiera.
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        enqueueAnswer(payload)
+        return
+      }
+      try {
+        const res = await submitAnswer(payload)
+        if (!res.success) enqueueAnswer(payload)
+      } catch {
+        enqueueAnswer(payload)
+      }
     },
     [sessionId, currentIndex],
   )
+
+  // Auto-sync: al recuperar conexion, vaciar la cola.
+  useEffect(() => {
+    function onOnline() {
+      if (queueSize() === 0) return
+      void flushQueue(submitAnswer).then((r) => {
+        if (r.flushed > 0) toast.success(`Sincronizadas ${r.flushed} respuestas offline`)
+        if (r.remaining > 0) toast.warning(`Quedan ${r.remaining} respuestas por sincronizar`)
+      })
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('online', onOnline)
+      // Intento inicial al montar (por si volvio online antes de cargar la app)
+      if (navigator.onLine && queueSize() > 0) onOnline()
+      return () => window.removeEventListener('online', onOnline)
+    }
+  }, [])
 
   function handleSelect(answer: CorrectAnswer) {
     if (!currentQuestion) return
@@ -147,8 +177,15 @@ export function QuizCard({
     goToIndex(i)
   }
 
-  async function handleFinish() {
+  async function ensureSynced() {
     if (currentQuestion) await submitInBackground(currentQuestion.id)
+    if (queueSize() > 0 && typeof navigator !== 'undefined' && navigator.onLine) {
+      await flushQueue(submitAnswer)
+    }
+  }
+
+  async function handleFinish() {
+    await ensureSynced()
     startFinishing(async () => {
       const result = await completeSession({ sessionId, earlyEnd: false })
       if (!result.success) {
@@ -162,7 +199,7 @@ export function QuizCard({
   }
 
   async function handleEndEarly() {
-    if (currentQuestion) await submitInBackground(currentQuestion.id)
+    await ensureSynced()
     startFinishing(async () => {
       const result = await completeSession({ sessionId, earlyEnd: true })
       if (!result.success) {

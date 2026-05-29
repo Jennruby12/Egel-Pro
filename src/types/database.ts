@@ -8,6 +8,7 @@ export type Json =
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.5"
   }
@@ -831,7 +832,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_user_role: { Args: never; Returns: string }
+      get_my_rank: {
+        Args: { p_sort_by?: string; p_user_id: string }
+        Returns: {
+          rank: number
+          total_players: number
+        }[]
+      }
+      get_top_players: {
+        Args: { p_limit?: number; p_sort_by?: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          level: number
+          rank: number
+          streak_current: number
+          streak_max: number
+          user_id: string
+          xp_total: number
+        }[]
+      }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

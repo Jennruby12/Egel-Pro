@@ -40,7 +40,16 @@ const AREA_COLOR: Record<number, string> = {
 }
 
 export function AreaBreakdown({ rows }: AreaBreakdownProps) {
-  if (rows.length === 0) return null
+  if (rows.length === 0) {
+    return (
+      <GlassCard variant="elevated" padding="lg">
+        <h3 className="mb-2 text-lg font-semibold">Desempeno por area</h3>
+        <p className="text-sm text-muted-foreground">
+          Las metricas por area apareceran cuando hayas contestado al menos una pregunta.
+        </p>
+      </GlassCard>
+    )
+  }
 
   const data = rows.map((r) => ({
     subject: `A${r.area}`,

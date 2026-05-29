@@ -32,6 +32,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/study',        label: 'Estudiar',     icon: BookOpen },
   { href: '/progress',     label: 'Progreso',     icon: TrendingUp },
   { href: '/achievements', label: 'Logros',       icon: Trophy },
+  { href: '/leaderboard',  label: 'Ranking',      icon: Trophy },
   { href: '/profile',      label: 'Perfil',       icon: User },
   { href: '/admin',        label: 'Admin',        icon: Settings, adminOnly: true },
 ]

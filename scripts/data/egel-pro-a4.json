@@ -145,7 +145,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 1,
     "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
-    "question_text": "Una empresa adopta gestion de buffer al estilo Critical Chain Method (CCM) en lugar de margenes individuales por tarea. ¿Cual es la principal ventaja sobre Critical Path Method (CPM) tradicional?",
+    "question_text": "Una empresa adopta gestion de buffer al estilo Critical Chain Method (CCM) en lugar de margenes individuales por tarea. El PM defiende la decision frente al equipo, que esta acostumbrado a anadir margen por estimacion. ¿Cual es la principal ventaja sobre Critical Path Method (CPM) tradicional?",
     "option_a": "CCM permite multiples rutas criticas simultaneas, CPM solo permite una",
     "option_b": "CCM consolida los margenes en un buffer al final del proyecto, evitando que la ley de Parkinson y el sindrome del estudiante consuman cada margen individual",
     "option_c": "CCM elimina la nocion de ruta critica y se basa en el camino de menor riesgo de recursos",
@@ -257,7 +257,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 2,
     "subarea_name": "Calidad de software",
-    "question_text": "Un sistema de monitoreo industrial reporta: durante 1 ano de operacion tuvo 8,760 horas de servicio y sufrio 6 fallas. El tiempo total de reparacion fue de 12 horas. ¿Cuales son MTBF y MTTR?",
+    "question_text": "Un sistema de monitoreo industrial reporta: durante 1 ano de operacion tuvo 8,760 horas de servicio y sufrio 6 fallas no catastroficas. El tiempo total de reparacion sumando todas las intervenciones fue de 12 horas. El gerente de operaciones necesita estos indicadores para el reporte mensual. ¿Cuales son MTBF y MTTR?",
     "option_a": "MTBF = 8,760/6 = 1,460 horas, MTTR = 12/6 = 2 horas",
     "option_b": "MTBF = 1,460 horas, MTTR = 2 horas",
     "option_c": "MTBF = 1,458 horas (descontando reparacion), MTTR = 2 horas",
@@ -277,7 +277,7 @@
     "option_c": "El nivel 3 implementa mejora continua basada en metricas; el nivel 2 solo cumple objetivos de proyecto",
     "correct_answer": "b",
     "explanation": "Nivel 2 (Managed): procesos gestionados por proyecto, cada uno puede tener variaciones. Nivel 3 (Defined): procesos ESTANDAR a nivel organizacional, ajustados por proyecto via tailoring. a) invierte el rol de cuantificacion (eso es nivel 4). c) la mejora continua cuantitativa es nivel 5.",
-    "difficulty": "hard"
+    "difficulty": "medium"
   },
   {
     "section": "disciplinar",
@@ -313,7 +313,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 2,
     "subarea_name": "Calidad de software",
-    "question_text": "Una empresa quiere certificarse ISO 9001 mientras tambien aspira a CMMI nivel 3. El director pregunta si son redundantes. ¿Cual es la diferencia clave?",
+    "question_text": "Una empresa quiere certificarse ISO 9001 mientras tambien aspira a CMMI nivel 3 dentro del area de software. El director pregunta si son redundantes y si una sustituye a la otra para evitar duplicar esfuerzo de auditorias. ¿Cual es la diferencia clave entre ambos estandares?",
     "option_a": "ISO 9001 es un modelo de madurez por niveles; CMMI es un sistema de gestion de calidad generico",
     "option_b": "ISO 9001 certifica un sistema de gestion de calidad generico para cualquier organizacion; CMMI es un modelo de madurez especifico para procesos de ingenieria de software con 5 niveles",
     "option_c": "Ambos certifican procesos de software pero ISO 9001 incluye CMMI como subnivel",
@@ -355,7 +355,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 2,
     "subarea_name": "Calidad de software",
-    "question_text": "El equipo de QA discute si una prueba de seguridad que valida 'el sistema no permite acceso sin autenticacion' es verificacion o validacion. ¿Cual es la respuesta correcta y por que?",
+    "question_text": "El equipo de QA discute si una prueba de seguridad que valida 'el sistema no permite acceso sin autenticacion' es verificacion o validacion. El requerimiento esta documentado en la especificacion y tambien refleja una necesidad real del cliente. ¿Cual es la respuesta correcta y por que?",
     "option_a": "Verificacion porque comprueba que el sistema fue construido segun especificaciones de seguridad",
     "option_b": "Ambas: verifica el requisito tecnico y valida la necesidad de negocio simultaneamente",
     "option_c": "Validacion porque comprueba que el sistema satisface las necesidades reales de seguridad del cliente",
@@ -397,7 +397,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 2,
     "subarea_name": "Calidad de software",
-    "question_text": "Un sistema requiere recuperarse rapidamente despues de fallas y mantener integridad de datos durante upgrades. ¿Que sub-caracteristica de Reliability en ISO/IEC 25010 cubre estos requisitos?",
+    "question_text": "Un sistema bancario requiere recuperarse rapidamente despues de fallas e incluso mantener funcionalidad parcial cuando ocurre un componente caido. El arquitecto debe redactar requisitos no funcionales acorde a ISO/IEC 25010. ¿Que sub-caracteristicas de Reliability cubren estos requisitos?",
     "option_a": "Maturity y Availability",
     "option_b": "Fault tolerance y Recoverability",
     "option_c": "Confidentiality y Integrity",
@@ -445,6 +445,34 @@
     "option_c": "Perfectivo porque aprovecha el cambio para mejorar el desempeno",
     "correct_answer": "b",
     "explanation": "Mantenimiento adaptativo: adaptar el software a cambios del ENTORNO operacional (OS, hardware, regulaciones, formatos externos). El sistema no esta defectuoso; el contexto cambio. a) no hay defecto: el codigo funciona en Win10. c) no se busca mejorar, solo mantener funcionalidad.",
+    "difficulty": "medium"
+  },
+  {
+    "section": "disciplinar",
+    "area": 4,
+    "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2,
+    "subarea_name": "Calidad de software",
+    "question_text": "Una empresa SaaS acumula deuda tecnica: codigo duplicado, falta de tests, hacks de produccion sin documentar. El CTO debate con el equipo si pagarla con un sprint completo de refactor o gradualmente. Citando a Ward Cunningham, la deuda tecnica se comporta como un prestamo financiero. ¿Que metafora aplica al caso?",
+    "option_a": "Si no se 'paga' (refactor), genera intereses (mas trabajo futuro y bugs); ignorarla cuesta exponencialmente porque cada cambio sobre codigo deudoso es mas costoso",
+    "option_b": "La deuda tecnica solo importa al final del proyecto, similar a un pago globo donde se liquida toda al cierre del producto",
+    "option_c": "La deuda tecnica desaparece sola al cambiar de framework o lenguaje, ya que el codigo se reescribe desde cero",
+    "correct_answer": "a",
+    "explanation": "La metafora original de Cunningham: la deuda tecnica genera intereses compuestos (cada cambio futuro sobre codigo deudoso cuesta mas). Ignorarla degrada productividad exponencialmente. b) y c) son malinterpretaciones comunes; la deuda crece y no se evapora con cambios de stack.",
+    "difficulty": "medium"
+  },
+  {
+    "section": "disciplinar",
+    "area": 4,
+    "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2,
+    "subarea_name": "Calidad de software",
+    "question_text": "Un proceso de gestion de configuracion del software (SCM) define lineas base (baselines) que congelan versiones del producto en hitos clave. Un equipo discute si modificar la baseline despues de aprobada por el CCB. ¿Cual es la regla correcta de SCM segun IEEE 828?",
+    "option_a": "Las baselines son inmutables y pueden modificarse libremente para mantenerlas actualizadas con la rama main",
+    "option_b": "Las baselines pueden modificarse solo a traves de un proceso formal de control de cambios (CCB) que evalua impacto, costo y riesgo de cada cambio",
+    "option_c": "Las baselines se reemplazan automaticamente por la version mas reciente en el repositorio al cerrar cada sprint",
+    "correct_answer": "b",
+    "explanation": "IEEE 828 / SCM: las baselines se cambian solo a traves del proceso de control de cambios formal. El CCB (Change Control Board) evalua impacto antes de aprobar. a) es contradictoria (dice inmutable y a la vez modificable libremente). c) elimina toda gobernanza y rompe el proposito de las baselines.",
     "difficulty": "medium"
   },
   {
@@ -501,7 +529,7 @@
     "option_c": "Modelo V (V-Model): cada fase de desarrollo tiene su contraparte de testing y validacion explicita, ideal para entornos regulados con trazabilidad",
     "correct_answer": "c",
     "explanation": "El Modelo V mapea cada fase (Requisitos, Diseno alto, diseno bajo, codigo) con su nivel de pruebas (Aceptacion, Sistema, Integracion, Unitarias). La trazabilidad explicita es ideal para certificacion FDA/medical devices. b) Scrum tiene baja trazabilidad formal de specs. c) Espiral aborda riesgo, no trazabilidad regulatoria.",
-    "difficulty": "hard"
+    "difficulty": "medium"
   },
   {
     "section": "disciplinar",
@@ -529,7 +557,7 @@
     "option_c": "Modelo RUP: identico al espiral pero solo con UML",
     "correct_answer": "b",
     "explanation": "El Modelo Espiral de Boehm (1986) incluye explicitamente cuatro cuadrantes por vuelta: (1) determinar objetivos, (2) analisis de riesgo, (3) desarrollo y prueba, (4) planeacion siguiente iteracion. El analisis de riesgo en cada ciclo es la diferencia clave vs iterativo simple. c) RUP es distinto: 4 fases (Inception, Elaboration, Construction, Transition).",
-    "difficulty": "hard"
+    "difficulty": "medium"
   },
   {
     "section": "disciplinar",
@@ -579,7 +607,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 3,
     "subarea_name": "Metodologias de desarrollo",
-    "question_text": "El manifiesto agil prioriza 'responder al cambio sobre seguir un plan'. Un gerente interpreta esto como 'no planificar'. ¿Cual es la interpretacion correcta segun los autores del manifiesto?",
+    "question_text": "El manifiesto agil prioriza 'responder al cambio sobre seguir un plan'. Un gerente interpreta esto como 'no planificar' y propone eliminar toda planeacion del proyecto. El coach agil corrige la interpretacion. ¿Cual es la lectura correcta segun los autores del manifiesto?",
     "option_a": "Correcto: en agil no se planea, se responde a lo que vaya surgiendo dia a dia",
     "option_b": "Incorrecto: agil prohibe planeacion mayor a 1 semana",
     "option_c": "Incorrecto: el manifiesto valora ambas cosas pero da mas peso a responder al cambio; planificar sigue siendo esencial pero adaptable",
@@ -593,7 +621,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 3,
     "subarea_name": "Metodologias de desarrollo",
-    "question_text": "Un equipo Scrum no termino 3 historias del sprint backlog. En la Sprint Review se discute que hacer con esas historias. ¿Que dicta la Scrum Guide?",
+    "question_text": "Un equipo Scrum no termino 3 historias del sprint backlog que estaban en el compromiso original. En la Sprint Review se discute que hacer con esas historias. El Product Owner quiere asegurarse de seguir la guia oficial. ¿Que dicta la Scrum Guide al respecto?",
     "option_a": "Las historias incompletas regresan al Product Backlog; el PO decide su prioridad junto con otros items para el proximo sprint",
     "option_b": "Se agregan automaticamente al siguiente sprint sin requerir refinamiento",
     "option_c": "Se eliminan del backlog porque ya tuvieron oportunidad y no se completaron",
@@ -607,7 +635,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 3,
     "subarea_name": "Metodologias de desarrollo",
-    "question_text": "Lean Software Development de los Poppendieck identifica 7 desperdicios. Un equipo identifica que esta haciendo features que nadie usa segun analytics. ¿Que desperdicio es y como se reduce?",
+    "question_text": "Lean Software Development de los Poppendieck identifica 7 desperdicios. Un equipo descubre via analytics que el 30% de las features desplegadas en el ultimo ano no se usan en absoluto. El coach lean clasifica el hallazgo segun el modelo. ¿Que desperdicio es y como se reduce?",
     "option_a": "Sobreprocesamiento: se reduce con menos revisiones de codigo",
     "option_b": "Sobreproduccion (extra features): se reduce con feedback temprano de usuarios y priorizacion basada en valor real",
     "option_c": "Esperas: se reduce eliminando bloqueos en pipeline",
@@ -621,7 +649,7 @@
     "area_name": "Gestion de Proyectos de Software",
     "subarea": 3,
     "subarea_name": "Metodologias de desarrollo",
-    "question_text": "Un equipo Kanban con tablero de columnas To Do, In Progress (WIP=3), Code Review (WIP=2), Done observa cuellos de botella en Code Review. ¿Que accion concreta esta alineada con principios Kanban?",
+    "question_text": "Un equipo Kanban con tablero de columnas To Do, In Progress (WIP=3), Code Review (WIP=2), Done observa cuellos de botella en Code Review: items esperan dias sin revisar. El gerente propone subir el WIP de Code Review. ¿Que accion concreta esta alineada con principios Kanban?",
     "option_a": "Aumentar WIP de Code Review a 5 para que mas items fluyan",
     "option_b": "Eliminar el limite WIP en Code Review para no detener el flujo",
     "option_c": "Reducir WIP de In Progress a 2 y reasignar capacidad para hacer code review; resolver el cuello antes de meter mas trabajo",
@@ -641,7 +669,7 @@
     "option_c": "Construction, porque la arquitectura se construye mientras se programan los componentes",
     "correct_answer": "a",
     "explanation": "RUP tiene 4 fases: Inception (vision/scope), Elaboration (arquitectura ejecutable, mitigar riesgos tecnicos), Construction (desarrollar masivo), Transition (deploy). Elaboration es la fase donde se construye y valida la arquitectura ejecutable, hito clave (LCA - Lifecycle Architecture). a) Inception es vision, no ejecutable. c) construction asume arquitectura ya validada.",
-    "difficulty": "hard"
+    "difficulty": "medium"
   },
   {
     "section": "disciplinar",
