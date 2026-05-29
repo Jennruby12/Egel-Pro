@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form'
 import { signIn, sendMagicLink } from '@/modules/auth/actions'
 import { signInSchema, type SignInInput } from '@/lib/validations/auth.schema'
-import { GoogleSignInButton } from './GoogleSignInButton'
+import { GoogleSignInButton, GOOGLE_OAUTH_ENABLED } from './GoogleSignInButton'
 
 export function LoginForm() {
   const router = useRouter()
@@ -65,18 +65,21 @@ export function LoginForm() {
 
   return (
     <div className="space-y-6">
-      <GoogleSignInButton />
-
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-bg-border/60" />
-        </div>
-        <div className="relative flex justify-center text-[10px] font-medium uppercase tracking-widest">
-          <span className="bg-card/40 px-3 text-muted-foreground backdrop-blur-sm">
-            O continua con
-          </span>
-        </div>
-      </div>
+      {GOOGLE_OAUTH_ENABLED ? (
+        <>
+          <GoogleSignInButton />
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-bg-border/60" />
+            </div>
+            <div className="relative flex justify-center text-[10px] font-medium uppercase tracking-widest">
+              <span className="bg-card/40 px-3 text-muted-foreground backdrop-blur-sm">
+                O continua con
+              </span>
+            </div>
+          </div>
+        </>
+      ) : null}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">

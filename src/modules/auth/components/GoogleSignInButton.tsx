@@ -9,7 +9,7 @@ import { signInWithGoogle } from '@/modules/auth/actions'
 // Bandera para esconder el boton si Google OAuth no esta habilitado en Supabase.
 // Setear NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED=true en .env y Vercel cuando configures
 // el provider en Supabase Dashboard -> Auth -> Providers -> Google.
-const GOOGLE_OAUTH_ENABLED =
+export const GOOGLE_OAUTH_ENABLED =
   process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED === 'true'
 
 export function GoogleSignInButton({
