@@ -9,26 +9,36 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
-  // Runtime caching: NetworkFirst para datos dinamicos de Supabase, CacheFirst para estaticos
+  // Runtime caching. IMPORTANTE: NUNCA cachear /auth/v1/* (login, tokens, signup,
+  // logout, /user). Si lo haces, en mobile el SW puede retornar respuestas stale
+  // del cache y la sesion se rompe (user aparece logged in cuando ya no lo esta,
+  // o login no se aplica). NetworkOnly garantiza que el browser SIEMPRE pega al
+  // server, sin cache intermedio. Mismo para /rest/v1/* en mutaciones.
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/[^/]+\.supabase\.co\/auth\/v1\/.*/i,
+      handler: 'NetworkOnly',
+    },
+    {
+      // Solo cachear GET reads, no POST/PATCH/DELETE
+      urlPattern: ({ url, request }) =>
+        /^https:\/\/[^/]+\.supabase\.co\/rest\/v1\/.*/i.test(url.href) && request.method === 'GET',
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'supabase-auth',
-        networkTimeoutSeconds: 10,
-        expiration: { maxEntries: 32, maxAgeSeconds: 60 * 5 },
-        cacheableResponse: { statuses: [0, 200] },
+        cacheName: 'supabase-rest-get',
+        networkTimeoutSeconds: 8,
+        expiration: { maxEntries: 64, maxAgeSeconds: 60 * 5 },
+        cacheableResponse: { statuses: [200] },
       },
     },
     {
-      urlPattern: /^https:\/\/[^/]+\.supabase\.co\/rest\/v1\/.*/i,
-      handler: 'NetworkFirst',
+      // Storage (avatares, imagenes publicas): CacheFirst, son inmutables por URL
+      urlPattern: /^https:\/\/[^/]+\.supabase\.co\/storage\/v1\/object\/public\/.*/i,
+      handler: 'CacheFirst',
       options: {
-        cacheName: 'supabase-rest',
-        networkTimeoutSeconds: 10,
-        expiration: { maxEntries: 128, maxAgeSeconds: 60 * 10 },
-        cacheableResponse: { statuses: [0, 200] },
+        cacheName: 'supabase-storage',
+        expiration: { maxEntries: 64, maxAgeSeconds: 60 * 60 * 24 * 7 },
+        cacheableResponse: { statuses: [200] },
       },
     },
     {
