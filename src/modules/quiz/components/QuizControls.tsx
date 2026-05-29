@@ -7,6 +7,7 @@ import {
   SkipForward,
   Send,
   Loader2,
+  XCircle,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MagicButton } from '@/components/ui/magic-button'
@@ -22,6 +23,9 @@ type QuizControlsProps = {
   onSkip: () => void
   onToggleMark: () => void
   onFinish: () => void
+  onEndEarly?: () => void
+  answeredCount?: number
+  total?: number
 }
 
 export function QuizControls({
@@ -34,7 +38,19 @@ export function QuizControls({
   onSkip,
   onToggleMark,
   onFinish,
+  onEndEarly,
+  answeredCount,
+  total,
 }: QuizControlsProps) {
+  function handleEndEarlyClick() {
+    if (!onEndEarly) return
+    const message =
+      answeredCount !== undefined && total !== undefined
+        ? `¿Terminar el quiz ahora? Veras el resultado sobre las ${answeredCount} preguntas contestadas (de ${total}).`
+        : '¿Terminar el quiz ahora?'
+    if (window.confirm(message)) onEndEarly()
+  }
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="flex items-center gap-2">
@@ -76,6 +92,18 @@ export function QuizControls({
       </div>
 
       <div className="flex items-center gap-2">
+        {onEndEarly ? (
+          <MagicButton
+            variant="ghost"
+            size="md"
+            onClick={handleEndEarlyClick}
+            disabled={isFinishing}
+            className="text-danger hover:text-danger"
+          >
+            <XCircle className="h-4 w-4" />
+            <span className="hidden sm:inline">Terminar ahora</span>
+          </MagicButton>
+        ) : null}
         {!isLast ? (
           <>
             <MagicButton

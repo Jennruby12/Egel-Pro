@@ -23,7 +23,9 @@ type AnswerRow = {
     id: string
     question_text: string
     area: number
+    area_name: string | null
     subarea: number
+    subarea_name: string | null
     option_a: string
     option_b: string
     option_c: string
@@ -59,7 +61,7 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
       user_answer,
       is_correct,
       order_in_quiz,
-      questions ( id, question_text, area, subarea, option_a, option_b, option_c, correct_answer, explanation )
+      questions ( id, question_text, area, area_name, subarea, subarea_name, option_a, option_b, option_c, correct_answer, explanation )
     `)
     .eq('session_id', id)
     .order('order_in_quiz', { ascending: true })
@@ -73,7 +75,9 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
       questionId: a.question_id,
       questionText: a.questions.question_text,
       area: a.questions.area,
+      areaName: a.questions.area_name,
       subarea: a.questions.subarea,
+      subareaName: a.questions.subarea_name,
       optionA: a.questions.option_a,
       optionB: a.questions.option_b,
       optionC: a.questions.option_c,

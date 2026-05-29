@@ -66,46 +66,93 @@ export async function startQuizSession(
         ? [1, 2, 3, 4]
         : [1, 2]
 
-  // Pesos para distribuir preguntas: cantidad oficial de reactivos por area
-  const weights: Record<number, number> = {}
-  for (const areaId of areasToUse) {
-    const area = getAreaById(areaId, data.section)
-    weights[areaId] = area?.totalQuestions ?? 1
-  }
-  const distribution = distributeQuestionsByArea(data.totalQuestions, weights)
-
-  // Para cada area, traer candidatos y seleccionar N al azar
+  // MODO REVIEW: traer SOLO preguntas que el usuario ha fallado antes
   const selectedQuestions: QuizQuestionForClient[] = []
 
-  for (const [areaIdStr, count] of Object.entries(distribution)) {
-    if (count === 0) continue
-    const areaId = Number(areaIdStr)
-
-    let query = supabase
+  if (data.mode === 'review') {
+    // Trae IDs de sesiones del usuario primero, luego sus respuestas falladas
+    const { data: userSessions, error: sessErr } = await supabase
+      .from('quiz_sessions')
+      .select('id')
+      .eq('user_id', user.id)
+    if (sessErr) {
+      return { success: false, error: `Error al consultar sesiones: ${sessErr.message}` }
+    }
+    const sessionIds = (userSessions ?? []).map((s) => s.id)
+    if (sessionIds.length === 0) {
+      return { success: false, error: 'Aun no tienes preguntas falladas para repasar. Completa al menos un quiz primero.' }
+    }
+    const { data: failedAnswers, error: failedErr } = await supabase
+      .from('quiz_answers')
+      .select('question_id')
+      .in('session_id', sessionIds)
+      .eq('is_correct', false)
+    if (failedErr) {
+      return { success: false, error: `Error al consultar fallidas: ${failedErr.message}` }
+    }
+    const failedIds = Array.from(new Set((failedAnswers ?? []).map((a) => a.question_id).filter((id): id is string => Boolean(id))))
+    if (failedIds.length === 0) {
+      return { success: false, error: 'Aun no tienes preguntas falladas para repasar. Completa al menos un quiz primero.' }
+    }
+    const { data: reviewCandidates, error: revErr } = await supabase
       .from('questions')
       .select('*')
-      .eq('section', data.section)
-      .eq('area', areaId)
+      .in('id', failedIds)
       .eq('is_active', true)
       .eq('is_deleted', false)
-
-    if (data.subareas.length > 0) {
-      query = query.in('subarea', data.subareas)
+    if (revErr) {
+      return { success: false, error: `Error al consultar preguntas: ${revErr.message}` }
     }
-
-    const { data: candidates, error } = await query.limit(500)
-    if (error) {
-      return { success: false, error: `Error al consultar preguntas: ${error.message}` }
+    if (!reviewCandidates || reviewCandidates.length === 0) {
+      return { success: false, error: 'Las preguntas falladas ya no estan disponibles.' }
     }
-    if (!candidates || candidates.length === 0) continue
-
-    const picked = shuffle(candidates).slice(0, count)
-    // Eliminar campos sensibles antes de enviar al cliente
+    const picked = shuffle(reviewCandidates).slice(0, data.totalQuestions)
     for (const q of picked) {
       const { correct_answer: _ca, explanation: _ex, ...safe } = q
       void _ca
       void _ex
       selectedQuestions.push(safe as QuizQuestionForClient)
+    }
+  } else {
+    // Pesos para distribuir preguntas: cantidad oficial de reactivos por area
+    const weights: Record<number, number> = {}
+    for (const areaId of areasToUse) {
+      const area = getAreaById(areaId, data.section)
+      weights[areaId] = area?.totalQuestions ?? 1
+    }
+    const distribution = distributeQuestionsByArea(data.totalQuestions, weights)
+
+    // Para cada area, traer candidatos y seleccionar N al azar
+    for (const [areaIdStr, count] of Object.entries(distribution)) {
+      if (count === 0) continue
+      const areaId = Number(areaIdStr)
+
+      let query = supabase
+        .from('questions')
+        .select('*')
+        .eq('section', data.section)
+        .eq('area', areaId)
+        .eq('is_active', true)
+        .eq('is_deleted', false)
+
+      if (data.subareas.length > 0) {
+        query = query.in('subarea', data.subareas)
+      }
+
+      const { data: candidates, error } = await query.limit(500)
+      if (error) {
+        return { success: false, error: `Error al consultar preguntas: ${error.message}` }
+      }
+      if (!candidates || candidates.length === 0) continue
+
+      const picked = shuffle(candidates).slice(0, count)
+      // Eliminar campos sensibles antes de enviar al cliente
+      for (const q of picked) {
+        const { correct_answer: _ca, explanation: _ex, ...safe } = q
+        void _ca
+        void _ex
+        selectedQuestions.push(safe as QuizQuestionForClient)
+      }
     }
   }
 
@@ -231,7 +278,7 @@ export async function completeSession(
   if (!parsed.success) {
     return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
   }
-  const { sessionId } = parsed.data
+  const { sessionId, earlyEnd } = parsed.data
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -273,16 +320,24 @@ export async function completeSession(
 
   // Construir array para calculateScore. Las preguntas sin respuesta cuentan
   // como skipped, asi que rellenamos con userAnswer=null hasta total_questions.
-  const answeredForScoring: AnsweredQuestion[] = rows.map((r) => ({
-    correctAnswer: (r.questions?.correct_answer ?? 'a') as CorrectAnswer,
-    userAnswer: (r.user_answer ?? null) as CorrectAnswer | null,
-  }))
-  // Rellenar saltadas implicitas
-  while (answeredForScoring.length < session.total_questions) {
-    answeredForScoring.push({ correctAnswer: 'a', userAnswer: null })
+  // Si earlyEnd=true, el score se calcula SOLO sobre las contestadas (justo
+  // al terminar anticipadamente).
+  const answeredForScoring: AnsweredQuestion[] = rows
+    .filter((r) => !earlyEnd || r.user_answer !== null)
+    .map((r) => ({
+      correctAnswer: (r.questions?.correct_answer ?? 'a') as CorrectAnswer,
+      userAnswer: (r.user_answer ?? null) as CorrectAnswer | null,
+    }))
+  // Si no es early end, rellenar saltadas implicitas hasta total_questions original
+  if (!earlyEnd) {
+    while (answeredForScoring.length < session.total_questions) {
+      answeredForScoring.push({ correctAnswer: 'a', userAnswer: null })
+    }
   }
 
   const result = calculateScore(answeredForScoring)
+  // En earlyEnd, el "total" real de la sesion es la cantidad de respuestas validas
+  const finalTotalQuestions = earlyEnd ? answeredForScoring.length : session.total_questions
 
   // Tiempo total (segundos desde started_at hasta ahora)
   const startedAt = session.started_at ? new Date(session.started_at).getTime() : Date.now()
@@ -295,6 +350,7 @@ export async function completeSession(
     .update({
       status: 'completed',
       finished_at: new Date().toISOString(),
+      total_questions: finalTotalQuestions,
       correct_answers: result.correct,
       wrong_answers: result.wrong,
       skipped: result.skipped,

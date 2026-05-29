@@ -48,6 +48,8 @@ export type SubmitAnswerInput = z.infer<typeof submitAnswerSchema>
 // =====================================================
 export const completeSessionSchema = z.object({
   sessionId: z.string().uuid(),
+  /** Si true: termina anticipadamente, score solo sobre contestadas (total_questions = answers.length real) */
+  earlyEnd: z.boolean().optional().default(false),
 })
 
 export type CompleteSessionInput = z.infer<typeof completeSessionSchema>

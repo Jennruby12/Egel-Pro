@@ -40,16 +40,17 @@ export function QuestionDisplay({ question }: QuestionDisplayProps) {
             areaClass,
           )}
         >
-          Area {question.area} · Subarea {question.subarea}
+          Area {question.area}
+          {question.area_name ? ` — ${question.area_name}` : ''}
         </span>
+        {question.subarea_name && (
+          <span className="inline-flex items-center rounded-full border border-bg-border/60 bg-bg-raised/40 px-2.5 py-0.5 text-xs font-medium text-foreground/80 backdrop-blur-md">
+            Tema: {question.subarea_name}
+          </span>
+        )}
         <Badge variant={DIFFICULTY_VARIANT[difficulty] ?? 'secondary'}>
           {DIFFICULTY_LABEL[difficulty] ?? difficulty}
         </Badge>
-        {question.area_name && (
-          <span className="text-xs text-muted-foreground">
-            {question.area_name}
-          </span>
-        )}
       </div>
       <h2 className="text-xl font-medium leading-relaxed md:text-2xl">
         {question.question_text}

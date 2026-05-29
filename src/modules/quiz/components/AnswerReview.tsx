@@ -11,6 +11,8 @@ export type ReviewItem = {
   questionText: string
   area: number
   subarea: number
+  areaName?: string | null
+  subareaName?: string | null
   optionA: string
   optionB: string
   optionC: string
@@ -97,8 +99,13 @@ function ReviewRow({ item, index }: { item: ReviewItem; index: number }) {
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <span className="font-mono text-muted-foreground">#{index}</span>
             <span className="inline-flex items-center rounded-full border border-glass-border/40 bg-glass-bg/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-md">
-              A{item.area}.{item.subarea}
+              {item.areaName ? `A${item.area} · ${item.areaName}` : `A${item.area}.${item.subarea}`}
             </span>
+            {item.subareaName && (
+              <span className="text-[10px] font-medium text-muted-foreground">
+                · {item.subareaName}
+              </span>
+            )}
             <span className={cn('font-semibold', meta.labelClass)}>
               {meta.label}
             </span>

@@ -150,7 +150,21 @@ export function QuizCard({
   async function handleFinish() {
     if (currentQuestion) await submitInBackground(currentQuestion.id)
     startFinishing(async () => {
-      const result = await completeSession({ sessionId })
+      const result = await completeSession({ sessionId, earlyEnd: false })
+      if (!result.success) {
+        toast.error(result.error)
+        return
+      }
+      useQuizStore.getState().reset()
+      router.push(`/quiz/results/${sessionId}`)
+      router.refresh()
+    })
+  }
+
+  async function handleEndEarly() {
+    if (currentQuestion) await submitInBackground(currentQuestion.id)
+    startFinishing(async () => {
+      const result = await completeSession({ sessionId, earlyEnd: true })
       if (!result.success) {
         toast.error(result.error)
         return
@@ -221,6 +235,9 @@ export function QuizCard({
           onSkip={handleSkip}
           onToggleMark={handleToggleMark}
           onFinish={handleFinish}
+          onEndEarly={answeredCount > 0 ? handleEndEarly : undefined}
+          answeredCount={answeredCount}
+          total={questions.length}
         />
 
         {/* Mini-mapa para saltar a cualquier pregunta */}
