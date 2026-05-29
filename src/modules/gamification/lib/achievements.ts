@@ -15,6 +15,7 @@ import {
   ACHIEVEMENTS_CATALOG,
   type AchievementType,
 } from '@/lib/constants/gamification'
+import { createNotification } from '@/modules/notifications/lib/create-notification'
 
 type SupabaseLike = SupabaseClient<Database>
 
@@ -208,5 +209,18 @@ export async function unlockAchievements(
     .filter((x): x is NonNullable<typeof x> => Boolean(x))
 
   await supabase.from('achievements').insert(toInsert)
+
+  // Crear notificaciones in-app por cada logro nuevo
+  for (const item of toInsert) {
+    await createNotification({
+      userId,
+      type: 'achievement_unlocked',
+      title: `Logro desbloqueado: ${item.title}`,
+      body: item.description ?? undefined,
+      actionLink: '/achievements',
+      icon: item.icon ?? undefined,
+    })
+  }
+
   return newlyUnlocked
 }

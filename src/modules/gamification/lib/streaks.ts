@@ -22,6 +22,10 @@ export type StreakUpdate = {
 
 type SupabaseLike = SupabaseClient<Database>
 
+/**
+ * Devuelve YYYY-MM-DD UTC. Fallback cuando el cliente NO envia su fecha local.
+ * Usado por updateStreak solo si no recibe todayISO.
+ */
 function toISODate(d: Date = new Date()): string {
   return d.toISOString().slice(0, 10)
 }
@@ -69,8 +73,10 @@ export async function updateStreak(
   supabase: SupabaseLike,
   userId: string,
   delta: { xpEarned?: number; questionsAnswered?: number; dailyChallengeCompleted?: boolean } = {},
+  todayOverride?: string,
 ): Promise<StreakUpdate> {
-  const today = toISODate()
+  // Si el cliente envio su fecha local (estilo TikTok), usarla. Fallback a UTC.
+  const today = todayOverride ?? toISODate()
 
   // 1. Leer profile actual
   const { data: profile } = await supabase

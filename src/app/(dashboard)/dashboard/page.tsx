@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 import { HeroSection } from '@/modules/dashboard/components/HeroSection'
+import { LeaderboardMini } from '@/modules/dashboard/components/LeaderboardMini'
 import { QuickStatsCard } from '@/modules/dashboard/components/QuickStatsCard'
 import { WeakAreasCard, type WeakArea } from '@/modules/dashboard/components/WeakAreasCard'
 import { RecentActivityCard, type RecentSession } from '@/modules/dashboard/components/RecentActivityCard'
@@ -130,6 +131,7 @@ export default async function DashboardPage() {
           streakCurrent={profile?.streak_current ?? 0}
           streakMax={profile?.streak_max ?? 0}
           daysToExam={daysToExam(profile?.exam_date ?? null)}
+          lastActivityDate={profile?.last_activity_date ?? null}
         />
       </BentoCard>
 
@@ -161,6 +163,11 @@ export default async function DashboardPage() {
       {/* Weak areas — 3 cols */}
       <BentoCard colSpan={3} variant="elevated" padding="lg">
         <WeakAreasCard areas={weakAreas} />
+      </BentoCard>
+
+      {/* Mini leaderboard — 6 cols (full row) */}
+      <BentoCard colSpan={6} variant="elevated" padding="lg">
+        <LeaderboardMini />
       </BentoCard>
     </BentoGrid>
   )

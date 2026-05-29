@@ -7,6 +7,7 @@ import { AnimatedCounter } from '@/components/ui/animated-counter'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { StreakFireAnimation } from '@/modules/gamification/components/StreakFireAnimation'
 import { streakToIntensity } from '@/modules/gamification/lib/streak-intensity'
+import { NotificationBell } from '@/modules/notifications/components/NotificationBell'
 
 type HeaderProps = {
   fullName: string | null
@@ -23,7 +24,7 @@ function getInitials(name: string | null, fallback: string): string {
   return (parts[0]![0] ?? '') + (parts[1]![0] ?? '')
 }
 
-export function Header({ fullName, email, xpTotal, level, streakCurrent }: HeaderProps) {
+export async function Header({ fullName, email, xpTotal, level, streakCurrent }: HeaderProps) {
   const initials = getInitials(fullName, email)
 
   return (
@@ -67,6 +68,8 @@ export function Header({ fullName, email, xpTotal, level, streakCurrent }: Heade
                 Nivel {level} · {xpTotal.toLocaleString('es-MX')} XP totales
               </TooltipContent>
             </Tooltip>
+
+            <NotificationBell />
 
             <ThemeToggle size="md" />
 

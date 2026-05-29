@@ -3,6 +3,7 @@
 import { CalendarClock, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { StreakWidget } from '@/modules/gamification/components/StreakWidget'
+import { StreakCountdown } from '@/modules/gamification/components/StreakCountdown'
 import { XPBar } from '@/modules/gamification/components/XPBar'
 import { LevelBadge } from '@/modules/gamification/components/LevelBadge'
 import { AuroraBackground } from '@/components/ui/aurora-background'
@@ -17,6 +18,7 @@ type HeroSectionProps = {
   streakCurrent: number
   streakMax: number
   daysToExam: number | null
+  lastActivityDate: string | null
 }
 
 function getGreeting(): string {
@@ -34,6 +36,7 @@ export function HeroSection({
   streakCurrent,
   streakMax,
   daysToExam,
+  lastActivityDate,
 }: HeroSectionProps) {
   const firstName = (fullName ?? email).split(/\s+/)[0]
 
@@ -88,9 +91,16 @@ export function HeroSection({
             )}
           </div>
 
-          <div className="flex items-center gap-4">
-            <StreakWidget current={streakCurrent} max={streakMax} size="lg" />
-            <LevelBadge level={level} size="lg" />
+          <div className="flex flex-col items-end gap-3">
+            <div className="flex items-center gap-4">
+              <StreakWidget current={streakCurrent} max={streakMax} size="lg" />
+              <LevelBadge level={level} size="lg" />
+            </div>
+            <StreakCountdown
+              lastActivityDate={lastActivityDate}
+              currentStreak={streakCurrent}
+              variant="inline"
+            />
           </div>
         </motion.div>
 

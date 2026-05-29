@@ -13,6 +13,7 @@ import {
   Settings,
   Sparkles,
   LogOut,
+  Bell,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { signOut } from '@/modules/auth/actions'
@@ -31,9 +32,10 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/simulacro',    label: 'Simulacro',    icon: Sparkles },
   { href: '/study',        label: 'Estudiar',     icon: BookOpen },
   { href: '/progress',     label: 'Progreso',     icon: TrendingUp },
-  { href: '/achievements', label: 'Logros',       icon: Trophy },
-  { href: '/leaderboard',  label: 'Ranking',      icon: Trophy },
-  { href: '/profile',      label: 'Perfil',       icon: User },
+  { href: '/achievements',  label: 'Logros',         icon: Trophy },
+  { href: '/leaderboard',   label: 'Ranking',        icon: Trophy },
+  { href: '/notifications', label: 'Notificaciones', icon: Bell },
+  { href: '/profile',       label: 'Perfil',         icon: User },
   { href: '/admin',        label: 'Admin',        icon: Settings, adminOnly: true },
 ]
 

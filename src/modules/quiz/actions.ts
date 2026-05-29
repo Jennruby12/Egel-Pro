@@ -58,6 +58,10 @@ export async function startQuizSession(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: ERROR_MESSAGES.notAuth }
 
+  // CLEANUP: marcar como abandoned sesiones in_progress previas SIN respuestas.
+  // Evita acumular sesiones zombi cuando el user inicia nueva.
+  await markEmptyInProgressAsAbandoned(supabase, user.id)
+
   // Determinar areas y pesos. Si no se especifican, usar todas las del section.
   const areasToUse =
     data.areas.length > 0
@@ -114,6 +118,36 @@ export async function startQuizSession(
       selectedQuestions.push(safe as QuizQuestionForClient)
     }
   } else {
+    // Seleccion inteligente: priorizar preguntas que el user nunca ha contestado.
+    // Modo `full_simulacro` NO usa este filtro (debe respetar distribucion oficial completa).
+    const prioritizeUnseen = data.mode !== 'full_simulacro'
+
+    // Construir set de IDs ya vistos por el user (any session previa, status != cancelled)
+    const seenIds = new Set<string>()
+    if (prioritizeUnseen) {
+      const { data: userSessions } = await supabase
+        .from('quiz_sessions')
+        .select('id')
+        .eq('user_id', user.id)
+      const sessionIds = (userSessions ?? []).map((s) => s.id)
+      if (sessionIds.length > 0) {
+        // Paginar por si hay muchas respuestas (limite Supabase ~1000)
+        let from = 0
+        const PAGE = 1000
+        while (true) {
+          const { data: answered } = await supabase
+            .from('quiz_answers')
+            .select('question_id')
+            .in('session_id', sessionIds)
+            .range(from, from + PAGE - 1)
+          if (!answered || answered.length === 0) break
+          for (const a of answered) if (a.question_id) seenIds.add(a.question_id)
+          if (answered.length < PAGE) break
+          from += PAGE
+        }
+      }
+    }
+
     // Pesos para distribuir preguntas: cantidad oficial de reactivos por area
     const weights: Record<number, number> = {}
     for (const areaId of areasToUse) {
@@ -122,7 +156,7 @@ export async function startQuizSession(
     }
     const distribution = distributeQuestionsByArea(data.totalQuestions, weights)
 
-    // Para cada area, traer candidatos y seleccionar N al azar
+    // Para cada area, traer candidatos y seleccionar N priorizando NO VISTAS
     for (const [areaIdStr, count] of Object.entries(distribution)) {
       if (count === 0) continue
       const areaId = Number(areaIdStr)
@@ -145,7 +179,21 @@ export async function startQuizSession(
       }
       if (!candidates || candidates.length === 0) continue
 
-      const picked = shuffle(candidates).slice(0, count)
+      // Picking inteligente: primero las no vistas, luego completar con las ya vistas
+      let picked: typeof candidates = []
+      if (prioritizeUnseen && seenIds.size > 0) {
+        const unseen = candidates.filter((c) => !seenIds.has(c.id))
+        const seen = candidates.filter((c) => seenIds.has(c.id))
+        const shuffledUnseen = shuffle(unseen)
+        const shuffledSeen = shuffle(seen)
+        picked = shuffledUnseen.slice(0, count)
+        if (picked.length < count) {
+          picked = picked.concat(shuffledSeen.slice(0, count - picked.length))
+        }
+      } else {
+        picked = shuffle(candidates).slice(0, count)
+      }
+
       // Eliminar campos sensibles antes de enviar al cliente
       for (const q of picked) {
         const { correct_answer: _ca, explanation: _ex, ...safe } = q
@@ -482,6 +530,112 @@ export async function abandonSession(
 
   revalidatePath('/dashboard')
   return { success: true, data: { sessionId: parsed.data.sessionId } }
+}
+
+// =====================================================
+// GET ACTIVE QUIZ SESSION + CLEANUP HELPERS
+// =====================================================
+
+/**
+ * Devuelve la sesion in_progress mas reciente del usuario actual, junto con
+ * el conteo de respuestas. Para renderizar banner "Continuar quiz" en /quiz.
+ *
+ * - Excluye modo full_simulacro (usa su propio flujo en /simulacro).
+ * - Si no hay sesion activa, retorna { success: true, data: null }.
+ */
+export async function getActiveQuizSession(): Promise<
+  | {
+      success: true
+      data: {
+        sessionId: string
+        mode: string
+        totalQuestions: number
+        answeredCount: number
+        startedAt: string | null
+      } | null
+    }
+  | { success: false; error: string }
+> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: ERROR_MESSAGES.notAuth }
+
+  const { data: session } = await supabase
+    .from('quiz_sessions')
+    .select('id, mode, total_questions, started_at')
+    .eq('user_id', user.id)
+    .eq('status', 'in_progress')
+    .neq('mode', 'full_simulacro')
+    .order('started_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (!session) return { success: true, data: null }
+
+  const { count } = await supabase
+    .from('quiz_answers')
+    .select('*', { count: 'exact', head: true })
+    .eq('session_id', session.id)
+
+  return {
+    success: true,
+    data: {
+      sessionId: session.id,
+      mode: session.mode,
+      totalQuestions: session.total_questions,
+      answeredCount: count ?? 0,
+      startedAt: session.started_at,
+    },
+  }
+}
+
+/**
+ * Marca como abandoned todas las sesiones in_progress del usuario que:
+ * - No tienen respuestas asociadas
+ * - Fueron creadas hace mas de 30 minutos
+ *
+ * Helper interno usado al iniciar una nueva sesion y al cargar /quiz.
+ * Recibe el supabase client ya con auth para evitar overhead.
+ */
+async function markEmptyInProgressAsAbandoned(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+): Promise<void> {
+  const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString()
+  const { data: candidates } = await supabase
+    .from('quiz_sessions')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('status', 'in_progress')
+    .lt('started_at', thirtyMinAgo)
+
+  if (!candidates || candidates.length === 0) return
+
+  // Para cada candidata, verificar si tiene respuestas
+  for (const c of candidates) {
+    const { count } = await supabase
+      .from('quiz_answers')
+      .select('*', { count: 'exact', head: true })
+      .eq('session_id', c.id)
+    if ((count ?? 0) === 0) {
+      await supabase
+        .from('quiz_sessions')
+        .update({ status: 'abandoned', finished_at: new Date().toISOString() })
+        .eq('id', c.id)
+    }
+  }
+}
+
+/**
+ * Action que /quiz/page.tsx puede llamar para limpiar sesiones zombi del user.
+ * Solo expone la version segura via Server Action.
+ */
+export async function cleanupEmptyInProgressSessions(): Promise<{ success: boolean }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false }
+  await markEmptyInProgressAsAbandoned(supabase, user.id)
+  return { success: true }
 }
 
 // =====================================================

@@ -6,7 +6,10 @@ import { calculateXPWithBreakdown, type XPMode } from './lib/xp'
 import { detectLevelUp } from './lib/levels'
 import { updateStreak, computeCurrentStreak } from './lib/streaks'
 import { unlockAchievements } from './lib/achievements'
+import { createNotification } from '@/modules/notifications/lib/create-notification'
 import type { AchievementType } from '@/lib/constants/gamification'
+
+const STREAK_MILESTONES = new Set([7, 14, 30, 60, 100, 200, 365])
 
 /**
  * Racha estilo TikTok: cada vez que el usuario abre la app, si no ha
@@ -26,14 +29,22 @@ export type TouchStreakResult = {
   alreadyToday: boolean
 }
 
-export async function touchStreakIfNeeded(): Promise<
+export async function touchStreakIfNeeded(
+  input?: { localDate?: string },
+): Promise<
   { success: true; data: TouchStreakResult } | { success: false; error: string }
 > {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'No autenticado' }
 
-  const today = new Date().toISOString().slice(0, 10)
+  // Si el cliente envio fecha local valida, usarla. Sino, fallback a UTC.
+  const isValid =
+    typeof input?.localDate === 'string' &&
+    /^\d{4}-\d{2}-\d{2}$/.test(input.localDate) &&
+    Number(input.localDate.slice(0, 4)) >= 2020 &&
+    Number(input.localDate.slice(0, 4)) <= 2100
+  const today = isValid ? input!.localDate! : new Date().toISOString().slice(0, 10)
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -99,6 +110,28 @@ export async function touchStreakIfNeeded(): Promise<
 
   // Evaluar logros nuevos relacionados a racha
   await unlockAchievements(supabase, user.id)
+
+  // Notif: hito de racha (7, 14, 30, 60, 100 dias)
+  if (STREAK_MILESTONES.has(newStreak) && newStreak > previousStreak) {
+    await createNotification({
+      userId: user.id,
+      type: 'streak_milestone',
+      title: `Racha de ${newStreak} dias!`,
+      body: `Has mantenido tu racha por ${newStreak} dias consecutivos. Sigue asi!`,
+      actionLink: '/dashboard',
+    })
+  }
+
+  // Notif: racha se rompio (previa > 1, ahora 1)
+  if (previousStreak > 1 && newStreak === 1) {
+    await createNotification({
+      userId: user.id,
+      type: 'streak_warning',
+      title: `Tu racha se rompio`,
+      body: `Perdiste tu racha de ${previousStreak} dias. Empezaste una nueva hoy.`,
+      actionLink: '/dashboard',
+    })
+  }
 
   revalidatePath('/dashboard')
   revalidatePath('/profile')
@@ -221,9 +254,21 @@ export async function processQuizCompletion(
   // 6. Logros (despues del update de profile/streak para tener valores frescos)
   const newAchievements = await unlockAchievements(supabase, user.id)
 
+  // 7. Notif: subio de nivel
+  if (levelChange.leveledUp) {
+    await createNotification({
+      userId: user.id,
+      type: 'level_up',
+      title: `Subiste a Nivel ${levelChange.newLevel}!`,
+      body: `Has acumulado ${newXP.toLocaleString('es-MX')} XP. Sigue practicando para llegar al siguiente nivel.`,
+      actionLink: '/dashboard',
+    })
+  }
+
   revalidatePath('/dashboard')
   revalidatePath('/progress')
   revalidatePath('/achievements')
+  revalidatePath('/notifications')
 
   return {
     success: true,

@@ -3,6 +3,11 @@ import { Sparkles } from 'lucide-react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { StartQuizForm } from '@/modules/quiz/components/StartQuizForm'
+import { ResumeQuizBanner } from '@/modules/quiz/components/ResumeQuizBanner'
+import {
+  getActiveQuizSession,
+  cleanupEmptyInProgressSessions,
+} from '@/modules/quiz/actions'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = { title: 'Practicar' }
@@ -23,7 +28,14 @@ async function getAvailableCounts(): Promise<Record<number, number>> {
 }
 
 export default async function QuizPage() {
-  const availableCounts = await getAvailableCounts()
+  // Cleanup silencioso de sesiones zombi antes de cargar el form
+  await cleanupEmptyInProgressSessions()
+
+  const [availableCounts, activeRes] = await Promise.all([
+    getAvailableCounts(),
+    getActiveQuizSession(),
+  ])
+  const activeSession = activeRes.success ? activeRes.data : null
   const totalBank = Object.values(availableCounts).reduce((s, n) => s + n, 0)
   return (
     <div className="relative">
@@ -46,6 +58,16 @@ export default async function QuizPage() {
           Banco disciplinar disponible: <span className="font-semibold text-aurora-2">{totalBank.toLocaleString('es-MX')}</span> reactivos
         </p>
       </header>
+
+      {activeSession ? (
+        <ResumeQuizBanner
+          sessionId={activeSession.sessionId}
+          mode={activeSession.mode}
+          totalQuestions={activeSession.totalQuestions}
+          answeredCount={activeSession.answeredCount}
+          startedAt={activeSession.startedAt}
+        />
+      ) : null}
 
       <StartQuizForm availableCounts={availableCounts} />
     </div>

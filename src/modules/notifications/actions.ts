@@ -1,7 +1,8 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { Resend } from 'resend'
-import { createAdminClient } from '@/lib/supabase/server'
+import { createAdminClient, createClient } from '@/lib/supabase/server'
 import WelcomeEmail from '../../../emails/welcome'
 import StreakWarningEmail from '../../../emails/streak-warning'
 import WeeklyReportEmail from '../../../emails/weekly-report'
@@ -149,4 +150,66 @@ export async function sendExamReminder(input: {
     await logEmail(input.userId, 'exam_reminder', 'failed')
     return { success: false, error: e instanceof Error ? e.message : 'Error' }
   }
+}
+
+// =====================================================
+// IN-APP NOTIFICATIONS
+// =====================================================
+
+export async function markNotificationAsRead(
+  notificationId: string,
+): Promise<ActionResult> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+  const { error } = await supabase
+    .from('notifications')
+    .update({ read_at: new Date().toISOString() })
+    .eq('id', notificationId)
+    .eq('user_id', user.id)
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/notifications')
+  return { success: true }
+}
+
+export async function markAllNotificationsAsRead(): Promise<ActionResult> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+  const { error } = await supabase
+    .from('notifications')
+    .update({ read_at: new Date().toISOString() })
+    .eq('user_id', user.id)
+    .is('read_at', null)
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/notifications')
+  return { success: true }
+}
+
+export async function deleteNotification(
+  notificationId: string,
+): Promise<ActionResult> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+  const { error } = await supabase
+    .from('notifications')
+    .delete()
+    .eq('id', notificationId)
+    .eq('user_id', user.id)
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/notifications')
+  return { success: true }
+}
+
+export async function getUnreadNotificationCount(): Promise<number> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return 0
+  const { count } = await supabase
+    .from('notifications')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+    .is('read_at', null)
+  return count ?? 0
 }

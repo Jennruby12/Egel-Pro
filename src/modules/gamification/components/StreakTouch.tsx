@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Flame } from 'lucide-react'
 import { touchStreakIfNeeded } from '@/modules/gamification/actions'
+import { toLocalDate } from '@/lib/utils/local-date'
 
 const LAST_TOUCH_KEY = 'egelpro-streak-last-touch-v1'
 
@@ -27,13 +28,14 @@ export function StreakTouch() {
 
     if (typeof window === 'undefined') return
 
-    const today = new Date().toISOString().slice(0, 10)
+    // Fecha LOCAL del navegador (no UTC) — racha estilo TikTok
+    const today = toLocalDate()
     const lastTouch = window.localStorage.getItem(LAST_TOUCH_KEY)
     if (lastTouch === today) return // Ya tocamos hoy desde este device
 
     void (async () => {
       try {
-        const res = await touchStreakIfNeeded()
+        const res = await touchStreakIfNeeded({ localDate: today })
         if (!res.success) return
         const { previousStreak, currentStreak, didGrow, isNewMax, alreadyToday } = res.data
 
