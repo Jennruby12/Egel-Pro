@@ -6,12 +6,22 @@ import { Loader2 } from 'lucide-react'
 import { MagicButton } from '@/components/ui/magic-button'
 import { signInWithGoogle } from '@/modules/auth/actions'
 
+// Bandera para esconder el boton si Google OAuth no esta habilitado en Supabase.
+// Setear NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED=true en .env y Vercel cuando configures
+// el provider en Supabase Dashboard -> Auth -> Providers -> Google.
+const GOOGLE_OAUTH_ENABLED =
+  process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED === 'true'
+
 export function GoogleSignInButton({
   label = 'Continuar con Google',
 }: {
   label?: string
 }) {
   const [loading, setLoading] = useState(false)
+
+  // Si el provider NO esta habilitado, no renderiza nada. Evita que el user
+  // clickee y reciba "400: Unsupported provider".
+  if (!GOOGLE_OAUTH_ENABLED) return null
 
   async function handleClick() {
     setLoading(true)
