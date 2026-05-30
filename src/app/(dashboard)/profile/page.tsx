@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Palette, Trophy, ChevronRight, Zap, Flame, Bell } from 'lucide-react'
+import { Palette, Trophy, ChevronRight, Zap, Flame, Bell, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { GlassCard } from '@/components/ui/glass-card'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -10,6 +10,7 @@ import { AvatarUpload } from '@/modules/auth/components/AvatarUpload'
 import { ChangePasswordForm } from '@/modules/auth/components/ChangePasswordForm'
 import { DangerZone } from '@/modules/auth/components/DangerZone'
 import { NotificationPrefsForm } from '@/modules/auth/components/NotificationPrefsForm'
+import { ExportQuestionsButton } from '@/modules/auth/components/ExportQuestionsButton'
 
 export const metadata = { title: 'Perfil' }
 
@@ -92,6 +93,17 @@ export default async function ProfilePage() {
           </div>
           <ThemeToggle size="lg" />
         </div>
+      </GlassCard>
+
+      <GlassCard variant="elevated" padding="lg">
+        <h2 className="mb-1 flex items-center gap-2 text-lg font-semibold">
+          <Download className="h-4 w-4 text-aurora-2" />
+          Exportar banco de preguntas
+        </h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          Descarga todas las preguntas activas en formato Excel para estudiar offline.
+        </p>
+        <ExportQuestionsButton />
       </GlassCard>
 
       <GlassCard variant="elevated" padding="lg">
