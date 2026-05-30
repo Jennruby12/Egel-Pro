@@ -60,3 +60,4 @@ public/fallback-*.js
 .claude/settings.local.json
 .claude/skills/local/
 .claude/projects/
+.claude/scheduled_tasks.lock
