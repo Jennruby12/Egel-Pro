@@ -23,7 +23,7 @@ export function MobileNav() {
       aria-label="Navegacion principal mobile"
     >
       <div className="glass-strong relative rounded-2xl shadow-elev-4">
-        <ul className="grid grid-cols-6 px-2 py-2">
+        <ul className="grid grid-cols-6 gap-0.5 px-1 py-1.5">
           {ITEMS.map((item) => {
             const active =
               pathname === item.href || pathname.startsWith(`${item.href}/`)
@@ -33,24 +33,24 @@ export function MobileNav() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'relative flex flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-medium transition-colors',
+                    'relative flex flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[9px] font-medium leading-tight transition-colors',
                     active ? 'text-brand-400' : 'text-muted-foreground',
                   )}
                 >
                   {active ? (
                     <motion.span
                       layoutId="mobile-active-pill"
-                      className="absolute inset-0 rounded-xl bg-bg-raised/80 shadow-glow-brand"
+                      className="absolute inset-0 rounded-lg bg-bg-raised/80 shadow-glow-brand"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   ) : null}
                   <Icon
                     className={cn(
-                      'relative z-10 h-5 w-5 transition-transform',
+                      'relative z-10 h-4 w-4 transition-transform',
                       active && 'scale-110',
                     )}
                   />
-                  <span className="relative z-10">{item.label}</span>
+                  <span className="relative z-10 truncate max-w-full">{item.label}</span>
                 </Link>
               </li>
             )
@@ -60,10 +60,10 @@ export function MobileNav() {
               <button
                 type="submit"
                 aria-label="Cerrar sesion"
-                className="relative flex w-full flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-medium text-muted-foreground transition-colors hover:text-danger"
+                className="relative flex w-full flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[9px] font-medium leading-tight text-muted-foreground transition-colors hover:text-danger"
               >
-                <LogOut className="relative z-10 h-5 w-5" />
-                <span className="relative z-10">Salir</span>
+                <LogOut className="relative z-10 h-4 w-4" />
+                <span className="relative z-10 truncate max-w-full">Salir</span>
               </button>
             </form>
           </li>

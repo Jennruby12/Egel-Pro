@@ -91,18 +91,29 @@ export function HeroSection({
             )}
           </div>
 
-          <div className="flex flex-col items-end gap-3">
-            <div className="flex items-center gap-4">
+          <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:items-end sm:gap-3">
+            <div className="flex items-center gap-3 sm:gap-4">
               <StreakWidget current={streakCurrent} max={streakMax} size="lg" />
               <LevelBadge level={level} size="lg" />
             </div>
-            <StreakCountdown
-              lastActivityDate={lastActivityDate}
-              currentStreak={streakCurrent}
-              variant="inline"
-            />
+            <div className="hidden sm:block">
+              <StreakCountdown
+                lastActivityDate={lastActivityDate}
+                currentStreak={streakCurrent}
+                variant="inline"
+              />
+            </div>
           </div>
         </motion.div>
+
+        {/* Countdown completo en mobile (full row debajo del greeting) */}
+        <div className="mt-4 sm:hidden">
+          <StreakCountdown
+            lastActivityDate={lastActivityDate}
+            currentStreak={streakCurrent}
+            variant="card"
+          />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}

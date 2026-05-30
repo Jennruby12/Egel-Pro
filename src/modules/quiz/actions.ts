@@ -208,7 +208,10 @@ export async function startQuizSession(
     return { success: false, error: ERROR_MESSAGES.noQuestions }
   }
 
-  // Crear la sesion
+  // Crear la sesion. Guardamos los question_ids en el orden seleccionado para
+  // que al reabrir la sesion se devuelvan LAS MISMAS preguntas en EL MISMO orden
+  // (sin esto, un shuffle nuevo en cada reload "reiniciaba" el quiz visualmente).
+  const questionIdsOrdered = selectedQuestions.map((q) => q.id)
   const { data: session, error: sessionError } = await supabase
     .from('quiz_sessions')
     .insert({
@@ -219,6 +222,7 @@ export async function startQuizSession(
       total_questions: selectedQuestions.length,
       time_limit_seconds: data.timeLimitSeconds,
       status: 'in_progress',
+      question_ids: questionIdsOrdered,
     })
     .select()
     .single()

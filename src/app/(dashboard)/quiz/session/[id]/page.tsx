@@ -33,46 +33,72 @@ export default async function QuizSessionPage({ params }: { params: Promise<Para
     redirect(`/quiz/results/${id}`)
   }
 
-  // Cargar las preguntas seleccionadas (sin correct_answer/explanation)
-  // Estrategia: usar las preguntas asociadas a quiz_answers ya existentes,
-  // y si no hay, traer las primeras N que matchean los filtros de la sesion.
-  const { data: existingAnswers } = await supabase
-    .from('quiz_answers')
-    .select('question_id, order_in_quiz')
-    .eq('session_id', id)
-    .order('order_in_quiz', { ascending: true })
-
+  // Cargar las preguntas seleccionadas. Estrategia de prioridad:
+  //   1. Si la sesion ya tiene question_ids guardados (sesiones nuevas), usarlos
+  //      en el orden exacto. Esto evita que un reload genere preguntas distintas
+  //      (bug que "reiniciaba" el quiz visualmente).
+  //   2. Si no, usar las preguntas asociadas a quiz_answers ya existentes
+  //      (sesiones viejas que tienen respuestas pero sin question_ids).
+  //   3. Fallback: traer preguntas que matchean los filtros, shuffled.
   let questions: QuizQuestionForClient[] = []
 
-  if (existingAnswers && existingAnswers.length >= session.total_questions) {
-    // Usuario ya tiene las preguntas asignadas (sesion en progreso reanudada)
-    const ids = existingAnswers.map((a) => a.question_id)
+  const QUESTION_COLS =
+    'id, section, area, area_name, subarea, subarea_name, type, stimulus_id, question_text, option_a, option_b, option_c, image_url, difficulty, tags, times_seen, times_correct, is_active, is_pilot, is_deleted, created_by, created_at, updated_at'
+
+  const savedIds = (session.question_ids ?? null) as string[] | null
+
+  if (savedIds && savedIds.length > 0) {
+    // Camino feliz: IDs ya guardados al crear la sesion. Determinista al reload.
     const { data: qs } = await supabase
       .from('questions')
-      .select('id, section, area, area_name, subarea, subarea_name, type, stimulus_id, question_text, option_a, option_b, option_c, image_url, difficulty, tags, times_seen, times_correct, is_active, is_pilot, is_deleted, created_by, created_at, updated_at')
-      .in('id', ids)
-    // Ordenar segun el order_in_quiz original
+      .select(QUESTION_COLS)
+      .in('id', savedIds)
     const byId = new Map((qs ?? []).map((q) => [q.id, q]))
-    questions = ids
+    questions = savedIds
       .map((qid) => byId.get(qid))
       .filter((q): q is NonNullable<typeof q> => Boolean(q)) as QuizQuestionForClient[]
   } else {
-    // Primera carga de esta sesion: tomar preguntas segun los filtros guardados
-    const areas = (session.areas ?? []) as number[]
-    let query = supabase
-      .from('questions')
-      .select('id, section, area, area_name, subarea, subarea_name, type, stimulus_id, question_text, option_a, option_b, option_c, image_url, difficulty, tags, times_seen, times_correct, is_active, is_pilot, is_deleted, created_by, created_at, updated_at')
-      .eq('is_active', true)
-      .eq('is_deleted', false)
-    if (areas.length > 0) query = query.in('area', areas)
-    const { data: qs } = await query.limit(session.total_questions * 2)
-    // Shuffle + take N
-    const arr = [...(qs ?? [])]
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[arr[i], arr[j]] = [arr[j]!, arr[i]!]
+    const { data: existingAnswers } = await supabase
+      .from('quiz_answers')
+      .select('question_id, order_in_quiz')
+      .eq('session_id', id)
+      .order('order_in_quiz', { ascending: true })
+
+    if (existingAnswers && existingAnswers.length >= session.total_questions) {
+      const ids = existingAnswers.map((a) => a.question_id)
+      const { data: qs } = await supabase
+        .from('questions')
+        .select(QUESTION_COLS)
+        .in('id', ids)
+      const byId = new Map((qs ?? []).map((q) => [q.id, q]))
+      questions = ids
+        .map((qid) => byId.get(qid))
+        .filter((q): q is NonNullable<typeof q> => Boolean(q)) as QuizQuestionForClient[]
+    } else {
+      // Primera carga: filtros + shuffle. Guardamos los IDs en la sesion para
+      // que el proximo reload sea determinista.
+      const areas = (session.areas ?? []) as number[]
+      let query = supabase
+        .from('questions')
+        .select(QUESTION_COLS)
+        .eq('is_active', true)
+        .eq('is_deleted', false)
+      if (areas.length > 0) query = query.in('area', areas)
+      const { data: qs } = await query.limit(session.total_questions * 2)
+      const arr = [...(qs ?? [])]
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[arr[i], arr[j]] = [arr[j]!, arr[i]!]
+      }
+      questions = arr.slice(0, session.total_questions) as QuizQuestionForClient[]
+      // Persistir IDs para que la sesion sea determinista en futuros reloads
+      if (questions.length > 0) {
+        await supabase
+          .from('quiz_sessions')
+          .update({ question_ids: questions.map((q) => q.id) })
+          .eq('id', id)
+      }
     }
-    questions = arr.slice(0, session.total_questions) as QuizQuestionForClient[]
   }
 
   if (questions.length === 0) {

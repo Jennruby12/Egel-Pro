@@ -47,7 +47,7 @@ export default async function DashboardLayout({
             level={profile?.level ?? 1}
             streakCurrent={profile?.streak_current ?? 0}
           />
-          <main className="safe-x flex-1 px-4 pb-24 pt-6 md:px-8 md:pb-8">
+          <main className="safe-x flex-1 px-3 pb-24 pt-4 sm:px-4 sm:pt-6 md:px-8 md:pb-8">
             <PageTransition>{children}</PageTransition>
           </main>
           <OfflineIndicator />

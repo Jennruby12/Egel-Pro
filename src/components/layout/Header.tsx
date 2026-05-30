@@ -29,7 +29,7 @@ export async function Header({ fullName, email, xpTotal, level, streakCurrent }:
 
   return (
     <header className="sticky top-0 z-40 border-b border-bg-border/40 bg-background/60 backdrop-blur-xl">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="flex h-16 items-center justify-between px-3 md:px-6">
         {/* Logo solo mobile */}
         <Link href="/dashboard" className="font-bold md:hidden">
           <span className="text-aurora">EGEL</span>
@@ -37,11 +37,11 @@ export async function Header({ fullName, email, xpTotal, level, streakCurrent }:
         </Link>
 
         <TooltipProvider delayDuration={200}>
-          <div className="ml-auto flex items-center gap-2 md:gap-3">
+          <div className="ml-auto flex items-center gap-1 md:gap-3">
             {/* Racha */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="glass flex items-center gap-1.5 rounded-full px-2 py-1 text-sm">
+                <div className="glass flex items-center gap-1 rounded-full px-1.5 py-0.5 text-xs md:gap-1.5 md:px-2 md:py-1 md:text-sm">
                   <StreakFireAnimation
                     intensity={streakToIntensity(streakCurrent)}
                     size="sm"
@@ -57,11 +57,11 @@ export async function Header({ fullName, email, xpTotal, level, streakCurrent }:
             {/* XP + Nivel */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="glass flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm">
-                  <Zap className="h-4 w-4 text-xp" fill="currentColor" />
+                <div className="glass flex items-center gap-1 rounded-full px-1.5 py-0.5 text-xs md:gap-1.5 md:px-3 md:py-1.5 md:text-sm">
+                  <Zap className="h-3.5 w-3.5 text-xp md:h-4 md:w-4" fill="currentColor" />
                   <AnimatedCounter value={xpTotal} className="font-semibold text-foreground" />
-                  <span className="text-xs text-muted-foreground">·</span>
-                  <span className="text-xs text-muted-foreground">Nv {level}</span>
+                  <span className="hidden text-xs text-muted-foreground md:inline">·</span>
+                  <span className="hidden text-xs text-muted-foreground md:inline">Nv {level}</span>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -77,7 +77,7 @@ export async function Header({ fullName, email, xpTotal, level, streakCurrent }:
               <TooltipTrigger asChild>
                 <Link
                   href="/profile"
-                  className="relative flex h-10 w-10 items-center justify-center rounded-full bg-bg-raised text-sm font-bold text-foreground transition-transform hover:scale-105"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full bg-bg-raised text-xs font-bold text-foreground transition-transform hover:scale-105 md:h-10 md:w-10 md:text-sm"
                   style={{
                     backgroundImage: 'linear-gradient(135deg, hsl(var(--aurora-1) / 0.2), hsl(var(--aurora-2) / 0.2), hsl(var(--aurora-3) / 0.2))',
                   }}

@@ -531,6 +531,7 @@ export type Database = {
           id: string
           last_question_index: number | null
           mode: string
+          question_ids: string[] | null
           score_percent: number | null
           session_number: number | null
           simulacro_group_id: string | null
@@ -553,6 +554,7 @@ export type Database = {
           id?: string
           last_question_index?: number | null
           mode: string
+          question_ids?: string[] | null
           score_percent?: number | null
           session_number?: number | null
           simulacro_group_id?: string | null
@@ -575,6 +577,7 @@ export type Database = {
           id?: string
           last_question_index?: number | null
           mode?: string
+          question_ids?: string[] | null
           score_percent?: number | null
           session_number?: number | null
           simulacro_group_id?: string | null
