@@ -28,6 +28,16 @@ type CreateNotificationInput = {
 export async function createNotification(input: CreateNotificationInput): Promise<void> {
   const supabase = createAdminClient()
 
+  // Respetar preferencias del usuario. Default = todas activas si no hay prefs.
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('notification_prefs')
+    .eq('id', input.userId)
+    .single()
+  const prefs = (profile?.notification_prefs ?? {}) as Record<string, boolean | undefined>
+  // Si la pref existe y es false, NO crear. Si no existe, default true.
+  if (prefs[input.type] === false) return
+
   // De-dup: evitar spam si misma notif se dispara dos veces seguidas
   const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString()
   const { data: existing } = await supabase

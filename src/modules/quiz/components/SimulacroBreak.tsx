@@ -91,7 +91,7 @@ export function SimulacroBreak({ simulacroGroupId, session1 }: SimulacroBreakPro
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
               Tu precision
             </p>
-            <p className="font-mono text-display-lg font-bold tabular-nums text-aurora">
+            <p className="font-mono text-3xl font-bold tabular-nums text-aurora sm:text-4xl md:text-display-lg">
               <AnimatedCounter value={score} decimals={1} suffix="%" />
             </p>
             <p className="text-sm text-muted-foreground">

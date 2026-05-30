@@ -253,6 +253,7 @@ export type Database = {
           id: string
           last_activity_date: string | null
           level: number | null
+          notification_prefs: Json | null
           onboarding_completed: boolean | null
           org_role: string | null
           organization_id: string | null
@@ -277,6 +278,7 @@ export type Database = {
           id: string
           last_activity_date?: string | null
           level?: number | null
+          notification_prefs?: Json | null
           onboarding_completed?: boolean | null
           org_role?: string | null
           organization_id?: string | null
@@ -301,6 +303,7 @@ export type Database = {
           id?: string
           last_activity_date?: string | null
           level?: number | null
+          notification_prefs?: Json | null
           onboarding_completed?: boolean | null
           org_role?: string | null
           organization_id?: string | null

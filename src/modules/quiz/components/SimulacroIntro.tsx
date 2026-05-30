@@ -40,7 +40,7 @@ export function SimulacroIntro() {
       {/* Hero epico con SparklesText + AnimatedCounter del 203 */}
       <div className="relative space-y-6 text-center">
         <SparklesText count={14}>
-          <h1 className="text-display-md font-bold tracking-tight text-aurora md:text-display-lg">
+          <h1 className="text-2xl font-bold tracking-tight text-aurora sm:text-3xl md:text-display-md lg:text-display-lg">
             Simulacro EGEL
           </h1>
         </SparklesText>
@@ -56,7 +56,7 @@ export function SimulacroIntro() {
               aria-hidden
               className="absolute inset-0 -z-10 bg-aurora-mesh blur-2xl opacity-60"
             />
-            <span className="font-mono text-[6rem] font-bold leading-none tabular-nums text-aurora md:text-[8rem]">
+            <span className="font-mono text-5xl font-bold leading-none tabular-nums text-aurora sm:text-7xl md:text-[6rem] lg:text-[8rem]">
               <AnimatedCounter value={EXAM_CONFIG.totalQuestions} duration={2} />
             </span>
             <span className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">

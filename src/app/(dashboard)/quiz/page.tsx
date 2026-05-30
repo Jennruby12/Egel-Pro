@@ -48,7 +48,7 @@ export default async function QuizPage() {
           <Sparkles className="h-3 w-3" />
           Modo entrenamiento
         </div>
-        <h1 className="text-display-md md:text-display-lg">
+        <h1 className="text-2xl sm:text-3xl md:text-display-md lg:text-display-lg">
           <SparklesText className="text-aurora">Practicar</SparklesText>
         </h1>
         <p className="max-w-2xl text-base text-muted-foreground">

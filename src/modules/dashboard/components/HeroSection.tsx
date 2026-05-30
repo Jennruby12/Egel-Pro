@@ -61,7 +61,7 @@ export function HeroSection({
                 {getGreeting()}
               </p>
             </div>
-            <h1 className="text-display-md md:text-display-lg">
+            <h1 className="text-2xl sm:text-3xl md:text-display-md lg:text-display-lg">
               Hola,{' '}
               <SparklesText className="text-aurora">{firstName}</SparklesText>
             </h1>

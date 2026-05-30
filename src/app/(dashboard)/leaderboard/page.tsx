@@ -55,7 +55,7 @@ export default async function LeaderboardPage({ searchParams }: Props) {
           <Trophy className="h-3 w-3" />
           Ranking global
         </div>
-        <h1 className="text-display-md md:text-display-lg">
+        <h1 className="text-2xl sm:text-3xl md:text-display-md lg:text-display-lg">
           <SparklesText className="text-aurora">Top 10</SparklesText>
         </h1>
         <p className="max-w-2xl text-base text-muted-foreground">

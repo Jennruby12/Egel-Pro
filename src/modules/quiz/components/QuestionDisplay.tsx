@@ -52,9 +52,22 @@ export function QuestionDisplay({ question }: QuestionDisplayProps) {
           {DIFFICULTY_LABEL[difficulty] ?? difficulty}
         </Badge>
       </div>
-      <h2 className="text-xl font-medium leading-relaxed md:text-2xl">
+      <h2 className="text-base font-medium leading-relaxed sm:text-lg md:text-xl lg:text-2xl">
         {question.question_text}
       </h2>
+      {question.image_url ? (
+        <div className="overflow-hidden rounded-lg border border-bg-border/40 bg-bg-raised/40">
+          {/* Imagen del enunciado (UML, diagrama, tabla). Usamos img normal para
+              evitar dependencia de remotePatterns por dominio externo arbitrario. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={question.image_url}
+            alt=""
+            className="max-h-[400px] w-full object-contain"
+            loading="lazy"
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

@@ -47,7 +47,26 @@ export async function signUp(input: SignUpInput): Promise<ActionResult> {
     },
   })
 
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    // Detectar email ya registrado para mostrar UX especifica en cliente
+    const msg = error.message.toLowerCase()
+    const isDuplicate =
+      msg.includes('already registered') ||
+      msg.includes('already exists') ||
+      msg.includes('already been registered') ||
+      msg.includes('user already') ||
+      error.code === 'user_already_exists'
+    if (isDuplicate) {
+      return { success: false, error: 'DUPLICATE_EMAIL' }
+    }
+    return { success: false, error: error.message }
+  }
+
+  // Edge case: Supabase puede devolver data.user con identities=[] cuando
+  // el email ya existe (sin error). Detectarlo y tratarlo como duplicado.
+  if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+    return { success: false, error: 'DUPLICATE_EMAIL' }
+  }
 
   // Si el usuario fue creado pero requiere confirmacion de email,
   // data.user existe pero session no.

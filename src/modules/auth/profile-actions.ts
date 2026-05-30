@@ -134,3 +134,41 @@ export async function deleteAccount(input: DeleteAccountInput): Promise<ActionRe
   revalidatePath('/', 'layout')
   redirect('/login?deleted=1')
 }
+
+// =====================================================
+// UPDATE NOTIFICATION PREFERENCES
+// =====================================================
+export type NotificationPrefsInput = {
+  achievement_unlocked?: boolean
+  streak_warning?: boolean
+  streak_milestone?: boolean
+  level_up?: boolean
+  weekly_report?: boolean
+  exam_reminder?: boolean
+}
+
+export async function updateNotificationPrefs(
+  input: NotificationPrefsInput,
+): Promise<ActionResult> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('notification_prefs')
+    .eq('id', user.id)
+    .single()
+
+  const current = (profile?.notification_prefs ?? {}) as Record<string, boolean>
+  const merged = { ...current, ...input }
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ notification_prefs: merged })
+    .eq('id', user.id)
+
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/profile')
+  return { success: true }
+}

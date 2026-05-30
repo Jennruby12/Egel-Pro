@@ -77,7 +77,7 @@ export default async function NotificationsPage({ searchParams }: Props) {
           <Bell className="h-3 w-3" />
           Centro de notificaciones
         </div>
-        <h1 className="text-display-md md:text-display-lg">
+        <h1 className="text-2xl sm:text-3xl md:text-display-md lg:text-display-lg">
           <SparklesText className="text-aurora">Notificaciones</SparklesText>
         </h1>
         <p className="max-w-2xl text-base text-muted-foreground">

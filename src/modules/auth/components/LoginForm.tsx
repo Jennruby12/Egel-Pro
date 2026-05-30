@@ -26,12 +26,13 @@ export function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') ?? '/dashboard'
+  const prefilledEmail = searchParams.get('email') ?? ''
   const [pending, startTransition] = useTransition()
   const [magicLoading, setMagicLoading] = useState(false)
 
   const form = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { email: prefilledEmail, password: '' },
   })
 
   function onSubmit(values: SignInInput) {
