@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Bell, Trophy, Flame, TrendingUp, Mail, AlertTriangle, Check } from 'lucide-react'
+import { Bell } from 'lucide-react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { GlassCard } from '@/components/ui/glass-card'
 import { SparklesText } from '@/components/ui/sparkles-text'
@@ -12,7 +12,7 @@ import { NotificationItem } from '@/modules/notifications/components/Notificatio
 
 export const metadata: Metadata = { title: 'Notificaciones' }
 
-export type NotificationType =
+type NotificationType =
   | 'achievement_unlocked'
   | 'streak_warning'
   | 'streak_milestone'
@@ -21,7 +21,7 @@ export type NotificationType =
   | 'exam_reminder'
   | 'system'
 
-export type NotificationRow = {
+type NotificationRow = {
   id: string
   type: NotificationType
   title: string
@@ -127,21 +127,3 @@ export default async function NotificationsPage({ searchParams }: Props) {
   )
 }
 
-export function iconForType(type: NotificationType) {
-  switch (type) {
-    case 'achievement_unlocked':
-      return Trophy
-    case 'streak_warning':
-      return AlertTriangle
-    case 'streak_milestone':
-      return Flame
-    case 'level_up':
-      return TrendingUp
-    case 'weekly_report':
-      return Mail
-    case 'exam_reminder':
-      return Bell
-    default:
-      return Check
-  }
-}
