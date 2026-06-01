@@ -74,7 +74,7 @@ export default async function StudyV2Hub() {
       <header className="mb-6 space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-glass-border/40 bg-glass-bg/40 px-3 py-1 text-xs font-medium text-aurora-2 backdrop-blur-md">
           <BookOpen className="h-3 w-3" />
-          Estudiar v2 — guias estructuradas
+          Estudiar — guias estructuradas
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-display-md lg:text-display-lg">
           <SparklesText className="text-aurora">Material de estudio</SparklesText>

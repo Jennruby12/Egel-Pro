@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1e"/>
+      <stop offset="50%" stop-color="#1a1340"/>
+      <stop offset="100%" stop-color="#0a0f1e"/>
+    </linearGradient>
+    <radialGradient id="aurora1" cx="20%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aurora2" cx="80%" cy="70%" r="50%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aurora3" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <rect width="1200" height="600" fill="url(#aurora1)"/>
+  <rect width="1200" height="600" fill="url(#aurora2)"/>
+  <rect width="1200" height="600" fill="url(#aurora3)"/>
+  <rect x="40" y="40" width="1120" height="520" rx="24" fill="none" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="2"/>
+  <text x="600" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#38bdf8" letter-spacing="4">GESTION</text>
+  <text x="600" y="290" text-anchor="middle" font-family="system-ui, sans-serif" font-size="42" font-weight="700" fill="#ffffff">RUP: 4 fases</text>
+  <text x="600" y="360" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#a78bfa" opacity="0.8">Diagrama de referencia</text>
+  <text x="600" y="500" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#9ca3af" opacity="0.6">EGEL Pro - Material de estudio</text>
+</svg>
