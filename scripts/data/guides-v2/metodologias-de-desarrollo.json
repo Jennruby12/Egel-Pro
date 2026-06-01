@@ -1,0 +1,129 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 4,
+    "area_name": "Gestion de Proyectos de Software",
+    "subarea_num": 3,
+    "subarea_name": "Metodologias de desarrollo",
+    "slug": "metodologias-de-desarrollo",
+    "title": "Metodologias: Scrum, Kanban, XP, RUP",
+    "short_description": "Comparativa de metodologias agiles (Scrum, Kanban, XP, Lean) y tradicionales (Waterfall, RUP, V-Model, Spiral). Incluye roles, eventos, artefactos, metricas DORA y criterios para elegir cada una.",
+    "weight_in_exam": 12,
+    "estimated_minutes": 55,
+    "difficulty": "intermedio",
+    "order_in_area": 3,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Scrum", "definition_md": "Marco agil iterativo. 3 roles (Product Owner, Scrum Master, Developers), 5 eventos (Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective) y 3 artefactos (Product Backlog, Sprint Backlog, Incremento). Sprint dura maximo 1 mes.", "importance": "alta" },
+    { "concept": "Kanban", "definition_md": "Metodo de flujo continuo basado en 5 practicas: visualizar el trabajo, limitar el WIP, gestionar el flujo, hacer politicas explicitas y mejorar colaborativamente. No tiene roles ni eventos prescritos.", "importance": "alta" },
+    { "concept": "Extreme Programming (XP)", "definition_md": "Metodologia agil tecnica con 12 practicas: TDD, pair programming, integracion continua, refactoring, diseno simple, propiedad colectiva del codigo, releases cortos, planning game, metafora, ritmo sostenible, cliente en sitio y estandares de codigo.", "importance": "alta" },
+    { "concept": "Waterfall (Cascada)", "definition_md": "Modelo secuencial clasico de Royce: requerimientos, diseno, implementacion, pruebas, despliegue, mantenimiento. Cada fase debe completarse antes de iniciar la siguiente. Util cuando los requerimientos son estables y bien conocidos.", "importance": "alta" },
+    { "concept": "RUP (Rational Unified Process)", "definition_md": "Proceso iterativo basado en UML. Cuatro fases: Inicio, Elaboracion, Construccion, Transicion. Usa casos de uso como driver y produce artefactos formales en cada iteracion.", "importance": "alta" },
+    { "concept": "V-Model", "definition_md": "Variante de Waterfall que asocia cada fase de desarrollo con un nivel de pruebas correspondiente: requerimientos-aceptacion, diseno alto-sistema, diseno detallado-integracion, codificacion-unidad.", "importance": "media" },
+    { "concept": "Modelo en Espiral (Boehm)", "definition_md": "Combina iteracion con analisis de riesgos. Cada vuelta incluye determinacion de objetivos, evaluacion de alternativas y riesgos, desarrollo y planeacion de la siguiente vuelta. Util en proyectos grandes y riesgosos.", "importance": "media" },
+    { "concept": "Lean Software Development", "definition_md": "Adaptacion del Lean Manufacturing de Toyota. Elimina 7 desperdicios: trabajo parcialmente hecho, procesos extras, funciones extras, cambio de tareas, esperas, movimientos y defectos.", "importance": "media" },
+    { "concept": "Metricas DORA", "definition_md": "Cuatro indicadores clave de equipos elite (DevOps Research and Assessment): Deployment Frequency, Lead Time for Changes, Change Failure Rate, Mean Time to Restore Service (MTTR).", "importance": "alta" },
+    { "concept": "Definition of Done (DoD)", "definition_md": "Lista compartida de criterios que un incremento debe cumplir para considerarse terminado. Comun a todo el equipo Scrum.", "importance": "alta" },
+    { "concept": "Definition of Ready (DoR)", "definition_md": "Criterios que una historia de usuario debe cumplir antes de entrar al Sprint Backlog. Reduce ambiguedad y retrabajo.", "importance": "media" },
+    { "concept": "Velocity y Throughput", "definition_md": "Velocity (Scrum): suma de story points completados por sprint. Throughput (Kanban): numero de items completados por unidad de tiempo. Sirven para planeacion empirica.", "importance": "media" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta es la subarea mas pesada del Area 4 con **12 reactivos** y la mas frecuente en el EGEL. Mide tu capacidad para distinguir entre marcos agiles (**Scrum**, **Kanban**, **XP**, **Lean**) y procesos tradicionales (**Waterfall**, **RUP**, **V-Model**, **Spiral**), reconocer roles, eventos y artefactos de cada uno, y elegir el adecuado segun el contexto.\n\nLas trampas clasicas del examen son: (1) confundir **Scrum Master** con jefe de proyecto, (2) creer que **Kanban** es solo un tablero visual sin reglas, (3) asumir que **Waterfall** es siempre malo (sigue siendo correcto en proyectos regulados con alcance fijo), y (4) mezclar fases de **RUP** con eventos de **Scrum**.\n\nMemoriza los numeros clave: Scrum tiene **3-5-3** (roles-eventos-artefactos), XP tiene **12 practicas**, Kanban tiene **5 practicas** y RUP tiene **4 fases**. Estas cifras son preguntas de respuesta corta seguras."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Sprint Goal vago vs especifico",
+      "body_md": "El **Sprint Goal** es el objetivo unico, coherente y medible que da proposito al Sprint. Comparemos dos formulaciones para un equipo de un e-commerce mexicano.\n\n**Vago (anti-patron):** *'Avanzar en el carrito de compras y arreglar bugs pendientes.'*\n\nProblemas: no define que es 'avanzar', no es medible, no permite tomar decisiones de scope cuando aparezcan imprevistos y no se puede demostrar coherentemente en el Sprint Review.\n\n**Especifico (correcto):** *'Permitir que el usuario complete una compra de un solo producto con pago por tarjeta y reciba comprobante por correo, con tiempo de respuesta < 3 segundos.'*\n\nVentajas:\n- El **Product Owner** puede priorizar el backlog en funcion de este objetivo.\n- El **equipo de desarrollo** puede negociar scope con el PO sin perder el objetivo: si un bug en filtros de busqueda no contribuye al goal, se posterga.\n- El **Sprint Review** demuestra el flujo completo end-to-end y permite feedback real del cliente.\n- La **retrospectiva** evalua si el goal se cumplio o no, y por que.\n\nEl Sprint Review **no es una demo de features sueltas**: es una conversacion sobre el incremento entregado y su impacto en el objetivo. Un Sprint Goal vago convierte el Review en un teatro sin valor."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Equipo decide migrar de Scrum a Kanban",
+      "body_md": "Un equipo de plataforma SRE en una startup fintech opera con Scrum desde hace 18 meses. Sus retrospectivas identifican varios sintomas:\n\n- 60% del trabajo entra como **bugs urgentes** o **incidentes en produccion** que rompen sprints.\n- Las **Daily Scrum** se sienten ceremoniales porque el trabajo cambia cada hora.\n- El **Sprint Planning** se convierte en un ejercicio teorico: la mitad de las historias planificadas se desplazan.\n- La **velocity** ya no es predictiva porque el contexto del equipo es reactivo, no proyectizado.\n\n**Decision:** migrar a **Kanban** porque su naturaleza es de flujo continuo y se adapta mejor a equipos de soporte y operacion.\n\n**Cambios concretos:**\n1. Eliminar Sprints, Sprint Planning y Sprint Review. Mantener una **retrospectiva quincenal**.\n2. Visualizar el flujo: columnas *Backlog → To Do → In Progress → Code Review → Testing → Done*.\n3. **Limitar el WIP** por columna (ej. 3 en In Progress, 2 en Code Review). Esto fuerza al equipo a terminar antes de empezar mas.\n4. Medir **Lead Time** (desde que un ticket entra hasta que se entrega) y **Cycle Time** (desde que empieza a trabajarse hasta que termina) en vez de velocity.\n5. Reuniones de **replenishment** cuando el backlog se vacia, no en un dia fijo.\n\n**Resultado esperado:** mejor predictibilidad por percentiles (ej. el 85% de los tickets se cierra en menos de 5 dias), reduccion del WIP y foco en finalizar antes de iniciar. Es un cambio cultural mas que tecnico — Kanban exige disciplina para respetar los limites de WIP."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Scrum vs Kanban",
+      "metadata": {
+        "headers": ["Aspecto", "Scrum", "Kanban"],
+        "rows": [
+          ["Cadencia", "Sprints fijos (1-4 semanas)", "Flujo continuo sin timebox"],
+          ["Roles", "PO, SM, Developers (3 roles)", "Sin roles prescritos"],
+          ["Eventos", "5 eventos formales (Planning, Daily, Review, Retro, Sprint)", "Sin eventos prescritos, opcionales (replenishment, retrospectiva)"],
+          ["Artefactos", "Product Backlog, Sprint Backlog, Incremento", "Tablero Kanban con limites de WIP"],
+          ["Metrica clave", "Velocity (story points por sprint)", "Lead Time, Cycle Time, Throughput"],
+          ["Cambios durante el ciclo", "No durante el sprint (proteccion del Sprint Goal)", "Pueden entrar en cualquier momento respetando WIP"],
+          ["Mejor cuando", "Producto evolutivo con backlog estable, equipo dedicado", "Trabajo reactivo, soporte, operacion, flujo variable"],
+          ["Riesgo principal", "Volverse mecanico, perder el espiritu agil", "Falta de mejora si nadie modera los WIP limits"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para gestion agil",
+      "metadata": {
+        "tools": [
+          { "name": "Jira", "url": "https://www.atlassian.com/software/jira", "description": "Estandar de la industria para Scrum y Kanban. Soporta sprints, backlogs, reportes de velocity, burndown y CFD." },
+          { "name": "Azure DevOps Boards", "url": "https://azure.microsoft.com/products/devops/boards/", "description": "Tableros agiles integrados a repos, pipelines CI/CD y test plans. Comun en empresas con stack Microsoft." },
+          { "name": "Trello", "url": "https://trello.com/", "description": "Tableros Kanban ligeros tipo postIt. Ideal para equipos pequenos o proyectos no tecnicos." },
+          { "name": "Linear", "url": "https://linear.app/", "description": "Plataforma moderna y rapida para issue tracking. Adoptada por startups que valoran velocidad y UX." },
+          { "name": "GitHub Projects", "url": "https://github.com/features/issues", "description": "Tableros nativos integrados con issues y PRs de GitHub. Util para equipos de codigo abierto." },
+          { "name": "Mural", "url": "https://www.mural.co/", "description": "Pizarra colaborativa para retrospectivas, mapeo de procesos y workshops remotos con plantillas listas." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Sprint", "def": "Iteracion fija de Scrum, maximo 1 mes, donde se produce un incremento potencialmente liberable." },
+          { "term": "Backlog", "def": "Lista ordenada de trabajo pendiente. Product Backlog es del producto; Sprint Backlog es del sprint." },
+          { "term": "DoD", "def": "Definition of Done. Criterios obligatorios para considerar un incremento terminado." },
+          { "term": "DoR", "def": "Definition of Ready. Criterios que una historia debe cumplir para entrar a un sprint." },
+          { "term": "Velocity", "def": "Story points completados por sprint. Promedio de los ultimos 3-5 sprints para planear." },
+          { "term": "WIP", "def": "Work In Progress. Trabajo en curso. En Kanban se limita por columna para evitar saturacion." },
+          { "term": "Lead Time", "def": "Tiempo desde que un item entra al sistema hasta que se entrega al cliente." },
+          { "term": "Cycle Time", "def": "Tiempo desde que se empieza a trabajar un item hasta que se completa." },
+          { "term": "Daily", "def": "Reunion de Scrum de maximo 15 minutos para sincronizar y detectar impedimentos." },
+          { "term": "Retrospective", "def": "Reunion al final del Sprint donde el equipo inspecciona su proceso y define mejoras." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Schwaber & Sutherland — The Scrum Guide 2020", "url": "https://scrumguides.org/scrum-guide.html" },
+          { "title": "David J. Anderson — Kanban: Successful Evolutionary Change for Your Technology Business", "url": "https://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" },
+          { "title": "Kent Beck — Extreme Programming Explained: Embrace Change (2a ed.)", "url": "https://www.oreilly.com/library/view/extreme-programming-explained/0321278658/" },
+          { "title": "PMBOK Guide — 7a edicion (PMI)", "url": "https://www.pmi.org/pmbok-guide-standards/foundational/pmbok" },
+          { "title": "Forsgren, Humble & Kim — Accelerate: The Science of Lean Software and DevOps (metricas DORA)", "url": "https://itrevolution.com/product/accelerate/" }
+        ]
+      }
+    }
+  ]
+}

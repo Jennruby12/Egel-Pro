@@ -1,0 +1,126 @@
+{
+  "guide": {
+    "section": "transversal",
+    "area_num": 2,
+    "area_name": "Redaccion Indirecta",
+    "subarea_num": 2,
+    "subarea_name": "Participacion social",
+    "slug": "ri-participacion-social",
+    "title": "Redaccion indirecta: Participacion social",
+    "short_description": "Redaccion de documentos formales para la esfera publica e institucional: carta formal, oficio, solicitud, comunicado, memorando, aviso, convocatoria, email formal. Estructura, formulas de tratamiento, cierres y abreviaturas convencionales.",
+    "weight_in_exam": 15,
+    "estimated_minutes": 35,
+    "difficulty": "intermedio",
+    "order_in_area": 2,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Carta formal", "definition_md": "Documento personal o institucional dirigido a un destinatario especifico con proposito definido. Estructura: lugar y fecha, destinatario, saludo, cuerpo, despedida, firma.", "importance": "alta" },
+    { "concept": "Oficio", "definition_md": "Comunicacion escrita oficial entre dependencias publicas o entre instituciones y particulares. Incluye numero de oficio, asunto, destinatario, cuerpo y firma con cargo.", "importance": "alta" },
+    { "concept": "Solicitud", "definition_md": "Documento mediante el cual una persona pide formalmente algo a una autoridad. Contiene exposicion de motivos y peticion concreta.", "importance": "alta" },
+    { "concept": "Comunicado", "definition_md": "Texto breve que difunde una postura, decision o aclaracion institucional. Dirigido al publico amplio mediante prensa o cartelera.", "importance": "alta" },
+    { "concept": "Memorando", "definition_md": "Comunicacion interna breve entre miembros de una misma institucion. Recuerda asuntos, transmite indicaciones o informa decisiones operativas.", "importance": "alta" },
+    { "concept": "Aviso", "definition_md": "Notificacion breve y publica de un hecho de interes para la comunidad: cambio de horario, mantenimiento, suspension de servicio.", "importance": "media" },
+    { "concept": "Convocatoria", "definition_md": "Documento que invita a participar en un acto, concurso o proceso. Detalla bases, requisitos, plazos, sede y forma de inscripcion.", "importance": "alta" },
+    { "concept": "Email formal", "definition_md": "Correo electronico con registro profesional. Incluye asunto preciso, saludo formal, cuerpo conciso, despedida y firma con datos de contacto.", "importance": "alta" },
+    { "concept": "Mensaje breve", "definition_md": "Comunicacion corta y directa en chat o nota institucional. Aunque breve, mantiene cortesia y precision para evitar ambiguedad.", "importance": "media" },
+    { "concept": "Formula de tratamiento", "definition_md": "Abreviaturas convencionales que anteceden al nombre segun titulo o cargo: Lic. (licenciado), Mtro. (maestro), Dr. (doctor), Ing. (ingeniero), Arq. (arquitecto).", "importance": "alta" },
+    { "concept": "Atte.", "definition_md": "Abreviatura de 'atentamente'. Formula clasica de cierre formal, especialmente en oficios y cartas administrativas.", "importance": "media" },
+    { "concept": "c.c.p.", "definition_md": "Abreviatura de 'con copia para'. Indica que el documento llegara tambien a destinatarios adicionales listados al final.", "importance": "media" },
+    { "concept": "Asunto", "definition_md": "Linea breve que sintetiza el motivo del documento. Aparece despues del numero de oficio o en el campo de email. Debe ser preciso y directo.", "importance": "alta" },
+    { "concept": "Exposicion de motivos", "definition_md": "Seccion de la solicitud o documento formal donde se argumentan las razones del pedido. Antecede a la peticion concreta.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea pesa **15 reactivos** en el EGEL y mide tu capacidad para producir documentos formales de la vida publica e institucional: cartas, oficios, solicitudes, comunicados, memorandos, avisos, convocatorias y correos electronicos profesionales.\n\nEl examen NO te pide escribir el documento entero: te muestra fragmentos y te pide elegir la mejor version del saludo, identificar el documento correspondiente a una situacion, detectar la formula de tratamiento adecuada o seleccionar la estructura correcta.\n\nLas confusiones tipicas incluyen:\n- Mezclar **oficio** con **memorando** (el oficio es externo o entre instituciones; el memorando es interno).\n- Usar **'Atte.'** sin coma final o sin firma adjunta.\n- Olvidar el orden: lugar y fecha → destinatario → asunto → cuerpo → cierre → firma → c.c.p.\n- No incluir **exposicion de motivos** antes de la peticion en una solicitud.\n- Usar registro coloquial donde se exige formal: 'Hola' en lugar de 'Estimado/a' o 'Senor/a'.\n\nSi memorizas la estructura prototipica de cada documento, las **formulas de tratamiento** y las **abreviaturas convencionales** (Atte., c.c.p., Lic., Mtro., Dr.), esta subarea aporta puntos seguros."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Solicitud para asamblea vecinal",
+      "body_md": "Imagina que como vecino quieres pedir al delegado el uso del salon comunitario para una asamblea. La estructura formal de la solicitud es:\n\n---\n\n*Tlalpan, Ciudad de Mexico, a 15 de marzo de 2026.*\n\n*Lic. Roberto Mendoza Garcia*\n*Coordinador de Atencion Vecinal*\n*Alcaldia Tlalpan*\n*P r e s e n t e.*\n\n*Asunto: Solicitud de uso de salon comunitario para asamblea vecinal.*\n\n*Estimado Lic. Mendoza:*\n\n*Por medio de la presente, los vecinos de la Unidad Habitacional Vista Hermosa, representados por el suscrito como secretario del Comite de Participacion Vecinal, nos dirigimos a usted con el proposito de solicitar el uso del salon comunitario ubicado en la planta baja del edificio A, el dia sabado 28 de marzo del presente ano, en un horario de 10:00 a 13:00 horas.*\n\n*La asamblea tiene como objetivo discutir el proyecto de mantenimiento de areas verdes y la conformacion del nuevo comite. Esperamos una asistencia aproximada de 80 personas, motivo por el cual el salon resulta el espacio adecuado.*\n\n*Quedamos atentos a su respuesta y agradecemos de antemano las facilidades que se sirva brindar para este acto de participacion comunitaria.*\n\n*Atentamente,*\n\n*Ing. Sofia Ramirez Lopez*\n*Secretaria del Comite Vecinal*\n*Vista Hermosa, Tlalpan*\n*Tel. 55-1234-5678*\n\n*c.c.p. Archivo del Comite*\n\n---\n\n**Analisis:** la solicitud incluye lugar y fecha; destinatario completo con formula de tratamiento ('Lic.') y cargo; asunto en una linea; saludo formal; **exposicion de motivos** (por que se solicita); **peticion concreta** (que se pide, cuando, para que); cierre cortes; firma con cargo y datos de contacto; **c.c.p.** para archivo. La omision de cualquiera de estos elementos es lo que el EGEL evalua como error."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Reclamacion formal por servicio deficiente",
+      "body_md": "Un usuario contrato servicio de internet y la conexion ha fallado durante tres semanas. Decide presentar una reclamacion formal a la empresa antes de acudir a la Profeco.\n\n**Tono apropiado:** firme pero respetuoso. Evita insultos, exageraciones y amenazas. El registro debe ser **formal y argumentativo**.\n\n**Estructura adecuada:**\n\n1. **Lugar y fecha.**\n2. **Destinatario con cargo:** 'Lic. Mariana Lopez, Gerente de Atencion al Cliente, Telecom SA de CV.'\n3. **Asunto:** 'Reclamacion formal por servicio deficiente del contrato folio 12345.'\n4. **Saludo:** 'Estimada Lic. Lopez:'\n5. **Cuerpo en tres bloques:**\n   - **Antecedentes**: descripcion objetiva del problema con fechas, folios y reportes previos. *'El 24 de febrero contrate el plan Premium 200 Mbps con folio 12345. Desde la instalacion, la conexion ha presentado interrupciones diarias documentadas en los reportes 1029, 1147 y 1208.'*\n   - **Exposicion de motivos**: por que es relevante y que dano causa. *'Mi actividad laboral requiere conexion estable. Las fallas reiteradas han comprometido tres entregas profesionales y representan incumplimiento del contrato firmado.'*\n   - **Peticion concreta**: que se pide. *'Solicito reembolso proporcional de las tres semanas afectadas, ademas de la solucion definitiva de la conexion en un plazo no mayor a cinco dias habiles.'*\n6. **Cierre y advertencia cortes**: *'De no recibir respuesta satisfactoria en el plazo indicado, me vere obligada a presentar queja ante la Procuraduria Federal del Consumidor.'*\n7. **Despedida formal**: 'Atentamente,'\n8. **Firma completa con datos de contacto.**\n\n**Pregunta tipica EGEL:** ¿Que elemento NO debe incluirse en una reclamacion formal? → Insultos, amenazas vagas o tono coloquial. La firmeza se transmite con datos, no con adjetivos negativos."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Comunicacion formal: carta, oficio, memorando, email",
+      "metadata": {
+        "headers": ["Documento", "Ambito", "Estructura clave", "Tono"],
+        "rows": [
+          ["Carta formal", "Externo entre personas o instituciones", "Lugar, fecha, destinatario, saludo, cuerpo, cierre, firma", "Formal, cortes, personalizado"],
+          ["Oficio", "Entre dependencias publicas o instituciones", "Numero de oficio, asunto, destinatario con cargo, cuerpo, cierre, firma con cargo, c.c.p.", "Formal, impersonal, protocolar"],
+          ["Memorando", "Interno dentro de una misma institucion", "De: / Para: / Asunto: / Fecha: / Cuerpo breve / Firma", "Formal pero directo y operativo"],
+          ["Email formal", "Externo o interno digital", "Asunto preciso, saludo, cuerpo conciso, despedida, firma con datos", "Formal, breve, claro"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para redaccion institucional",
+      "metadata": {
+        "tools": [
+          { "name": "Plantillas oficiales del gobierno", "url": "https://www.gob.mx/", "description": "El portal del gobierno federal mexicano publica plantillas de oficio, solicitud y comunicado con formato oficial." },
+          { "name": "Plantillas de Word y Google Docs", "url": "https://docs.google.com/templates", "description": "Galeria de plantillas de carta formal, oficio y memorando listas para personalizar con los datos institucionales." },
+          { "name": "Grammarly", "url": "https://www.grammarly.com/", "description": "Corrector gramatical con sugerencias de tono. Detecta cuando un correo es demasiado coloquial o pasivo." },
+          { "name": "Hemingway Editor", "url": "https://hemingwayapp.com/", "description": "Editor que destaca frases largas, voz pasiva y adverbios innecesarios. Util para depurar oficios densos." },
+          { "name": "Diccionario panhispanico de dudas", "url": "https://www.rae.es/dpd/", "description": "Consulta de dudas frecuentes en redaccion formal: abreviaturas, tratamiento de cargos, uso de mayusculas." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Formula de tratamiento", "def": "Abreviatura de titulo o cargo que antecede al nombre: Lic., Mtro., Dr., Ing., Arq." },
+          { "term": "Exposicion de motivos", "def": "Seccion de la solicitud donde se argumentan las razones del pedido antes de la peticion concreta." },
+          { "term": "Formula de cierre", "def": "Frase convencional con la que termina el cuerpo del documento: 'Atentamente', 'Sin otro particular', 'Quedo a sus ordenes'." },
+          { "term": "Atte.", "def": "Abreviatura de 'atentamente'; cierre formal clasico en oficios y cartas administrativas." },
+          { "term": "c.c.p.", "def": "Abreviatura de 'con copia para'; indica destinatarios adicionales del documento." },
+          { "term": "Asunto", "def": "Linea breve que sintetiza el motivo del documento; sustituye al titulo." },
+          { "term": "Oficio", "def": "Comunicacion oficial entre dependencias o entre institucion y particular; incluye numero y firma con cargo." },
+          { "term": "Memorando", "def": "Comunicacion interna breve entre miembros de la misma institucion." },
+          { "term": "Convocatoria", "def": "Documento que invita formalmente a un acto, concurso o proceso, detallando bases y plazos." },
+          { "term": "Email formal", "def": "Correo profesional con asunto, saludo, cuerpo conciso, despedida y firma con datos de contacto." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Manual de redaccion institucional — SEP", "url": "https://www.gob.mx/sep" },
+          { "title": "Norma ISO 8439 — Formato de documentos formales", "url": "https://www.iso.org/standard/15639.html" },
+          { "title": "Diccionario panhispanico de dudas — RAE", "url": "https://www.rae.es/dpd/" },
+          { "title": "Manual de estilo de publicaciones del gobierno federal", "url": "https://www.dof.gob.mx/" },
+          { "title": "Maria Teresa Serafini — Como se escribe", "url": "https://www.paidos.com.mx/" }
+        ]
+      }
+    }
+  ]
+}

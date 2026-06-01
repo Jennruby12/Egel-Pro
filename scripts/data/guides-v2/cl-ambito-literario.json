@@ -1,0 +1,123 @@
+{
+  "guide": {
+    "section": "transversal",
+    "area_num": 1,
+    "area_name": "Comprension Lectora",
+    "subarea_num": 2,
+    "subarea_name": "Ambito literario",
+    "slug": "cl-ambito-literario",
+    "title": "Comprension lectora: Ambito literario",
+    "short_description": "Lectura de textos literarios: generos (narrativo, lirico, dramatico, ensayo), figuras retoricas, voz narrativa, tono, atmosfera, simbolos y elementos del verso. Estrategias de analisis textual para cuento, poema y obra dramatica.",
+    "weight_in_exam": 10,
+    "estimated_minutes": 30,
+    "difficulty": "intermedio",
+    "order_in_area": 2,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Generos literarios", "definition_md": "Clasificacion de las obras segun su forma y proposito: narrativo (cuento, novela), lirico (poema), dramatico (obra de teatro) y ensayo (texto reflexivo en prosa).", "importance": "alta" },
+    { "concept": "Figuras retoricas", "definition_md": "Recursos del lenguaje que producen efecto estetico o persuasivo. Incluyen metafora, simil, hiperbole, personificacion, anafora, sinestesia y otras.", "importance": "alta" },
+    { "concept": "Voz narrativa", "definition_md": "Perspectiva desde la cual se cuenta la historia: primera persona (yo participo), segunda persona (tu), tercera persona omnisciente (sabe todo) o tercera persona testigo (observa).", "importance": "alta" },
+    { "concept": "Tono", "definition_md": "Actitud del autor o narrador hacia el tema o el lector. Puede ser ironico, solemne, melancolico, festivo, critico, nostalgico.", "importance": "alta" },
+    { "concept": "Atmosfera", "definition_md": "Clima emocional o ambiental que envuelve la accion. Se construye con descripciones, vocabulario y ritmo. Diferente al tono: la atmosfera la siente el lector dentro del relato.", "importance": "alta" },
+    { "concept": "Simbolo", "definition_md": "Elemento concreto que representa una idea abstracta. Ej. la paloma como simbolo de paz, el rio como simbolo del paso del tiempo.", "importance": "alta" },
+    { "concept": "Alegoria", "definition_md": "Representacion extendida en la que cada elemento del relato corresponde a un concepto. Toda la obra funciona como simbolo prolongado.", "importance": "media" },
+    { "concept": "Verso", "definition_md": "Unidad ritmica del poema; cada linea con medida, ritmo y eventual rima. Su conteo silabico define el tipo (octosilabo, endecasilabo, etc).", "importance": "media" },
+    { "concept": "Estrofa", "definition_md": "Agrupacion de versos que forma una unidad. Su numero y tipo de rima define formas como soneto, decima, cuarteta.", "importance": "media" },
+    { "concept": "Rima asonante", "definition_md": "Coincidencia de las vocales a partir de la ultima silaba acentuada del verso. Ej. cama / casa.", "importance": "media" },
+    { "concept": "Rima consonante", "definition_md": "Coincidencia total de vocales y consonantes desde la ultima silaba acentuada. Ej. canto / espanto.", "importance": "media" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea pesa **10 reactivos** en el EGEL y mide tu capacidad para leer textos literarios con sensibilidad y precision. El examen no pide memorizar autores ni fechas sino reaccionar ante fragmentos: identificar la **voz narrativa**, distinguir el **tono** de la **atmosfera**, reconocer **figuras retoricas** dominantes e interpretar **simbolos**.\n\nLas trampas frecuentes incluyen:\n- Confundir **metafora** con **simil** (la metafora omite el nexo 'como').\n- Confundir **autor** con **narrador**: el narrador es una construccion del texto, no el escritor real.\n- Confundir **tono** (actitud del narrador) con **atmosfera** (clima emocional que rodea la accion).\n\nLos textos seran fragmentos cortos: 8 a 30 versos en poesia, 100 a 400 palabras en narrativa. Si reconoces los rasgos prototipicos de cada genero, identificas con rapidez la voz narrativa y dominas las cinco figuras retoricas mas comunes, este bloque te aporta puntos casi automaticos."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Fragmento de Cortazar: voz, tono y simbolismo",
+      "body_md": "Lee:\n\n*Sabia que el cronopio se acercaba a la ventana, lo veia ajustarse el sombrero con la mano izquierda como hacia siempre que iba a hacer algo importante, y yo me quedaba quieto, esperando, porque sabia que en cuanto se moviera todo iba a cambiar para siempre.*\n\n**Voz narrativa:** primera persona testigo. El narrador observa al cronopio pero no es el cronopio. Notese el verbo 'sabia' y 'lo veia' en primera persona: alguien que mira sin participar.\n\n**Tono:** expectante, ligeramente melancolico. Frases como 'todo iba a cambiar para siempre' transmiten una actitud cargada de presagio.\n\n**Atmosfera:** suspendida, casi de ensueno. El gesto repetido del sombrero, la quietud del observador y la promesa de un cambio inminente crean un clima de pausa antes del acontecimiento.\n\n**Simbolismo:** el sombrero ajustado funciona como simbolo del umbral entre lo cotidiano y lo extraordinario. Cortazar transforma un gesto trivial en sena de algo trascendente, recurso tipico de su poetica del cuento.\n\nUna pregunta tipica del EGEL seria: ¿que recurso emplea el autor para sugerir que algo importante esta por ocurrir? → Respuesta: el simbolismo del gesto ritualizado, no una hiperbole ni una metafora explicita."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Poema corto: figura dominante",
+      "body_md": "Lee este fragmento (estilo modernista):\n\n*La noche es un manto azul cosido con estrellas,\nun rio sin orillas que canta entre los pinos,\nun perfume callado que tiembla en las ventanas\ny duerme en los caminos.*\n\n**Analisis:** el poema presenta una imagen central, la noche, y la describe mediante una sucesion de **metaforas**. Notese: 'manto azul', 'rio sin orillas', 'perfume callado'. Cada verso atribuye a la noche una identidad nueva sin usar el nexo 'como', confirmando que se trata de metaforas y no de similes.\n\nLa **figura dominante** es la metafora; el recurso secundario es la **personificacion** ('perfume que duerme', 'rio que canta'). Tambien hay **sinestesia** sutil al mezclar lo visual (azul, estrellas) con lo auditivo (canta) y lo olfativo (perfume).\n\n**Rima:** los versos 2 y 4 riman en *-inos* (consonante: pinos / caminos). Los versos 1 y 3 cierran en *-ellas / -anas*, sin coincidencia: no hay rima entre ellos.\n\n**Pregunta tipica EGEL:** ¿Cual figura predomina en el poema? → Respuesta: la metafora, porque cada verso transforma a la noche en otra entidad sin uso de comparacion explicita. Una respuesta como 'hiperbole' o 'anafora' seria un distractor: no hay exageracion sistematica ni repeticion al inicio de los versos."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Generos literarios",
+      "metadata": {
+        "headers": ["Genero", "Forma", "Proposito", "Ejemplo tipico"],
+        "rows": [
+          ["Lirico", "Verso, breve, ritmico", "Expresar emocion o subjetividad", "Soneto, oda, elegia"],
+          ["Narrativo", "Prosa, hay narrador y trama", "Contar una historia", "Cuento, novela, cronica literaria"],
+          ["Dramatico", "Dialogos y acotaciones", "Representar accion en escena", "Tragedia, comedia, drama"],
+          ["Ensayo", "Prosa reflexiva, voz personal", "Argumentar y explorar una idea", "Ensayo de Montaigne, de Borges, de Paz"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas y tecnicas de analisis literario",
+      "metadata": {
+        "tools": [
+          { "name": "Anotaciones marginales", "url": "https://es.wikipedia.org/wiki/Anotaci%C3%B3n", "description": "Tecnica de marcar el texto a mano: subrayar figuras, escribir el tono al margen, encerrar simbolos. Fuerza una lectura activa." },
+          { "name": "Mapas tematicos", "url": "https://es.wikipedia.org/wiki/Mapa_conceptual", "description": "Esquemas que relacionan motivos, simbolos y personajes para detectar redes de significado en una obra." },
+          { "name": "Fichas de lectura", "url": "https://es.wikipedia.org/wiki/Ficha_bibliogr%C3%A1fica", "description": "Plantilla con autor, genero, voz, tono, figuras predominantes y simbolos. Util para preparar la subarea con un cuaderno de fichas." },
+          { "name": "Diccionario de retorica", "url": "https://www.rae.es/", "description": "Consulta rapida de figuras: anafora, hiperbaton, sinestesia, antitesis. Indispensable para no confundir terminos similares." },
+          { "name": "Audio-lecturas", "url": "https://www.cervantesvirtual.com/", "description": "Escuchar el texto literario revela el ritmo, las rimas y los efectos sonoros que se pierden al leer en silencio." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Metafora", "def": "Figura que identifica un termino con otro sin nexo: 'la noche es un manto azul'." },
+          { "term": "Simil", "def": "Comparacion explicita con nexo 'como', 'cual' o 'parece': 'la noche es como un manto'." },
+          { "term": "Hiperbole", "def": "Exageracion intencional para reforzar una idea: 'lloraba un rio de lagrimas'." },
+          { "term": "Alegoria", "def": "Simbolismo extendido en el que cada elemento del texto representa una idea." },
+          { "term": "Simbolo", "def": "Elemento concreto que evoca un concepto abstracto: paloma = paz." },
+          { "term": "Narrador omnisciente", "def": "Voz en tercera persona que conoce pensamientos y motivaciones de todos los personajes." },
+          { "term": "Narrador testigo", "def": "Voz en primera persona que observa sin ser el protagonista principal." },
+          { "term": "Anafora", "def": "Repeticion de una palabra o grupo al inicio de versos u oraciones sucesivas." },
+          { "term": "Sinestesia", "def": "Fusion de sensaciones de distintos sentidos: 'verde chillante', 'silencio amargo'." },
+          { "term": "Lirico", "def": "Relativo a la lirica; expresa emocion o subjetividad usualmente en verso." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Helena Beristain — Diccionario de retorica y poetica", "url": "https://www.editorialporrua.com.mx/" },
+          { "title": "Julio Cortazar — Algunos aspectos del cuento", "url": "https://www.literatura.us/cortazar/aspectos.html" },
+          { "title": "Jorge Luis Borges — Arte poetica (Norton Lectures)", "url": "https://www.hup.harvard.edu/catalog.php?isbn=9780674008205" },
+          { "title": "Mijail Bajtin — Teoria y estetica de la novela", "url": "https://www.editorialtaurus.com/" },
+          { "title": "Roman Jakobson — Linguistica y poetica", "url": "https://es.wikipedia.org/wiki/Roman_Jakobson" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "guide": {
+    "section": "transversal",
+    "area_num": 1,
+    "area_name": "Comprension Lectora",
+    "subarea_num": 1,
+    "subarea_name": "Ambito de estudio",
+    "slug": "cl-ambito-estudio",
+    "title": "Comprension lectora: Ambito de estudio",
+    "short_description": "Lectura de textos academicos: identificacion de tesis, argumentos, premisas, ideas principales y secundarias, inferencias literal/inferencial/critica, macroestructura, superestructura y conectores logicos. Modelo de Barrett y estrategias de comprension profunda.",
+    "weight_in_exam": 12,
+    "estimated_minutes": 30,
+    "difficulty": "intermedio",
+    "order_in_area": 1,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Texto academico", "definition_md": "Discurso escrito con proposito de exponer, argumentar o explicar conocimiento. Caracterizado por registro formal, vocabulario tecnico, citas y estructura logica (introduccion, desarrollo, conclusion).", "importance": "alta" },
+    { "concept": "Tesis", "definition_md": "Afirmacion central que el autor defiende a lo largo del texto. Responde a la pregunta: ¿que postura sostiene el autor? Usualmente aparece en la introduccion o conclusion.", "importance": "alta" },
+    { "concept": "Argumento", "definition_md": "Razon o conjunto de razones que sustentan la tesis. Combina premisas y conclusion para persuadir o demostrar.", "importance": "alta" },
+    { "concept": "Premisa", "definition_md": "Enunciado del que parte un argumento. Puede ser un hecho, dato, principio o supuesto aceptado que conduce a una conclusion.", "importance": "alta" },
+    { "concept": "Idea principal", "definition_md": "Enunciado que sintetiza el contenido esencial de un parrafo o texto. Si se elimina, el sentido global se pierde.", "importance": "alta" },
+    { "concept": "Idea secundaria", "definition_md": "Enunciado que apoya, ejemplifica, matiza o desarrolla la idea principal. Su eliminacion no afecta el sentido global.", "importance": "media" },
+    { "concept": "Inferencia (literal, inferencial, critica)", "definition_md": "Niveles de comprension: la literal recupera informacion explicita; la inferencial deduce lo implicito; la critica evalua, juzga y contrasta con conocimientos previos.", "importance": "alta" },
+    { "concept": "Macroestructura", "definition_md": "Organizacion global del significado del texto. Es la red de ideas principales jerarquizadas que resume el contenido completo.", "importance": "alta" },
+    { "concept": "Superestructura", "definition_md": "Forma esquematica convencional del texto segun su tipo (expositivo, argumentativo, narrativo). Ej. introduccion-desarrollo-conclusion.", "importance": "alta" },
+    { "concept": "Conector logico", "definition_md": "Marcador que explicita la relacion entre ideas: causa (porque), consecuencia (por tanto), adicion (ademas), contraste (sin embargo), ejemplificacion (por ejemplo).", "importance": "media" },
+    { "concept": "Parafrasis", "definition_md": "Reformulacion de una idea con palabras propias conservando el significado original. Mecanismo clave para demostrar comprension profunda y evitar plagio.", "importance": "alta" },
+    { "concept": "Niveles de Barrett", "definition_md": "Taxonomia de comprension lectora con cinco niveles: literal, reorganizacion, inferencial, evaluativa y de apreciacion. Marco de referencia clasico en evaluaciones educativas.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea pesa **12 reactivos** en el EGEL y evalua tu capacidad para leer textos academicos con profundidad: articulos cientificos, capitulos de libro, ensayos academicos y reportes tecnicos. El examen NO te pide leer libros completos sino reaccionar ante fragmentos de 200 a 500 palabras con preguntas en tres niveles.\n\nLas preguntas se ubican en alguno de estos planos:\n- **Literal**: localizar datos explicitos en el texto.\n- **Inferencial**: deducir lo que el texto sugiere pero no dice de forma directa.\n- **Critica o evaluativa**: juzgar la validez de un argumento, detectar sesgos o contrastar con otras posturas.\n\nLa trampa clasica es responder con sentido comun o creencias previas en vez de basarte en lo que el texto sostiene. Otra confusion frecuente es no distinguir la **tesis** del autor de los **argumentos** que la apoyan. Si dominas la taxonomia de Barrett, identificas la macroestructura con rapidez y rastreas conectores logicos, esta subarea aporta puntos seguros."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Economia circular: tres niveles de pregunta",
+      "body_md": "Lee el fragmento:\n\n*La economia circular propone un modelo productivo en el que los residuos de un proceso se convierten en insumos de otro. A diferencia del modelo lineal de extraer-producir-desechar, este enfoque busca cerrar los ciclos de materia y energia. Sus defensores sostienen que disminuye la presion sobre los recursos naturales y reduce la generacion de desechos. Sin embargo, su implementacion exige rediseno de productos, regulacion ambiciosa y cambios en los habitos de consumo, condiciones que pocos paises han alcanzado.*\n\n**Pregunta literal:** ¿Que modelo se opone a la economia circular? → Respuesta: el modelo lineal de extraer-producir-desechar (informacion explicita en la linea 2).\n\n**Pregunta inferencial:** ¿Por que el autor introduce la palabra 'Sin embargo'? → Respuesta: para senalar una restriccion u objecion practica al modelo, anticipando que su adopcion no es sencilla. El conector marca un contraste entre los beneficios anunciados y las dificultades reales.\n\n**Pregunta evaluativa o critica:** ¿La tesis del autor es favorable a la economia circular? → Respuesta: el autor reconoce sus beneficios pero introduce condiciones criticas para su exito, por lo que sostiene una postura matizada, no entusiasta sin reservas. La clave esta en interpretar el peso retorico del 'sin embargo'."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Articulo academico: identificar tesis y argumentos",
+      "body_md": "Imagina un articulo titulado *Brecha digital y aprendizaje en zonas rurales de Mexico*. La introduccion cierra con:\n\n*Sostenemos que la brecha digital en el medio rural mexicano no se reduce con la dotacion de dispositivos, sino que requiere intervenciones simultaneas en conectividad, alfabetizacion digital docente y produccion de contenidos en lenguas indigenas.*\n\nEsa oracion es la **tesis** del articulo: una afirmacion que el autor defendera. El resto del texto desplegara **argumentos** para sostenerla. Identifica los argumentos siguientes:\n\n1. *Argumento de evidencia*: datos del INEGI 2022 muestran que 56% de hogares rurales sin internet poseen al menos un dispositivo, lo que prueba que el problema no es solo de equipo.\n2. *Argumento de autoridad*: la UNESCO recomienda intervenciones combinadas en infraestructura y formacion.\n3. *Argumento contrafactico*: programas anteriores que solo entregaron tabletas (ej. Mi Compu.Mx) no movieron indicadores de aprendizaje.\n\nUn lector entrenado distingue: la **tesis es una sola**, los **argumentos son varios** y cada uno se apoya en **premisas** (datos, citas, ejemplos). Confundir un argumento con la tesis es el error mas comun en el EGEL."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Niveles de comprension lectora (Barrett)",
+      "metadata": {
+        "headers": ["Nivel", "Que se evalua", "Verbo clave", "Ejemplo de pregunta"],
+        "rows": [
+          ["Literal", "Recuperar informacion explicita del texto", "Identificar, senalar, listar", "¿En que ano se publico el estudio mencionado?"],
+          ["Reorganizacion", "Clasificar, resumir, esquematizar lo leido", "Resumir, ordenar, agrupar", "Resume el segundo parrafo en una oracion."],
+          ["Inferencial", "Deducir lo implicito; conectar ideas no expresadas", "Inferir, predecir, deducir", "¿Por que el autor usa la palabra 'sin embargo'?"],
+          ["Evaluativa o critica", "Juzgar la validez del argumento o detectar sesgos", "Evaluar, contrastar, refutar", "¿La evidencia presentada sostiene la tesis?"],
+          ["Apreciacion", "Reaccion estetica o emocional ante el texto", "Apreciar, valorar, opinar", "¿Que efecto produce el cierre del articulo?"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas y tecnicas de lectura academica",
+      "metadata": {
+        "tools": [
+          { "name": "SQ3R", "url": "https://en.wikipedia.org/wiki/SQ3R", "description": "Tecnica clasica de cinco pasos: Survey, Question, Read, Recite, Review. Util para abordar capitulos densos con un plan." },
+          { "name": "Mapas conceptuales (CmapTools)", "url": "https://cmap.ihmc.us/", "description": "Software gratuito para representar visualmente la macroestructura de un texto y las relaciones entre conceptos." },
+          { "name": "Subrayado estructurado", "url": "https://es.wikipedia.org/wiki/Subrayado", "description": "Tecnica de marcar con codigos distintos tesis, argumentos, premisas y ejemplos. Convierte la lectura pasiva en activa." },
+          { "name": "Notion", "url": "https://www.notion.so/", "description": "Espacio de trabajo para fichas de lectura, resumenes y citas con etiquetas y enlaces internos." },
+          { "name": "MarginNote", "url": "https://www.marginnote.com/", "description": "App para iPad y Mac que combina anotacion en PDF, mapas mentales y tarjetas de repaso a partir de lo subrayado." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Tesis", "def": "Afirmacion central que el autor defiende en el texto." },
+          { "term": "Premisa", "def": "Enunciado del que parte un argumento; sirve de punto de apoyo logico." },
+          { "term": "Argumento", "def": "Conjunto de premisas que conducen a una conclusion para sostener la tesis." },
+          { "term": "Inferencia", "def": "Operacion mental que deduce informacion no explicita a partir del texto." },
+          { "term": "Macroestructura", "def": "Red jerarquica de ideas principales que resume el contenido global del texto." },
+          { "term": "Superestructura", "def": "Esquema convencional de organizacion del texto segun su tipo: argumentativo, expositivo, narrativo." },
+          { "term": "Parafrasis", "def": "Reformulacion del contenido con palabras propias preservando el significado." },
+          { "term": "Deduccion", "def": "Razonamiento que va de lo general a lo particular; si las premisas son verdaderas, la conclusion lo es." },
+          { "term": "Induccion", "def": "Razonamiento que parte de casos particulares para llegar a una generalizacion probable." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Daniel Cassany — La cocina de la escritura", "url": "https://www.anagrama-ed.es/libro/argumentos/la-cocina-de-la-escritura/9788433913920/A_61" },
+          { "title": "Isabel Sole — Estrategias de lectura", "url": "https://www.grao.com/es/producto/estrategias-de-lectura" },
+          { "title": "Mortimer Adler & Charles Van Doren — How to Read a Book", "url": "https://www.simonandschuster.com/books/How-to-Read-a-Book/Mortimer-J-Adler/9780671212094" },
+          { "title": "Thomas Barrett — Taxonomia de comprension lectora (1968)", "url": "https://eric.ed.gov/?id=ED032187" },
+          { "title": "Teun van Dijk — La ciencia del texto", "url": "https://www.discourses.org/" }
+        ]
+      }
+    }
+  ]
+}

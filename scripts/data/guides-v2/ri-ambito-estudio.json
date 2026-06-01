@@ -1,0 +1,124 @@
+{
+  "guide": {
+    "section": "transversal",
+    "area_num": 2,
+    "area_name": "Redaccion Indirecta",
+    "subarea_num": 1,
+    "subarea_name": "Ambito de estudio",
+    "slug": "ri-ambito-estudio",
+    "title": "Redaccion indirecta: Ambito de estudio",
+    "short_description": "Redaccion academica formal: ortografia, acentuacion (agudas, graves, esdrujulas, sobreesdrujulas, tildes diacriticas), conectores discursivos, cohesion y coherencia, concordancia, cita textual vs parafrasis, prevencion del plagio y normas APA 7.",
+    "weight_in_exam": 15,
+    "estimated_minutes": 35,
+    "difficulty": "intermedio",
+    "order_in_area": 1,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Registro formal", "definition_md": "Variedad linguistica propia del entorno academico y profesional: vocabulario tecnico, sintaxis cuidada, ausencia de coloquialismos y marca clara de distancia entre emisor y lector.", "importance": "alta" },
+    { "concept": "Ortografia academica", "definition_md": "Conjunto de normas de escritura segun la RAE: uso de mayusculas, signos de puntuacion, division silabica, tildes y representacion correcta de fonemas.", "importance": "alta" },
+    { "concept": "Acentuacion", "definition_md": "Sistema de tildes que indica la silaba tonica. Las palabras se clasifican en agudas (ultima silaba tonica), graves (penultima), esdrujulas (antepenultima) y sobreesdrujulas (anterior a la antepenultima).", "importance": "alta" },
+    { "concept": "Tildes diacriticas", "definition_md": "Tildes que distinguen palabras homografas con funcion gramatical diferente: el/el, tu/tu, mi/mi, si/si, mas/mas, te/te, se/se, de/de.", "importance": "alta" },
+    { "concept": "Conectores discursivos", "definition_md": "Marcadores que explicitan la relacion entre oraciones o parrafos: causales (porque, dado que), consecutivos (por tanto, en consecuencia), adversativos (sin embargo, no obstante), ordinales (en primer lugar, finalmente).", "importance": "alta" },
+    { "concept": "Cohesion", "definition_md": "Propiedad que conecta las partes del texto mediante recursos linguisticos: pronombres, sinonimos, conectores y elipsis. Permite que el texto se lea como un todo.", "importance": "alta" },
+    { "concept": "Coherencia", "definition_md": "Propiedad que da unidad logica y tematica al texto. Va mas alla de la cohesion: requiere que las ideas se relacionen entre si y avancen hacia un proposito.", "importance": "alta" },
+    { "concept": "Concordancia", "definition_md": "Acuerdo gramatical entre palabras: sujeto-verbo (numero y persona) y sustantivo-adjetivo (genero y numero).", "importance": "alta" },
+    { "concept": "Cita textual", "definition_md": "Reproduccion exacta de las palabras de otro autor, marcada con comillas y atribucion. En APA se acompana de autor, ano y pagina.", "importance": "alta" },
+    { "concept": "Parafrasis", "definition_md": "Reformulacion de una idea ajena con palabras propias conservando el significado. Debe atribuirse al autor original aunque cambien las palabras.", "importance": "alta" },
+    { "concept": "Plagio", "definition_md": "Apropiacion de ideas, frases o estructuras de otro autor sin atribucion. Constituye falta etica grave en el ambito academico.", "importance": "alta" },
+    { "concept": "APA 7", "definition_md": "Septima edicion del manual de la American Psychological Association para citas y referencias. Define formato autor-fecha, lista de referencias y estilo editorial.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea pesa **15 reactivos** en el EGEL y mide tu capacidad para producir textos academicos con correccion gramatical, ortografica y discursiva. El examen NO te pide redactar un ensayo: te muestra fragmentos con errores y te pide elegir la version mejor escrita, identificar el error de acentuacion o reconocer el conector adecuado.\n\nLos rubros mas evaluados son:\n- **Acentuacion**: reglas generales (agudas, graves, esdrujulas) y especialmente **tildes diacriticas** que distinguen pares como 'el/el', 'tu/tu', 'mas/mas', 'si/si'.\n- **Conectores discursivos**: elegir el conector que respeta la relacion logica (causa, consecuencia, contraste, adicion).\n- **Cohesion y coherencia**: ordenar parrafos, evitar repeticiones, mantener un sujeto consistente.\n- **Concordancia**: detectar errores entre sujeto y verbo, sustantivo y adjetivo.\n- **Cita y parafrasis**: distinguir cuando se copia textualmente, cuando se reformula y cuando se incurre en plagio.\n\nSi memorizas las reglas de tildes, dominas las 10 tildes diacriticas mas frecuentes y reconoces los conectores por familia, esta subarea aporta puntos seguros."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Elegir la mejor version de una oracion academica",
+      "body_md": "El examen presenta tres versiones de una misma oracion y pide elegir la academicamente correcta. Lee:\n\n**(A)** *Aunque los resultados son preliminares, pero la tendencia se mantiene, por lo tanto se requieren mas estudios para confirmarla.*\n\n**(B)** *Los resultados son preliminares; sin embargo, la tendencia se mantiene, por lo que se requieren mas estudios para confirmarla.*\n\n**(C)** *Los resultados son preliminares, mas la tendencia se mantiene, asi que se requeriran mas estudios para que se pueda confirmar la misma.*\n\n**Analisis:**\n- (A) tiene **doble conector adversativo** ('aunque... pero'). En espanol uno excluye al otro: o se usa 'aunque' o se usa 'pero', nunca los dos.\n- (B) usa correctamente el punto y coma seguido de 'sin embargo' (contraste), y cierra con 'por lo que' (consecuencia). El sujeto se mantiene consistente.\n- (C) usa 'mas' como conector adversativo (correcto, sin tilde) pero introduce 'la misma' como referente anaforico, considerado defectuoso en redaccion academica formal.\n\n**Respuesta correcta:** (B). Esta oracion respeta tres principios: un solo conector por relacion, conectores claros para causa y contraste, y referencia limpia sin redundancia. Esta es la logica del EGEL: no la version 'mas larga' sino la que respeta cohesion y conexion logica."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Reescribir un parrafo con plagio a parafrasis APA",
+      "body_md": "Texto original (Garcia, 2022, p. 45):\n\n*La inteligencia artificial generativa transforma la educacion porque permite a los estudiantes acceder a explicaciones personalizadas en tiempo real, lo que antes solo era posible mediante tutorias individuales costosas.*\n\nFragmento de un estudiante que comete plagio:\n\n*La inteligencia artificial generativa transforma la educacion porque permite a los estudiantes acceder a explicaciones personalizadas en tiempo real, antes solo posibles mediante tutorias costosas.*\n\nEl estudiante cambio dos palabras y omitio la atribucion. Esto es **plagio**, aun con cambios cosmeticos.\n\n**Parafrasis correcta con cita APA 7:**\n\n*Segun Garcia (2022), los sistemas de IA generativa han abierto la posibilidad de que cualquier estudiante reciba aclaraciones adaptadas a su nivel sin pagar tutorias personalizadas, beneficio antes restringido a contextos privilegiados (p. 45).*\n\nObserva tres cambios: (1) **reformulacion sintactica completa** (no solo sustitucion de palabras), (2) **conservacion del sentido original** sin distorsion, y (3) **atribucion explicita** con autor, ano y pagina.\n\n**Cita textual con APA 7:** si el estudiante prefiere conservar las palabras exactas, debe usar comillas: *'La inteligencia artificial generativa transforma la educacion porque permite a los estudiantes acceder a explicaciones personalizadas en tiempo real' (Garcia, 2022, p. 45).*\n\n**Pregunta tipica EGEL:** ¿Cual fragmento incurre en plagio? El primero, porque copia la estructura del original y omite la fuente, aun cuando cambio algunas palabras."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Reglas de acentuacion",
+      "metadata": {
+        "headers": ["Tipo", "Silaba tonica", "Lleva tilde si...", "Ejemplos"],
+        "rows": [
+          ["Aguda", "Ultima", "Termina en vocal, n o s", "cancion, sofa, jamas (con tilde) / reloj, papel (sin tilde)"],
+          ["Grave o llana", "Penultima", "NO termina en vocal, n ni s", "arbol, lapiz, dificil (con tilde) / casa, examen (sin tilde)"],
+          ["Esdrujula", "Antepenultima", "SIEMPRE lleva tilde", "musica, telefono, examenes"],
+          ["Sobreesdrujula", "Anterior a la antepenultima", "SIEMPRE lleva tilde", "comprendelo, digamelo, repitaselo"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para redaccion academica",
+      "metadata": {
+        "tools": [
+          { "name": "RAE Diccionario", "url": "https://dle.rae.es/", "description": "Diccionario oficial de la lengua espanola. Consulta de significado, conjugacion y dudas ortograficas." },
+          { "name": "Fundeu RAE", "url": "https://www.fundeu.es/", "description": "Recomendaciones diarias sobre dudas frecuentes del espanol: uso de extranjerismos, conectores, abreviaturas." },
+          { "name": "LanguageTool", "url": "https://languagetool.org/es", "description": "Corrector gramatical en linea con explicaciones pedagogicas. Detecta concordancia, tildes y conectores." },
+          { "name": "Grammarly espanol", "url": "https://www.grammarly.com/", "description": "Asistente de redaccion con soporte para espanol; sugiere mejoras de estilo y deteccion de plagio basico." },
+          { "name": "Zotero", "url": "https://www.zotero.org/", "description": "Gestor bibliografico libre. Genera citas APA, MLA y Chicago de forma automatica y mantiene tu biblioteca personal." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Tilde diacritica", "def": "Tilde que distingue palabras homografas con funcion gramatical distinta: 'mi' (posesivo) y 'mi' (pronombre)." },
+          { "term": "Conector", "def": "Marcador linguistico que explicita la relacion entre ideas: causa, consecuencia, contraste, adicion." },
+          { "term": "Anafora", "def": "Recurso de referirse a un elemento anterior mediante pronombre, demostrativo o sinonimo." },
+          { "term": "Catafora", "def": "Recurso de anticipar un elemento que aparecera despues en el texto." },
+          { "term": "Dequeismo", "def": "Uso incorrecto de 'de que' donde solo corresponde 'que': *pienso de que* en vez de *pienso que*." },
+          { "term": "Queismo", "def": "Omision incorrecta de 'de' antes de 'que': *me alegro que vinieras* en vez de *me alegro de que vinieras*." },
+          { "term": "Leismo", "def": "Uso de 'le' en lugar de 'lo' o 'la' como complemento directo: aceptable solo para persona masculina singular." },
+          { "term": "Parafrasis", "def": "Reformulacion de una idea ajena con palabras propias y la debida atribucion." },
+          { "term": "Registro", "def": "Variedad linguistica adaptada al contexto: formal, coloquial, tecnico." },
+          { "term": "Cohesion", "def": "Conexion linguistica entre las partes del texto mediante pronombres, conectores y sinonimos." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Ortografia de la lengua espanola — RAE 2010", "url": "https://www.rae.es/obras-academicas/ortografia/ortografia-2010" },
+          { "title": "Nueva Gramatica de la lengua espanola — RAE", "url": "https://www.rae.es/obras-academicas/gramatica/nueva-gramatica" },
+          { "title": "Publication Manual of the APA — 7th edition", "url": "https://apastyle.apa.org/products/publication-manual-7th-edition" },
+          { "title": "Hilda Basulto — Curso de redaccion dinamica", "url": "https://www.trillas.mx/" },
+          { "title": "Daniel Cassany — Describir el escribir", "url": "https://www.paidos.com.mx/" }
+        ]
+      }
+    }
+  ]
+}

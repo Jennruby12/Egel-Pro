@@ -1,0 +1,118 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 3,
+    "area_name": "Desarrollo de Sistemas de Software",
+    "subarea_num": 5,
+    "subarea_name": "Plataformas: Cloud, contenedores, K8s, serverless",
+    "slug": "plataformas-desarrollo",
+    "title": "Plataformas: Cloud, contenedores, K8s, serverless",
+    "short_description": "Modelos de servicio en la nube (IaaS, PaaS, SaaS, FaaS), contenedores con Docker, orquestacion con Kubernetes (Pod, Deployment, Service), redes de entrega (CDN, edge), API Gateway, PWA y Backend-as-a-Service.",
+    "weight_in_exam": 10,
+    "estimated_minutes": 45,
+    "difficulty": "intermedio",
+    "order_in_area": 5,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "IaaS (Infrastructure-as-a-Service)", "definition_md": "El proveedor expone infraestructura virtualizada (VMs, redes, almacenamiento); el cliente administra SO, runtime y app. Ejemplos: AWS EC2, Azure VMs.", "importance": "alta" },
+    { "concept": "PaaS (Platform-as-a-Service)", "definition_md": "El proveedor administra SO, runtime y middleware; el cliente solo despliega codigo. Ejemplos: Heroku, Google App Engine, Vercel.", "importance": "alta" },
+    { "concept": "SaaS (Software-as-a-Service)", "definition_md": "Aplicacion completa lista para usar via navegador. El cliente solo consume, no opera nada. Ejemplos: Gmail, Salesforce, Notion.", "importance": "alta" },
+    { "concept": "FaaS / Serverless", "definition_md": "El cliente sube funciones; el proveedor las ejecuta on-demand, escala a cero y cobra por invocacion y duracion. Ejemplos: AWS Lambda, Cloud Functions.", "importance": "alta" },
+    { "concept": "Imagen vs contenedor (Docker)", "definition_md": "Imagen: plantilla inmutable de solo lectura con el codigo y sus dependencias. Contenedor: instancia en ejecucion de una imagen, con su capa escribible.", "importance": "alta" },
+    { "concept": "Pod (Kubernetes)", "definition_md": "Unidad minima de despliegue en K8s. Agrupa uno o mas contenedores que comparten red y almacenamiento. Suele ser efimero.", "importance": "alta" },
+    { "concept": "Deployment (Kubernetes)", "definition_md": "Recurso declarativo que mantiene N replicas de un Pod, realiza rolling updates y permite rollback automatico.", "importance": "alta" },
+    { "concept": "Service (Kubernetes)", "definition_md": "Abstraccion estable de red que expone un conjunto de Pods bajo una IP y DNS interno fijos (ClusterIP, NodePort, LoadBalancer).", "importance": "alta" },
+    { "concept": "CDN (Content Delivery Network)", "definition_md": "Red global de servidores edge que cachean assets estaticos cerca del usuario para reducir latencia y descargar el origen.", "importance": "media" },
+    { "concept": "API Gateway", "definition_md": "Punto unico de entrada a microservicios: enrutamiento, autenticacion, rate limiting, transformacion y observabilidad. Ejemplo: AWS API Gateway, Kong.", "importance": "media" },
+    { "concept": "Edge computing", "definition_md": "Ejecucion de codigo (no solo cache) cerca del usuario en POPs distribuidos. Ejemplo: Cloudflare Workers, Vercel Edge Functions.", "importance": "media" },
+    { "concept": "PWA (Progressive Web App)", "definition_md": "App web instalable con service workers, manifest y soporte offline. Se comporta como nativa sin pasar por tiendas.", "importance": "media" },
+    { "concept": "BaaS (Backend-as-a-Service)", "definition_md": "Plataformas que dan auth, DB, storage y push como servicio para que el cliente solo construya el front. Ejemplos: Supabase, Firebase.", "importance": "media" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea aporta **10 reactivos** en Area 3. Cubre las plataformas modernas donde corren los sistemas: los **modelos de servicio cloud** (IaaS, PaaS, SaaS, FaaS), **Docker** y **Kubernetes** como ejes de la operacion en contenedores, y conceptos asociados como **CDN**, **API Gateway**, **edge**, **PWA** y **BaaS**.\n\nLos reactivos clasicos preguntan: (1) cual modelo corresponde a un escenario dado (ej. 'API impredecible que debe escalar a cero' -> FaaS); (2) la diferencia entre **imagen** y **contenedor**; (3) que recurso de K8s expone Pods estables (Service) y cual los administra (Deployment); (4) cuando usar **CDN** vs **edge computing**.\n\nTip de oro: la cadena de responsabilidad **disminuye** de IaaS a SaaS — en IaaS administras casi todo, en SaaS nada. FaaS es PaaS llevado al extremo: ni siquiera administras procesos largos, solo funciones. Una imagen Docker es como una clase, un contenedor es como un objeto instanciado. En K8s: Pod = unidad efimera, Deployment = quien la mantiene viva, Service = quien la expone."
+    },
+    { "type": "concept", "order": 2, "title": "Conceptos clave", "metadata": null },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "API que escala a cero con Lambda (FaaS)",
+      "body_md": "Una empresa publica una API que valida CURPs mexicanas. La carga es **impredecible**: puede tener 0 peticiones durante horas y de pronto recibir 5,000 en 2 minutos cuando un cliente corporativo procesa un padron.\n\n**Opcion A — VM tradicional (IaaS):**\n- Pagar 24/7 por una EC2 aunque no haya trafico.\n- En el pico, la VM se satura y hay que pre-escalar manualmente.\n\n**Opcion B — Serverless (AWS Lambda + API Gateway):**\n```js\nexports.handler = async (event) => {\n  const { curp } = JSON.parse(event.body);\n  const valido = validarCurp(curp);\n  return { statusCode: 200, body: JSON.stringify({ valido }) };\n};\n```\n- Costo cero cuando no hay invocaciones (escala a 0).\n- Escala automatica al pico — Lambda lanza miles de instancias concurrentes.\n- Cobro por invocacion + GB-segundo.\n\n**Trade-offs de FaaS:**\n- **Cold start**: la primera invocacion tras inactividad tarda mas (cientos de ms).\n- Limite de duracion (15 min en Lambda).\n- Vendor lock-in si se usan triggers propietarios.\n\nPregunta tipica EGEL: '¿Que caracteristica diferencia a serverless de PaaS tradicional?' -> escala a cero y cobro por invocacion."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Migrar monolito a contenedores con docker-compose",
+      "body_md": "Una pyme tiene un monolito PHP que corre en un servidor unico junto con MySQL y Redis. Quiere prepararlo para mover a la nube sin reescribirlo.\n\n**Paso 1 — Dockerizar la app:**\n```dockerfile\nFROM php:8.2-fpm\nWORKDIR /app\nCOPY . .\nRUN composer install --no-dev\nEXPOSE 9000\nCMD [\"php-fpm\"]\n```\n\n**Paso 2 — `docker-compose.yml` para desarrollo local:**\n```yaml\nversion: '3.8'\nservices:\n  app:\n    build: .\n    depends_on: [db, cache]\n    environment:\n      DB_HOST: db\n      REDIS_HOST: cache\n  db:\n    image: mysql:8\n    environment: { MYSQL_ROOT_PASSWORD: secret }\n    volumes: [db_data:/var/lib/mysql]\n  cache:\n    image: redis:7-alpine\n  nginx:\n    image: nginx:alpine\n    ports: [\"80:80\"]\n    depends_on: [app]\nvolumes:\n  db_data:\n```\n\n**Beneficios obtenidos:**\n1. **Reproducibilidad**: el equipo entero usa el mismo entorno con `docker compose up`.\n2. **Aislamiento**: app, DB y cache no chocan en versiones de librerias.\n3. **Portabilidad**: las mismas imagenes corren en staging y produccion.\n4. **Camino a K8s**: cuando la carga crezca, los mismos contenedores se llevan a Deployments con minimas modificaciones.\n\nPregunta tipica EGEL: '¿Que diferencia hay entre imagen y contenedor?' -> imagen es plantilla inmutable, contenedor es instancia en ejecucion."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "IaaS vs PaaS vs SaaS vs FaaS",
+      "metadata": {
+        "headers": ["Aspecto", "IaaS", "PaaS", "SaaS", "FaaS"],
+        "rows": [
+          ["Lo administra el cliente", "SO, runtime, app, datos", "App y datos", "Nada", "Solo codigo de la funcion"],
+          ["Lo administra el proveedor", "Hardware, red, virtualizacion", "SO, runtime, escala", "Todo", "SO, runtime, escala, ejecucion"],
+          ["Flexibilidad", "Maxima", "Media", "Minima", "Baja (limites de tiempo y recursos)"],
+          ["Modelo de costo", "Por hora de VM", "Por instancia / dyno", "Por usuario / suscripcion", "Por invocacion + GB-segundo"],
+          ["Escala a cero", "No", "No (suele tener minimo)", "N/A", "Si"],
+          ["Ejemplo", "AWS EC2", "Vercel, Heroku", "Gmail, Notion", "AWS Lambda, Cloud Functions"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas de cloud y orquestacion",
+      "metadata": {
+        "tools": [
+          { "name": "AWS (EC2, Lambda, S3, RDS)", "url": "https://aws.amazon.com/", "description": "Proveedor cloud lider. EC2 (IaaS), Lambda (FaaS), S3 (storage), RDS (DB administrada)." },
+          { "name": "Docker", "url": "https://www.docker.com/", "description": "Motor de contenedores estandar. Empaqueta apps con todas sus dependencias en imagenes portables." },
+          { "name": "Kubernetes", "url": "https://kubernetes.io/", "description": "Orquestador de contenedores: programa Pods, escala, hace rolling updates y self-healing." },
+          { "name": "Terraform", "url": "https://www.terraform.io/", "description": "Infraestructura como codigo declarativa multi-cloud (AWS, GCP, Azure, etc.)." },
+          { "name": "Vercel", "url": "https://vercel.com/", "description": "PaaS optimizado para Next.js con edge functions, CDN global y previews por PR." },
+          { "name": "Cloudflare", "url": "https://www.cloudflare.com/", "description": "CDN + edge computing (Workers) + DNS + proteccion DDoS en red global." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "IaaS", "def": "Infrastructure-as-a-Service. Recursos de computo virtualizado donde el cliente administra desde el SO hacia arriba." },
+          { "term": "PaaS", "def": "Platform-as-a-Service. Plataforma administrada donde el cliente solo despliega codigo." },
+          { "term": "SaaS", "def": "Software-as-a-Service. Aplicacion final lista para usar via navegador." },
+          { "term": "FaaS", "def": "Functions-as-a-Service. Ejecucion de funciones bajo demanda con escala a cero." },
+          { "term": "Pod", "def": "Unidad minima de despliegue en Kubernetes; agrupa uno o mas contenedores que comparten red y volumenes." },
+          { "term": "Image (Docker)", "def": "Plantilla inmutable de solo lectura que describe un contenedor." },
+          { "term": "Container", "def": "Instancia en ejecucion de una imagen Docker con su capa escribible." },
+          { "term": "Edge", "def": "Ejecucion de codigo en POPs cercanos al usuario para reducir latencia." },
+          { "term": "Serverless", "def": "Modelo de ejecucion sin administrar servidores; abarca FaaS, BaaS y servicios administrados." },
+          { "term": "CDN", "def": "Content Delivery Network. Red distribuida que cachea contenido estatico cerca del usuario." }
+        ]
+      }
+    },
+    { "type": "quick_quiz", "order": 8, "title": "Quick Quiz", "metadata": null },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "AWS Well-Architected Framework", "url": "https://aws.amazon.com/architecture/well-architected/" },
+          { "title": "Kubernetes Documentation", "url": "https://kubernetes.io/docs/home/" },
+          { "title": "Docker Documentation", "url": "https://docs.docker.com/" },
+          { "title": "Google Cloud — Serverless overview", "url": "https://cloud.google.com/serverless" },
+          { "title": "NIST — Definition of Cloud Computing (SP 800-145)", "url": "https://csrc.nist.gov/publications/detail/sp/800-145/final" }
+        ]
+      }
+    }
+  ]
+}

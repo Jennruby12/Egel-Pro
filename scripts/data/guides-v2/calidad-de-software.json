@@ -1,0 +1,128 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 4,
+    "area_name": "Gestion de Proyectos de Software",
+    "subarea_num": 2,
+    "subarea_name": "Calidad de software",
+    "slug": "calidad-de-software",
+    "title": "Calidad de software (ISO 25010, CMMI, MTBF)",
+    "short_description": "Modelo ISO/IEC 25010, niveles de madurez CMMI, plan de aseguramiento de calidad IEEE 730, complejidad ciclomatica de McCabe, TDD/BDD, metricas de confiabilidad (MTBF, MTTR, MTTF) y la piramide de pruebas.",
+    "weight_in_exam": 10,
+    "estimated_minutes": 50,
+    "difficulty": "intermedio",
+    "order_in_area": 2,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "ISO/IEC 25010", "definition_md": "Modelo de calidad de producto de software con 8 caracteristicas: adecuacion funcional, eficiencia de desempeno, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad y portabilidad. Sucede a ISO/IEC 9126.", "importance": "alta" },
+    { "concept": "CMMI", "definition_md": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos: 1 Inicial, 2 Gestionado, 3 Definido, 4 Cuantitativamente gestionado, 5 Optimizado.", "importance": "alta" },
+    { "concept": "IEEE 730", "definition_md": "Estandar para el Plan de Aseguramiento de Calidad de Software (SQAP). Define estructura: proposito, referencias, gestion, documentacion, estandares, revisiones, pruebas, reportes y herramientas.", "importance": "alta" },
+    { "concept": "Complejidad ciclomatica (McCabe)", "definition_md": "Metrica que cuenta el numero de caminos linealmente independientes en el codigo. Formula: V(G) = E - N + 2, o tambien numero de decisiones + 1. Recomendacion: V(G) <= 10 por funcion.", "importance": "alta" },
+    { "concept": "TDD (Test Driven Development)", "definition_md": "Ciclo Red-Green-Refactor: escribir test que falla, codigo minimo para que pase, refactorizar. Mejora diseno y reduce defectos.", "importance": "alta" },
+    { "concept": "BDD (Behavior Driven Development)", "definition_md": "Extension de TDD orientada al comportamiento desde la perspectiva del negocio. Usa lenguaje Gherkin (Given-When-Then) y herramientas como Cucumber.", "importance": "media" },
+    { "concept": "MTBF", "definition_md": "Mean Time Between Failures. Tiempo promedio entre dos fallas consecutivas. Indicador de fiabilidad en sistemas reparables. MTBF = tiempo total operativo / numero de fallas.", "importance": "alta" },
+    { "concept": "MTTR", "definition_md": "Mean Time To Repair. Tiempo promedio para reparar una falla. Indicador de mantenibilidad. Disponibilidad = MTBF / (MTBF + MTTR).", "importance": "alta" },
+    { "concept": "MTTF", "definition_md": "Mean Time To Failure. Tiempo promedio hasta la primera falla. Aplica a sistemas no reparables (un componente que se reemplaza).", "importance": "media" },
+    { "concept": "V&V (Verificacion y Validacion)", "definition_md": "Verificacion: se construye el producto correctamente segun la especificacion. Validacion: se construye el producto correcto segun las necesidades del usuario.", "importance": "alta" },
+    { "concept": "Piramide de pruebas", "definition_md": "Estrategia de balance de pruebas: base amplia de unitarias (rapidas, baratas), capa media de integracion, cima delgada de E2E (lentas, costosas). Propuesta por Mike Cohn.", "importance": "alta" },
+    { "concept": "Niveles de pruebas", "definition_md": "Unitarias (componente aislado), Integracion (interaccion entre modulos), Sistema (producto completo en ambiente similar a produccion), Aceptacion (validacion con usuario o cliente, UAT).", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea es la mas pesada de Area 4 con **10 reactivos** y mide tu dominio sobre modelos formales de calidad. El examen suele probar tres frentes: (1) reconocer las **8 caracteristicas de ISO/IEC 25010** y diferenciarlas de las **6 del antiguo ISO/IEC 9126**, (2) ubicar practicas tipicas en el **nivel CMMI** correcto y (3) interpretar metricas de confiabilidad (**MTBF, MTTR, MTTF**) y de codigo (complejidad ciclomatica).\n\nUn error frecuente es confundir **V&V** (verificacion vs validacion) y otro es asumir que TDD garantiza calidad sin necesidad de QA. Tambien aparecen preguntas sobre la **piramide de pruebas**: por que tener 80% de pruebas E2E es un anti-patron y como balancear unitarias, integracion y E2E. Memoriza las formulas de complejidad ciclomatica y disponibilidad — son puntos faciles si los identificas a tiempo."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Complejidad ciclomatica de una funcion",
+      "body_md": "Considera la siguiente funcion en pseudocodigo que clasifica una calificacion EGEL:\n\n```\nfunction clasificar(score) {\n  if (score < 60) {\n    return 'ANS';\n  } else if (score < 80) {\n    if (score < 70) {\n      return 'Satisfactorio bajo';\n    } else {\n      return 'Satisfactorio alto';\n    }\n  } else {\n    if (score >= 95) {\n      return 'Sobresaliente top';\n    } else {\n      return 'Sobresaliente';\n    }\n  }\n}\n```\n\n**Calculo por conteo de decisiones:** identifica cada condicion (if/else if):\n- `score < 60` → 1\n- `score < 80` → 1\n- `score < 70` → 1\n- `score >= 95` → 1\n\nTotal de decisiones binarias = 4. **V(G) = 4 + 1 = 5**.\n\n**Calculo por grafo:** dibujando el flujo se obtienen E = 11 aristas y N = 8 nodos:\n\n`V(G) = E - N + 2 = 11 - 8 + 2 = 5`.\n\nInterpretacion: la funcion tiene 5 caminos independientes, por lo que se requieren al menos 5 casos de prueba para cobertura de caminos. Como V(G) <= 10, sigue siendo mantenible segun McCabe. Si pasara de 10, conviene refactorizar (extraer funciones o usar tabla de decision)."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Plan de calidad para sistema fintech bajo CNBV",
+      "body_md": "Una fintech mexicana desarrolla una plataforma de credito digital regulada por la **CNBV** y la **Ley para Regular las Instituciones de Tecnologia Financiera**. El equipo debe redactar un Plan de Aseguramiento de Calidad (SQAP) conforme a **IEEE 730** que cubra:\n\n1. **Caracteristicas ISO/IEC 25010 prioritarias:**\n   - *Seguridad*: cifrado AES-256 en reposo, TLS 1.3 en transito, MFA obligatorio.\n   - *Fiabilidad*: MTBF objetivo >= 720 horas (1 falla cada 30 dias), MTTR <= 30 min, disponibilidad 99.95%.\n   - *Adecuacion funcional*: cumplimiento de CFDI 4.0 y reportes regulatorios R04 a CNBV.\n   - *Mantenibilidad*: complejidad ciclomatica <= 10 por funcion, cobertura de pruebas unitarias >= 80%.\n\n2. **Practicas de aseguramiento:**\n   - TDD para logica de calculo de intereses (alto riesgo financiero).\n   - BDD con Cucumber para flujos de aprobacion de credito (lenguaje compartido con compliance).\n   - Pentest trimestral por tercero certificado.\n   - SonarQube en pipeline CI/CD con quality gate bloqueante.\n\n3. **Nivel CMMI objetivo:** Nivel 3 (Definido) en primer ano, con meta de Nivel 4 (Cuantitativamente gestionado) en segundo ano cuando existan suficientes datos historicos para control estadistico de procesos.\n\n4. **Auditorias:** revisiones formales cada release, kick-off con la **CNBV** y reportes mensuales de metricas (defect density, escape rate, MTBF, MTTR).\n\nEl plan deja claro que la calidad no es responsabilidad exclusiva del equipo de QA sino una propiedad emergente del proceso completo."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Niveles de madurez CMMI",
+      "metadata": {
+        "headers": ["Nivel", "Nombre", "Caracteristica distintiva", "Ejemplo de practica"],
+        "rows": [
+          ["1", "Inicial", "Procesos caoticos, ad-hoc, dependientes de heroes", "Equipos que reaccionan a crisis sin documentar nada"],
+          ["2", "Gestionado", "Procesos planificados y ejecutados por proyecto", "Gestion de requerimientos, planeacion, control de calidad basico por proyecto"],
+          ["3", "Definido", "Procesos estandar de la organizacion, adaptados por proyecto", "Plantillas corporativas, capacitacion formal, definicion de procesos comunes"],
+          ["4", "Cuantitativamente gestionado", "Procesos medidos y controlados estadisticamente", "Control estadistico de procesos (SPC), modelos predictivos de defectos"],
+          ["5", "Optimizado", "Mejora continua basada en datos cuantitativos", "Innovacion de procesos, causal analysis and resolution, eliminacion de causas raiz"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas de aseguramiento de calidad",
+      "metadata": {
+        "tools": [
+          { "name": "SonarQube", "url": "https://www.sonarsource.com/products/sonarqube/", "description": "Analisis estatico de codigo: complejidad ciclomatica, code smells, cobertura, deuda tecnica. Integrable a CI/CD con quality gates." },
+          { "name": "JUnit", "url": "https://junit.org/", "description": "Framework de pruebas unitarias estandar en Java. Base para TDD en ecosistema JVM." },
+          { "name": "pytest", "url": "https://docs.pytest.org/", "description": "Framework moderno de pruebas para Python. Soporta fixtures, parametrizacion y plugins de cobertura." },
+          { "name": "Selenium", "url": "https://www.selenium.dev/", "description": "Automatizacion de pruebas E2E sobre navegadores. Util para pruebas de aceptacion de UIs web." },
+          { "name": "Postman", "url": "https://www.postman.com/", "description": "Plataforma para pruebas de APIs REST y GraphQL con colecciones, mocks y monitores automatizados." },
+          { "name": "JMeter", "url": "https://jmeter.apache.org/", "description": "Pruebas de carga y rendimiento. Mide tiempos de respuesta, throughput y concurrencia." },
+          { "name": "Cucumber", "url": "https://cucumber.io/", "description": "Framework BDD que ejecuta especificaciones en formato Gherkin (Given-When-Then)." },
+          { "name": "TestRail", "url": "https://www.testrail.com/", "description": "Gestion de casos de prueba, ejecuciones y reportes. Estandar para equipos de QA formales." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "ISO/IEC 25010", "def": "Modelo de calidad de producto de software con 8 caracteristicas. Sucesor de ISO/IEC 9126." },
+          { "term": "CMMI", "def": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos." },
+          { "term": "V&V", "def": "Verificacion (segun especificacion) y Validacion (segun necesidades del usuario)." },
+          { "term": "TDD", "def": "Test Driven Development. Ciclo Red-Green-Refactor: test primero, codigo despues." },
+          { "term": "BDD", "def": "Behavior Driven Development. Especificacion ejecutable con Gherkin (Given-When-Then)." },
+          { "term": "MTBF", "def": "Mean Time Between Failures. Tiempo promedio entre fallas en sistemas reparables." },
+          { "term": "MTTR", "def": "Mean Time To Repair. Tiempo promedio para reparar una falla." },
+          { "term": "Defect density", "def": "Defectos por KLOC o por punto de funcion. Indicador de calidad del producto." },
+          { "term": "Complejidad ciclomatica", "def": "Metrica de McCabe que cuenta caminos independientes. V(G) = decisiones + 1." },
+          { "term": "Smoke test", "def": "Pruebas rapidas que validan que el build basico funciona antes de pruebas mas profundas." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "ISO/IEC 25010:2011 — Systems and software Quality Requirements and Evaluation (SQuaRE)", "url": "https://www.iso.org/standard/35733.html" },
+          { "title": "CMMI Institute — CMMI for Development", "url": "https://cmmiinstitute.com/cmmi" },
+          { "title": "IEEE 730-2014 — Standard for Software Quality Assurance Processes", "url": "https://standards.ieee.org/ieee/730/5284/" },
+          { "title": "Kent Beck — Test Driven Development: By Example", "url": "https://www.oreilly.com/library/view/test-driven-development/0321146530/" },
+          { "title": "McCabe — A Complexity Measure (IEEE TSE 1976)", "url": "https://ieeexplore.ieee.org/document/1702388" }
+        ]
+      }
+    }
+  ]
+}

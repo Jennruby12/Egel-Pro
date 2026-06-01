@@ -1,0 +1,129 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 1,
+    "area_name": "Analisis de Sistemas de Software",
+    "subarea_num": 3,
+    "subarea_name": "Tecnicas y herramientas de documentacion de requerimientos",
+    "slug": "documentacion-de-requerimientos",
+    "title": "Documentacion de requerimientos: SRS, UML y casos de uso",
+    "short_description": "Documentacion formal de requerimientos con SRS (IEEE 29148), casos de uso estilo Cockburn, diagramas UML (actividad, secuencia, clases), modelado ER y SysML.",
+    "weight_in_exam": 10,
+    "estimated_minutes": 50,
+    "difficulty": "intermedio",
+    "order_in_area": 3,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "SRS IEEE 29148", "definition_md": "Software Requirements Specification segun el estandar ISO/IEC/IEEE 29148:2018. Documento maestro que recopila FRs, NFRs, restricciones, casos de uso y criterios de aceptacion con estructura formal.", "importance": "alta" },
+    { "concept": "Caso de uso (Cockburn)", "definition_md": "Descripcion textual de la interaccion entre actores y el sistema para lograr una meta de negocio. Estilo Alistair Cockburn: nombre, actor primario, precondiciones, flujo principal, flujos alternativos, postcondiciones.", "importance": "alta" },
+    { "concept": "Actor", "definition_md": "Rol externo al sistema que interactua con el. Puede ser humano (usuario), otro sistema o un evento de tiempo. NO es una persona especifica sino un rol.", "importance": "alta" },
+    { "concept": "Include (<<include>>)", "definition_md": "Relacion entre casos de uso donde el caso base SIEMPRE incluye al caso reutilizable. Ej. 'Pagar Cuenta' include 'Autenticar Usuario'.", "importance": "alta" },
+    { "concept": "Extend (<<extend>>)", "definition_md": "Relacion donde un caso de uso extiende al base SOLO bajo cierta condicion (punto de extension). Ej. 'Pagar Cuenta' es extendido por 'Aplicar Cupon' si el cliente tiene uno.", "importance": "alta" },
+    { "concept": "Generalizacion", "definition_md": "Relacion de herencia entre actores o casos de uso. Ej. 'Cliente Premium' generaliza a 'Cliente'. El especializado hereda comportamiento.", "importance": "alta" },
+    { "concept": "Diagrama de actividad", "definition_md": "Diagrama UML que modela el flujo de control de un proceso usando nodos de accion, decisiones (rombo), fork/join (barras) y swimlanes para responsabilidades.", "importance": "alta" },
+    { "concept": "Diagrama de secuencia", "definition_md": "Diagrama UML de interaccion que muestra el orden temporal de mensajes entre objetos/lifelines. Util para detallar el flujo de un caso de uso a nivel tecnico.", "importance": "alta" },
+    { "concept": "Diagrama de clases", "definition_md": "Diagrama UML estructural con clases (atributos, operaciones), relaciones (asociacion, agregacion, composicion, herencia) y multiplicidades. Base del diseno orientado a objetos.", "importance": "alta" },
+    { "concept": "Diagrama ER", "definition_md": "Entity-Relationship. Modelo conceptual de datos con entidades, atributos, relaciones y cardinalidades. Antecede al modelo relacional fisico.", "importance": "alta" },
+    { "concept": "Multiplicidad", "definition_md": "Cardinalidad en UML que indica cuantas instancias participan en una relacion. Notacion: 1, 0..1, *, 1..*, 0..*. Equivalente al cardinalidad ER.", "importance": "alta" },
+    { "concept": "SysML", "definition_md": "Systems Modeling Language. Extension de UML para ingenieria de sistemas. Anade diagrama de requerimientos, paramétrico y bloques (BDD/IBD).", "importance": "media" },
+    { "concept": "Historia de usuario", "definition_md": "Formato agil de requerimiento: 'Como [rol] quiero [accion] para [beneficio]'. Complementa, NO reemplaza al caso de uso para sistemas grandes.", "importance": "alta" },
+    { "concept": "Criterios de aceptacion", "definition_md": "Condiciones medibles que el requerimiento debe cumplir para considerarse terminado. Formato Gherkin: Given/When/Then. Sirven de base para pruebas.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea cubre **10 reactivos** del EGEL y evalua tu capacidad de DOCUMENTAR requerimientos con formalismos. Tres bloques son criticos: (1) estructura del **SRS IEEE 29148**, (2) **casos de uso estilo Cockburn** con flujos alternativos y (3) **diagramas UML** principalmente actividad, secuencia, clases y casos de uso.\n\nLa pregunta clasica del EGEL contrasta **include** vs **extend** vs **generalizacion** — es OBLIGATORIO dominar las tres. Tambien preguntan multiplicidades en diagrama de clases (0..1, 1..*, *), diferencias entre **agregacion** y **composicion** (rombo vacio vs lleno) y elementos de un diagrama de actividad (fork, join, decision node, merge).\n\nLas historias de usuario y criterios de aceptacion Gherkin tambien aparecen, pero en el EGEL ISOFT el peso mayor lo lleva UML. Memoriza los simbolos y practica leyendo diagramas: el examen suele mostrar un diagrama y preguntar 'que representa la flecha X'."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "POS de restaurante: caso de uso 'Cobrar Cuenta'",
+      "body_md": "Una cadena de restaurantes mexicana implementa un POS. Documentamos el caso de uso 'Cobrar Cuenta' estilo Cockburn.\n\n**Caso de uso:** CU-04 Cobrar Cuenta\n**Actor primario:** Mesero\n**Actores secundarios:** Sistema de Facturacion CFDI 4.0, Terminal Bancaria\n**Precondiciones:** la mesa tiene una cuenta abierta con al menos un platillo registrado.\n**Postcondicion exitosa:** la cuenta queda cerrada, se emite el CFDI y se libera la mesa.\n\n**Flujo principal:**\n1. El Mesero selecciona la mesa en la pantalla principal.\n2. El sistema muestra el detalle de consumo con subtotal, IVA y propina sugerida (10%).\n3. El Mesero confirma el total con el comensal.\n4. El sistema pregunta forma de pago: efectivo, tarjeta o transferencia.\n5. El Mesero registra el pago.\n6. El sistema **include** 'Emitir CFDI' (siempre se emite).\n7. El sistema cierra la cuenta y libera la mesa.\n\n**Flujo alternativo 4a — Pago dividido:**\n- 4a.1 El Mesero indica 'dividir cuenta'.\n- 4a.2 El sistema permite seleccionar items por comensal.\n- 4a.3 Continua en el paso 5 por cada subcuenta.\n\n**Flujo alternativo 5a — Pago rechazado:**\n- 5a.1 La terminal bancaria responde 'rechazado'.\n- 5a.2 El sistema notifica al Mesero y vuelve al paso 4.\n\n**Extension:** 'Aplicar Cupon' **extend** este caso en el punto 3 si el cliente presenta cupon valido. La extension recalcula el total.\n\nNota como 'Emitir CFDI' va con **include** (siempre ocurre) y 'Aplicar Cupon' va con **extend** (solo bajo condicion)."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Sistema de reservaciones de hotel: casos de uso completos",
+      "body_md": "Un grupo hotelero de Cancun documenta su sistema central de reservaciones con UML. Identifican 4 actores y 9 casos de uso principales.\n\n**Actores:**\n- **Huesped** (cliente final, hereda de Visitante via generalizacion)\n- **Visitante** (usuario no registrado que solo busca)\n- **Recepcionista** (empleado del hotel)\n- **Sistema de Pagos** (actor externo, ej. Stripe Mexico)\n\n**Casos de uso identificados:**\n1. CU-01 Buscar Disponibilidad (Visitante, Huesped)\n2. CU-02 Crear Cuenta (Visitante) — **include** 'Validar Email'\n3. CU-03 Iniciar Sesion (Huesped, Recepcionista) — **extend** por 'Recuperar Password'\n4. CU-04 Reservar Habitacion (Huesped, Recepcionista) — **include** 'Procesar Pago'\n5. CU-05 Procesar Pago (interno) — interactua con Sistema de Pagos\n6. CU-06 Cancelar Reservacion (Huesped, Recepcionista) — **extend** por 'Aplicar Penalizacion'\n7. CU-07 Hacer Check-in (Recepcionista) — **include** 'Verificar Identidad'\n8. CU-08 Hacer Check-out (Recepcionista) — **include** 'Generar Factura'\n9. CU-09 Administrar Tarifas (Recepcionista especializado)\n\n**Diagrama de clases asociado** muestra las entidades centrales:\n- Reservacion (1) — (1..*) Habitacion con multiplicidad 1..*\n- Reservacion (1) — (1) Huesped\n- Reservacion (1) — (0..1) Factura\n- Hotel (1) ◆— (*) Habitacion (composicion: si se elimina el hotel, las habitaciones desaparecen)\n- Hotel (1) ◇— (*) Empleado (agregacion: los empleados existen sin el hotel)\n\n**Diagrama de secuencia** para CU-04 muestra los mensajes: Huesped -> UI : reservar() ; UI -> Controller : crearReserva() ; Controller -> PagoService : cobrar() ; PagoService -> Stripe : charge() ; Stripe --> PagoService : ok ; Controller -> ReservaRepo : guardar() ; UI --> Huesped : confirmacion.\n\nEl equipo usa **Visual Paradigm** para mantener trazabilidad entre casos de uso, clases y secuencias."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Include vs Extend vs Generalizacion",
+      "metadata": {
+        "headers": ["Aspecto", "Include (<<include>>)", "Extend (<<extend>>)", "Generalizacion"],
+        "rows": [
+          ["Direccion de flecha", "Del caso base al incluido", "Del caso extension al base", "Del especializado al general"],
+          ["Cuando ocurre", "SIEMPRE se ejecuta", "SOLO bajo condicion (punto de extension)", "Es relacion estructural (herencia)"],
+          ["Ejemplo tipico", "'Pagar' include 'Autenticar'", "'Pagar' extend por 'Aplicar Cupon'", "'Cliente Premium' generaliza 'Cliente'"],
+          ["Aplica a", "Casos de uso", "Casos de uso", "Casos de uso Y actores"],
+          ["Proposito", "Reutilizar comportamiento comun", "Modelar comportamiento opcional", "Especializar / extender semantica"],
+          ["Caso base depende del otro", "Si, lo necesita siempre", "No, funciona sin la extension", "Si, hereda atributos/operaciones"],
+          ["Notacion adicional", "Ninguna", "Punto de extension nombrado", "Triangulo vacio en herencia"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas de modelado UML y documentacion",
+      "metadata": {
+        "tools": [
+          { "name": "Visual Paradigm", "url": "https://www.visual-paradigm.com/", "description": "Suite UML/SysML completa con trazabilidad de requerimientos a casos de uso, generacion de SRS y reportes IEEE 29148." },
+          { "name": "StarUML", "url": "https://staruml.io/", "description": "Editor UML/SysML ligero y rapido. Soporta UML 2.5 completo y exporta a PDF, PNG y codigo." },
+          { "name": "Lucidchart", "url": "https://www.lucidchart.com/", "description": "Diagramas colaborativos en la nube con plantillas UML, ER y BPMN. Excelente para equipos remotos." },
+          { "name": "Draw.io / diagrams.net", "url": "https://www.drawio.com/", "description": "Editor gratuito de diagramas con shapes UML/ER. Se integra con Google Drive, Confluence y GitHub." },
+          { "name": "PlantUML", "url": "https://plantuml.com/", "description": "Diagramas UML como codigo (text-based). Ideal para versionar en Git junto al SRS. Soporta casos de uso, secuencia, clases, actividad y mas." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Include", "def": "Relacion UML donde el caso de uso base SIEMPRE incluye el comportamiento del caso incluido. Flecha del base al incluido." },
+          { "term": "Extend", "def": "Relacion UML donde un caso extiende al base SOLO bajo cierta condicion en un punto de extension. Flecha del extensor al base." },
+          { "term": "Generalizacion", "def": "Relacion de herencia entre actores o casos de uso. El especializado hereda comportamiento del general." },
+          { "term": "Multiplicidad", "def": "Cardinalidad UML en una asociacion: 1, 0..1, *, 1..*, 0..*." },
+          { "term": "Fork", "def": "Nodo en diagrama de actividad que divide un flujo en multiples flujos concurrentes (barra horizontal)." },
+          { "term": "Join", "def": "Nodo en diagrama de actividad que sincroniza multiples flujos concurrentes en uno (barra horizontal)." },
+          { "term": "Decision node", "def": "Nodo en diagrama de actividad con forma de rombo que evalua una condicion y bifurca el flujo." },
+          { "term": "SysML Requirement Diagram", "def": "Diagrama de SysML para representar requerimientos y sus relaciones (contain, derive, satisfy, verify, trace)." },
+          { "term": "Cockburn", "def": "Alistair Cockburn, autor del formato estandar de casos de uso con flujo principal y alternativos." },
+          { "term": "Agregacion vs Composicion", "def": "Agregacion (rombo vacio): la parte puede existir sin el todo. Composicion (rombo lleno): la parte muere con el todo." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Booch, Rumbaugh & Jacobson — The Unified Modeling Language User Guide (UML 2.5)", "url": "https://www.pearson.com/en-us/subject-catalog/p/unified-modeling-language-user-guide-the/P200000003388" },
+          { "title": "Alistair Cockburn — Writing Effective Use Cases", "url": "https://www.pearson.com/en-us/subject-catalog/p/writing-effective-use-cases/P200000009377" },
+          { "title": "Sommerville — Ingenieria de Software (Cap. 5: Modelos de Sistemas)", "url": "https://www.pearsonenespanol.com/mexico/educacion-superior/sommerville-ingenieria-software-9-edicion" },
+          { "title": "OMG — UML 2.5.1 Specification", "url": "https://www.omg.org/spec/UML/2.5.1/" },
+          { "title": "IEEE 29148-2018 — Requirements engineering", "url": "https://standards.ieee.org/ieee/29148/6937/" }
+        ]
+      }
+    }
+  ]
+}

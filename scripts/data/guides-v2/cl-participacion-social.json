@@ -1,0 +1,125 @@
+{
+  "guide": {
+    "section": "transversal",
+    "area_num": 1,
+    "area_name": "Comprension Lectora",
+    "subarea_num": 3,
+    "subarea_name": "Participacion social",
+    "slug": "cl-participacion-social",
+    "title": "Comprension lectora: Participacion social",
+    "short_description": "Lectura critica de textos periodisticos y de comunicacion social: generos (nota, cronica, columna, reportaje, editorial), distincion hecho/opinion, piramide invertida, lead, 5W+H, fuentes, sesgos y falacias argumentativas.",
+    "weight_in_exam": 8,
+    "estimated_minutes": 30,
+    "difficulty": "intermedio",
+    "order_in_area": 3,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Generos periodisticos", "definition_md": "Formas convencionales de comunicacion en prensa. Se dividen en informativos (nota, reportaje, entrevista), interpretativos (cronica, reportaje extenso) y de opinion (editorial, columna, articulo).", "importance": "alta" },
+    { "concept": "Hecho vs opinion", "definition_md": "El hecho es un dato verificable ('el INE reporta 95 millones de electores'); la opinion es una valoracion subjetiva ('el INE actuo con torpeza'). Distinguirlos es la habilidad central del lector critico.", "importance": "alta" },
+    { "concept": "Piramide invertida", "definition_md": "Estructura clasica de la nota informativa: lo mas importante al inicio, los detalles secundarios al final. Permite al lector entender el hecho con solo leer las primeras lineas.", "importance": "alta" },
+    { "concept": "Lead", "definition_md": "Primer parrafo de la nota informativa. Condensa el hecho central respondiendo las preguntas basicas. Es la entrada que decide si el lector continua.", "importance": "alta" },
+    { "concept": "Las 5W+H", "definition_md": "Esquema clasico de la nota: who (quien), what (que), when (cuando), where (donde), why (por que) y how (como). Estructura el lead y guia la lectura critica.", "importance": "alta" },
+    { "concept": "Fuente", "definition_md": "Origen de la informacion: persona, documento, institucion. Una fuente puede ser oficial, experta, testimonial o anonima. La calidad de las fuentes determina la solidez de la nota.", "importance": "alta" },
+    { "concept": "Atribucion", "definition_md": "Mecanismo de citar la fuente en el texto: 'segun el INEGI', 'declaro el funcionario', 'de acuerdo con un informe de 2024'. Permite verificar y deslindar responsabilidad.", "importance": "media" },
+    { "concept": "Sesgo", "definition_md": "Inclinacion sistematica a favor o en contra de un actor o postura. Puede ser de seleccion (que se cubre), de encuadre (como se presenta) o de fuentes (a quien se cita).", "importance": "alta" },
+    { "concept": "Falacia", "definition_md": "Razonamiento que parece valido pero no lo es. Tipos clasicos: ad hominem, hombre de paja, falsa dicotomia, apelacion a la autoridad indebida, generalizacion apresurada.", "importance": "alta" },
+    { "concept": "Argumentum ad hominem", "definition_md": "Falacia que ataca al emisor del argumento en lugar de refutar su contenido: 'no le creas, es de tal partido'.", "importance": "media" },
+    { "concept": "Comunicado", "definition_md": "Texto oficial breve emitido por una institucion para informar de una postura, decision o aclaracion. Estructura: titulo, lugar y fecha, cuerpo, firma institucional.", "importance": "media" },
+    { "concept": "Convocatoria", "definition_md": "Documento que invita a participar en un acto, concurso o proceso. Detalla requisitos, plazos, sede y forma de inscripcion.", "importance": "media" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea pesa **8 reactivos** en el EGEL y mide tu capacidad para leer con sentido critico textos de prensa, comunicados oficiales, convocatorias y otros materiales de la esfera publica. La pregunta central que el examen formula es: ¿puedes distinguir lo que la nota afirma como **hecho** de lo que el columnista plantea como **opinion**?\n\nLos errores frecuentes incluyen:\n- Tomar como hecho lo que es interpretacion del autor.\n- No detectar **falacias** clasicas como ad hominem, hombre de paja o falsa dicotomia.\n- Confundir **nota informativa** con **editorial** porque ambos hablan del mismo tema.\n- Pasar por alto la **atribucion** de fuentes: cuando una nota dice 'fuentes anonimas senalaron', el peso probatorio cambia.\n\nDomina los **generos periodisticos**, identifica el **lead** y las **5W+H**, rastrea las **fuentes** y reconoce las **falacias** mas comunes. Con ese kit, esta subarea aporta puntos seguros."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Cierre vial: nota vs columna",
+      "body_md": "Lee el siguiente fragmento de **nota informativa**:\n\n*Ciudad de Mexico, 14 de marzo. El gobierno capitalino informo que la avenida Reforma estara cerrada desde las 6 horas del proximo sabado y hasta las 22 horas del domingo por la celebracion del Maraton Internacional. La Secretaria de Movilidad recomendo a los automovilistas usar las rutas alternas de Insurgentes y Circuito Interior. Se desplegaran 1,200 elementos de policia auxiliar, segun el comunicado oficial.*\n\nEs **informativa**: presenta hechos verificables, atribuye al gobierno y a la Secretaria, responde 5W+H y carece de juicios de valor.\n\nLee el fragmento de **columna de opinion** sobre el mismo tema:\n\n*Otra vez el caos. La autoridad capitalina insiste en cerrar Reforma para satisfacer a un purado de corredores extranjeros mientras millones de personas pierden horas de su domingo. Que la ciudad se ajuste al maraton, no al reves: he ahi la logica absurda de quienes nos gobiernan.*\n\nEs **opinion**: usa adjetivos cargados ('caos', 'purado', 'absurda'), generaliza ('millones de personas'), no atribuye fuentes y emite un juicio.\n\n**Pregunta tipica EGEL:** ¿En cual texto la valoracion 'logica absurda' descalifica al gobierno? → En la columna. Y ¿que genero corresponde a cada uno? → Nota informativa y columna de opinion."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Editorial: tesis, sesgo y falacia",
+      "body_md": "Un editorial publicado tras una reforma educativa afirma:\n\n*La reforma propuesta por la SEP no es sino el regreso de la vieja escuela autoritaria. Sus defensores hablan de calidad, pero todos los analistas serios saben que se trata de un retroceso. Quien no comparta esta vision o defiende al gobierno o esta mal informado.*\n\n**Tesis del editorial:** la reforma es un retroceso autoritario.\n\n**Sesgo:** de encuadre (presenta la reforma solo desde el angulo negativo) y de fuentes (alude a 'analistas serios' sin citarlos).\n\n**Falacias detectables:**\n1. **Ad hominem implicito**: 'quien no comparta esta vision o defiende al gobierno o esta mal informado' descalifica al disidente por su posicion, no por su argumento.\n2. **Falsa dicotomia**: presenta solo dos opciones para quien discrepa (oficialista o ignorante), excluyendo posiciones intermedias.\n3. **Apelacion a la autoridad indebida**: 'todos los analistas serios saben' invoca una autoridad anonima y vaga.\n4. **Hombre de paja**: reduce la postura adversa al 'autoritarismo de la vieja escuela' sin describir los argumentos reales de quienes defienden la reforma.\n\n**Pregunta tipica EGEL:** ¿Que falacia se identifica en 'quien no comparta esta vision o defiende al gobierno o esta mal informado'? → Falsa dicotomia (excluyente). El lector critico no descarta el editorial: detecta sus recursos retoricos y separa lo que esta probado de lo que esta afirmado sin sustento."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Generos periodisticos",
+      "metadata": {
+        "headers": ["Genero", "Proposito", "Voz del autor", "Estructura tipica"],
+        "rows": [
+          ["Nota informativa", "Reportar un hecho verificable", "Neutra, sin opinion", "Piramide invertida con lead y 5W+H"],
+          ["Cronica", "Narrar el hecho con detalle e impresion", "Visible pero no opina", "Narrativa, cronologica, descriptiva"],
+          ["Editorial", "Fijar postura institucional del medio", "Voz del medio, sin firma personal", "Argumentativa, tesis y sustento"],
+          ["Reportaje", "Profundizar en un tema con multiples fuentes", "Voz autoral con investigacion", "Contextual, varios angulos, datos"],
+          ["Columna", "Opinar de forma regular sobre un tema", "Voz personal del autor firmante", "Argumentativa, estilo libre"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas de verificacion y lectura critica",
+      "metadata": {
+        "tools": [
+          { "name": "Verification Handbook", "url": "https://verificationhandbook.com/", "description": "Manual libre con tecnicas para verificar contenido digital: imagenes, videos, fuentes anonimas, redes sociales." },
+          { "name": "FactCheck.org", "url": "https://www.factcheck.org/", "description": "Sitio de verificacion en ingles centrado en politica estadounidense. Util como modelo de chequeo riguroso." },
+          { "name": "Snopes", "url": "https://www.snopes.com/", "description": "Verificador clasico de rumores virales, imagenes manipuladas y citas falsas atribuidas a celebridades." },
+          { "name": "Media Bias Fact Check", "url": "https://mediabiasfactcheck.com/", "description": "Cataloga medios anglo segun su sesgo politico y rigor factual. Util para contrastar lecturas multifuente." },
+          { "name": "Animal Politico Sabueso", "url": "https://www.animalpolitico.com/sabueso", "description": "Verificador mexicano de declaraciones publicas y notas virales en espanol." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "Piramide invertida", "def": "Estructura de la nota informativa: del dato mas importante al menos importante." },
+          { "term": "Lead", "def": "Primer parrafo de la nota; condensa el nucleo del hecho." },
+          { "term": "5W+H", "def": "Esquema basico de quien, que, cuando, donde, por que y como." },
+          { "term": "Fuente", "def": "Origen de la informacion; puede ser oficial, experta, testimonial o documental." },
+          { "term": "Atribucion", "def": "Cita explicita de la fuente dentro del texto para permitir verificacion." },
+          { "term": "Opinion informada", "def": "Juicio sustentado en datos y argumentos; distinto a la opinion meramente afectiva." },
+          { "term": "Sesgo", "def": "Inclinacion sistematica que afecta seleccion, encuadre o cita de fuentes." },
+          { "term": "Falacia", "def": "Razonamiento aparentemente valido pero defectuoso en su logica." },
+          { "term": "Ad hominem", "def": "Falacia que ataca a la persona en vez de refutar su argumento." },
+          { "term": "Hombre de paja", "def": "Falacia que distorsiona la postura ajena para derribarla con mas facilidad." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Ryszard Kapuscinski — Los cinco sentidos del periodista", "url": "https://fundaciongabo.org/es/publicaciones/los-cinco-sentidos-del-periodista" },
+          { "title": "Manual de Estilo — El Pais", "url": "https://elpais.com/estaticos/manual-de-estilo/" },
+          { "title": "Reuters Handbook of Journalism", "url": "https://handbook.reuters.com/" },
+          { "title": "Mar de Fontcuberta — La noticia, pistas para percibir el mundo", "url": "https://www.paidos.com.mx/" },
+          { "title": "Anthony Weston — Las claves de la argumentacion", "url": "https://www.ariel.es/" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 4,
+    "area_name": "Gestion de Proyectos de Software",
+    "subarea_num": 1,
+    "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "slug": "tiempos-costos-rh-riesgo",
+    "title": "Gestion de tiempos, costos, recursos humanos y riesgo",
+    "short_description": "Tecnicas cuantitativas para planear y controlar proyectos de software: WBS, PERT, CPM, Gantt, COCOMO, Puntos de funcion, matriz RACI, FODA, gestion de valor ganado (EVM) y estrategias de respuesta a riesgos.",
+    "weight_in_exam": 8,
+    "estimated_minutes": 45,
+    "difficulty": "intermedio",
+    "order_in_area": 1,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "WBS (Work Breakdown Structure)", "definition_md": "Descomposicion jerarquica del trabajo en entregables y paquetes de trabajo manejables. Regla 8/80: cada paquete entre 8 y 80 horas.", "importance": "alta" },
+    { "concept": "PERT", "definition_md": "Program Evaluation and Review Technique. Estima duraciones con tres puntos: Optimista (O), Mas probable (M) y Pesimista (P). Formula: Te = (O + 4M + P) / 6.", "importance": "alta" },
+    { "concept": "CPM (Ruta critica)", "definition_md": "Critical Path Method. Identifica la secuencia mas larga de actividades dependientes que determina la duracion minima del proyecto. Cualquier retraso en la ruta critica retrasa el proyecto.", "importance": "alta" },
+    { "concept": "Diagrama de Gantt", "definition_md": "Cronograma visual de barras horizontales que muestra duracion, dependencias y avance de tareas. Util para comunicacion con stakeholders no tecnicos.", "importance": "alta" },
+    { "concept": "COCOMO", "definition_md": "Constructive Cost Model (Boehm). Estima esfuerzo en personas-mes a partir de KLOC. Modos: Basico (E = a * KLOC^b), Intermedio (incluye 15 factores), Detallado.", "importance": "alta" },
+    { "concept": "Puntos de funcion (IFPUG)", "definition_md": "Metrica funcional independiente del lenguaje. Mide entradas externas, salidas externas, consultas, archivos logicos internos y de interfaz. Estandar ISO/IEC 20926.", "importance": "alta" },
+    { "concept": "Matriz RACI", "definition_md": "Asignacion de responsabilidades: Responsible (ejecuta), Accountable (rinde cuentas, unico), Consulted (opina antes), Informed (se le avisa).", "importance": "alta" },
+    { "concept": "Analisis FODA", "definition_md": "Fortalezas, Oportunidades, Debilidades y Amenazas. Herramienta de diagnostico estrategico al inicio de un proyecto.", "importance": "media" },
+    { "concept": "EVM (Earned Value Management)", "definition_md": "Tecnica de control integrado de alcance, tiempo y costo. Indicadores clave: PV (planeado), EV (ganado), AC (actual), CV = EV - AC, SV = EV - PV, CPI = EV / AC, SPI = EV / PV.", "importance": "alta" },
+    { "concept": "Estrategias de respuesta al riesgo", "definition_md": "Para riesgos negativos: Evitar, Transferir, Mitigar, Aceptar. Para positivos (oportunidades): Explotar, Compartir, Mejorar, Aceptar.", "importance": "alta" },
+    { "concept": "EMV (Valor Monetario Esperado)", "definition_md": "Esperanza estadistica de un riesgo: EMV = Probabilidad x Impacto monetario. Permite priorizar la reserva de contingencia.", "importance": "media" },
+    { "concept": "Reserva de contingencia y de gestion", "definition_md": "Contingencia: presupuesto para riesgos conocidos identificados. Gestion: para riesgos desconocidos (incognitas-incognitas). Ambas forman la linea base de costos.", "importance": "media" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea cubre **8 reactivos** del Area 4 y mide tu capacidad para planear, estimar y controlar proyectos de software con tecnicas cuantitativas reconocidas en el **PMBOK**. El examen suele combinar formulas (PERT, COCOMO, EVM) con casos situacionales donde debes elegir la estrategia correcta de respuesta a un riesgo o asignar responsabilidades con una matriz RACI.\n\nDomina cuatro pilares: (1) descomposicion del trabajo con **WBS** y secuenciacion con **CPM**, (2) estimacion con **PERT** y **COCOMO** o **Puntos de funcion**, (3) control de avance con **EVM** (CV, SV, CPI, SPI) y (4) gestion de riesgos con las cuatro estrategias clasicas y el calculo de **EMV**. Si memorizas las formulas y entiendes para que sirve cada herramienta, esta subarea te aporta puntos seguros porque las preguntas son altamente predecibles."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Calculo PERT y diagnostico EVM",
+      "body_md": "**Caso 1 — Estimacion PERT.** El lider tecnico estima para la actividad 'Implementar modulo de facturacion':\n- Optimista (O) = 4 dias\n- Mas probable (M) = 6 dias\n- Pesimista (P) = 14 dias\n\nAplicando la formula del tiempo esperado:\n\n`Te = (O + 4M + P) / 6 = (4 + 4*6 + 14) / 6 = 42 / 6 = **7 dias**`\n\nLa desviacion estandar de la actividad es σ = (P - O) / 6 = (14 - 4) / 6 ≈ 1.67 dias. Esto permite calcular intervalos de confianza para el proyecto.\n\n**Caso 2 — Diagnostico con EVM.** A la mitad de un proyecto presupuestado en $1,000,000 MXN se reporta:\n- PV (Valor planeado) = $500,000\n- EV (Valor ganado)  = $450,000\n- AC (Costo actual)  = $530,000\n\nIndicadores:\n- **CV** = EV - AC = 450,000 - 530,000 = -$80,000 (sobrecosto)\n- **SV** = EV - PV = 450,000 - 500,000 = -$50,000 (atraso)\n- **CPI** = EV / AC = 450,000 / 530,000 = **0.85**\n- **SPI** = EV / PV = 450,000 / 500,000 = 0.90\n\nUn CPI de 0.85 significa que por cada peso gastado solo se ha ganado 0.85. Si la tendencia continua, el proyecto **sobrepasara el presupuesto en aproximadamente 18%** (1/0.85 ≈ 1.18). Accion correctiva inmediata: revisar alcance, productividad o reasignar recursos."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Riesgos en proyecto de 6 meses con cliente externo",
+      "body_md": "Una consultora gana un contrato de 6 meses para construir un portal de tramites para un gobierno estatal. El equipo identifica los siguientes riesgos en el **Risk Register**:\n\n| ID | Riesgo | Prob | Impacto | EMV | Estrategia |\n|----|--------|------|---------|-----|------------|\n| R1 | Cambios de alcance por nueva administracion | 60% | -$400,000 | -$240,000 | Mitigar: contrato con control de cambios formal y change request |\n| R2 | Retraso en validacion de UI por parte del cliente | 70% | -$150,000 | -$105,000 | Mitigar: SLA de respuesta de 5 dias habiles, escalamiento automatico |\n| R3 | Fuga del arquitecto senior | 25% | -$300,000 | -$75,000 | Mitigar: documentacion ADR, pair programming, plan de sucesion |\n| R4 | Hackeo del portal en produccion | 15% | -$1,000,000 | -$150,000 | Transferir: seguro de ciberseguridad + pentest tercerizado |\n| R5 | Cambio regulatorio fiscal (CFDI 5.0) | 10% | -$200,000 | -$20,000 | Aceptar: monitorear DOF, reserva de contingencia |\n\n**Reserva de contingencia** = suma de EMV ≈ $590,000 MXN.\n\nLecciones clave para el examen: (1) **mitigar** es la estrategia mas comun en software porque reduce probabilidad o impacto sin eliminar el riesgo; (2) **transferir** se asocia a contratos y seguros; (3) **evitar** implica cambiar el plan (ej. no usar una tecnologia inmadura); (4) **aceptar** se justifica cuando el costo de tratarlo supera el EMV."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Estrategias de respuesta a riesgos negativos",
+      "metadata": {
+        "headers": ["Estrategia", "Que hace", "Cuando aplicarla", "Ejemplo en software"],
+        "rows": [
+          ["Evitar", "Elimina la causa del riesgo cambiando el plan", "Riesgo de alto impacto y baja tolerancia", "Cancelar uso de libreria sin soporte y elegir alternativa madura"],
+          ["Transferir", "Traslada la responsabilidad a un tercero", "Existe un actor especializado dispuesto a asumirlo", "Contratar seguro de ciberseguridad o tercerizar pentest"],
+          ["Mitigar", "Reduce probabilidad o impacto", "Riesgo identificable y controlable", "Code reviews, pair programming, pruebas automatizadas, ADRs"],
+          ["Aceptar", "No actuar y dejar reserva", "Costo de tratarlo supera el EMV o no hay control posible", "Cambios regulatorios externos, fallas de proveedores cloud"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para gestion de proyectos",
+      "metadata": {
+        "tools": [
+          { "name": "Microsoft Project", "url": "https://www.microsoft.com/microsoft-365/project/project-management-software", "description": "Estandar empresarial para Gantt, CPM y nivelacion de recursos. Integra costos y EVM nativamente." },
+          { "name": "Jira", "url": "https://www.atlassian.com/software/jira", "description": "Tracking agil de backlog, sprints y burndown. Plugins para Gantt y EVM (BigPicture, Structure)." },
+          { "name": "ProjectLibre", "url": "https://www.projectlibre.com/", "description": "Alternativa open source a MS Project. Soporta WBS, Gantt, PERT y ruta critica." },
+          { "name": "GanttProject", "url": "https://www.ganttproject.biz/", "description": "Herramienta gratuita ligera para Gantt y CPM. Util en proyectos pequenos o academicos." },
+          { "name": "Smartsheet", "url": "https://www.smartsheet.com/", "description": "Plataforma hibrida hoja de calculo + project management. Buena para PMOs distribuidos." },
+          { "name": "Risk Register en Excel", "url": "https://www.pmi.org/", "description": "Plantilla con columnas: ID, descripcion, probabilidad, impacto, EMV, estrategia, responsable, estado. Sigue siendo el formato mas usado." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "WBS", "def": "Work Breakdown Structure. Descomposicion jerarquica orientada a entregables." },
+          { "term": "PERT", "def": "Tecnica de estimacion de tres puntos. Te = (O + 4M + P) / 6." },
+          { "term": "CPM", "def": "Critical Path Method. Secuencia mas larga de actividades dependientes que define la duracion minima." },
+          { "term": "COCOMO", "def": "Modelo de estimacion de esfuerzo de Boehm basado en KLOC con tres modos: organico, semilibre y empotrado." },
+          { "term": "KLOC", "def": "Miles de lineas de codigo (Kilo Lines Of Code). Unidad de medida de tamano en COCOMO." },
+          { "term": "RACI", "def": "Matriz de asignacion: Responsible, Accountable, Consulted, Informed." },
+          { "term": "FODA", "def": "Fortalezas, Oportunidades, Debilidades, Amenazas. Diagnostico estrategico." },
+          { "term": "EVM", "def": "Earned Value Management. Integra alcance, tiempo y costo con PV, EV, AC, CV, SV, CPI, SPI." },
+          { "term": "EMV", "def": "Valor Monetario Esperado = Probabilidad x Impacto. Base de la reserva de contingencia." },
+          { "term": "Milestone", "def": "Hito sin duracion que marca un evento significativo (entrega, aprobacion, go-live)." },
+          { "term": "Deliverable", "def": "Producto verificable, tangible y medible que debe entregar el proyecto." },
+          { "term": "Riesgo residual", "def": "Riesgo que queda despues de aplicar una estrategia de respuesta." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "PMBOK Guide — 7a edicion (PMI, 2021)", "url": "https://www.pmi.org/pmbok-guide-standards/foundational/pmbok" },
+          { "title": "Boehm — Software Cost Estimation with COCOMO II", "url": "https://csse.usc.edu/csse/research/COCOMOII/cocomo_main.html" },
+          { "title": "ISO 31000:2018 — Risk management Guidelines", "url": "https://www.iso.org/iso-31000-risk-management.html" },
+          { "title": "IFPUG — Function Point Counting Practices Manual", "url": "https://www.ifpug.org/" },
+          { "title": "Pressman — Ingenieria de Software (Cap. 23 Gestion de proyectos)", "url": "https://www.mheducation.com.mx/" }
+        ]
+      }
+    }
+  ]
+}
