@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { createGuide, updateGuide } from '@/modules/study/actions'
+import { createGuide, updateGuide } from '@/modules/study/_legacy_v1_actions'
 import {
   createGuideSchema,
   type CreateGuideInput,

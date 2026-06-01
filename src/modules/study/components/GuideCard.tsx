@@ -25,7 +25,7 @@ export function GuideCard({ areaSlug, guide, progress }: Props) {
   const pct = progress?.percent_read ?? 0
   return (
     <Link
-      href={`/study/v2/${areaSlug}/${guide.slug}`}
+      href={`/study/${areaSlug}/${guide.slug}`}
       className={cn(
         'group flex flex-col gap-3 rounded-2xl border bg-glass-bg/40 p-4 backdrop-blur-md transition-all hover:-translate-y-0.5',
         status === 'completado'

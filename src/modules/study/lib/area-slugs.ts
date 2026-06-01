@@ -1,5 +1,5 @@
 /**
- * Mapeo slug <-> seccion+area para rutas /study/v2/[areaSlug]/[guideSlug].
+ * Mapeo slug <-> seccion+area para rutas /study/[areaSlug]/[guideSlug].
  * No usamos los IDs numericos en la URL; usamos slugs amigables.
  */
 

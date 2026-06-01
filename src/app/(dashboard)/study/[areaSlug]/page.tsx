@@ -5,8 +5,8 @@ import { ChevronLeft } from 'lucide-react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { createClient } from '@/lib/supabase/server'
-import { GuideCard } from '@/modules/study/v2/components/GuideCard'
-import { findArea } from '@/modules/study/v2/lib/area-slugs'
+import { GuideCard } from '@/modules/study/components/GuideCard'
+import { findArea } from '@/modules/study/lib/area-slugs'
 
 type Params = { areaSlug: string }
 type Props = { params: Promise<Params> }
@@ -55,7 +55,7 @@ export default async function StudyV2AreaPage({ params }: Props) {
       </AuroraBackground>
 
       <header className="mb-6 space-y-3">
-        <Link href="/study/v2" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-aurora-2">
+        <Link href="/study" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-aurora-2">
           <ChevronLeft className="h-3 w-3" />
           Material de estudio
         </Link>

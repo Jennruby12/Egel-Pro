@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Check, X, Loader2, Lightbulb } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
-import { fetchQuickQuizQuestions } from '@/modules/study/v2/actions'
+import { fetchQuickQuizQuestions } from '@/modules/study/actions'
 
 type Q = {
   id: string

@@ -1,309 +1,225 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { createClient } from '@/lib/supabase/server'
-import {
-  createGuideSchema,
-  updateGuideSchema,
-  deleteGuideSchema,
-  togglePublishGuideSchema,
-  submitFlashcardReviewSchema,
-  type CreateGuideInput,
-  type UpdateGuideInput,
-  type DeleteGuideInput,
-  type TogglePublishGuideInput,
-  type SubmitFlashcardReviewInput,
-} from '@/lib/validations/guide.schema'
-import {
-  calculateNextReview,
-  DEFAULT_EASE_FACTOR,
-  type ReviewQuality,
-} from '@/modules/quiz/lib/spaced-repetition'
-import type { Tables } from '@/types/database'
+import { z } from 'zod'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { unlockAchievements } from '@/modules/gamification/lib/achievements'
+import { createNotification } from '@/modules/notifications/lib/create-notification'
+import { shuffle } from '@/modules/quiz/lib/shuffle'
 
-type Guide = Tables<'study_guides'>
-type ActionResult<T> = { success: true; data: T } | { success: false; error: string }
+type ActionResult<T = void> = { success: true; data?: T } | { success: false; error: string }
 
-const ERROR_MESSAGES = {
-  notAuth: 'Necesitas iniciar sesion',
-  notAdmin: 'Solo administradores pueden gestionar guias',
-  notFound: 'Guia no encontrada',
-}
-
-// Helper interno: verifica que el usuario actual sea admin
-async function requireAdmin() {
+/**
+ * Marca la guia como en_progreso (idempotente). Crea row en user_guide_progress
+ * con status='en_progreso' y started_at si aun no existe.
+ */
+export async function markGuideStarted(guideId: string): Promise<ActionResult> {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) return { supabase, user: null, error: ERROR_MESSAGES.notAuth }
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+  if (!isUuid(guideId)) return { success: false, error: 'ID invalido' }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile || profile.role !== 'admin') {
-    return { supabase, user, error: ERROR_MESSAGES.notAdmin }
-  }
-  return { supabase, user, error: null as string | null }
-}
-
-// Revalida las rutas afectadas por una mutacion sobre una guia.
-function revalidateGuidePaths(area?: number, subarea?: number) {
-  revalidatePath('/study')
-  revalidatePath('/admin/guides')
-  if (area !== undefined && subarea !== undefined) {
-    revalidatePath(`/study/${area}/${subarea}`)
-  }
-}
-
-// =====================================================
-// CREATE GUIDE
-// =====================================================
-export async function createGuide(input: CreateGuideInput): Promise<ActionResult<Guide>> {
-  const parsed = createGuideSchema.safeParse(input)
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
-  }
-  const data = parsed.data
-
-  const { supabase, user, error: authError } = await requireAdmin()
-  if (authError || !user) return { success: false, error: authError ?? ERROR_MESSAGES.notAuth }
-
-  const { data: guide, error } = await supabase
-    .from('study_guides')
-    .insert({
-      section: data.section,
-      area: data.area,
-      subarea: data.subarea,
-      title: data.title,
-      content: data.content,
-      summary: data.summary || null,
-      ceneval_tips: data.ceneval_tips || null,
-      reading_time_minutes: data.reading_time_minutes,
-      is_published: data.is_published,
-      created_by: user.id,
-    })
-    .select('*')
-    .single()
-
-  if (error || !guide) {
-    return { success: false, error: `Error al crear guia: ${error?.message ?? 'desconocido'}` }
-  }
-
-  revalidateGuidePaths(guide.area, guide.subarea)
-  return { success: true, data: guide }
-}
-
-// =====================================================
-// UPDATE GUIDE
-// =====================================================
-export async function updateGuide(
-  id: string,
-  input: UpdateGuideInput,
-): Promise<ActionResult<Guide>> {
-  if (!id || typeof id !== 'string') {
-    return { success: false, error: 'ID invalido' }
-  }
-  const parsed = updateGuideSchema.safeParse(input)
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
-  }
-  const data = parsed.data
-
-  const { supabase, error: authError } = await requireAdmin()
-  if (authError) return { success: false, error: authError }
-
-  const { data: guide, error } = await supabase
-    .from('study_guides')
-    .update({
-      section: data.section,
-      area: data.area,
-      subarea: data.subarea,
-      title: data.title,
-      content: data.content,
-      summary: data.summary || null,
-      ceneval_tips: data.ceneval_tips || null,
-      reading_time_minutes: data.reading_time_minutes,
-      is_published: data.is_published,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', id)
-    .select('*')
-    .single()
-
-  if (error || !guide) {
-    return { success: false, error: `Error al actualizar guia: ${error?.message ?? 'desconocido'}` }
-  }
-
-  revalidateGuidePaths(guide.area, guide.subarea)
-  return { success: true, data: guide }
-}
-
-// =====================================================
-// DELETE GUIDE (soft delete)
-// =====================================================
-export async function deleteGuide(
-  input: DeleteGuideInput,
-): Promise<ActionResult<{ id: string }>> {
-  const parsed = deleteGuideSchema.safeParse(input)
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
-  }
-
-  const { supabase, error: authError } = await requireAdmin()
-  if (authError) return { success: false, error: authError }
-
-  // Soft delete: marcar is_deleted=true para preservar historial.
-  const { data: guide, error } = await supabase
-    .from('study_guides')
-    .update({ is_deleted: true, is_published: false, updated_at: new Date().toISOString() })
-    .eq('id', parsed.data.id)
-    .select('area, subarea')
-    .single()
-
-  if (error) {
-    return { success: false, error: `Error al eliminar guia: ${error.message}` }
-  }
-
-  revalidateGuidePaths(guide?.area, guide?.subarea)
-  return { success: true, data: { id: parsed.data.id } }
-}
-
-// =====================================================
-// TOGGLE PUBLISH
-// =====================================================
-export async function togglePublishGuide(
-  input: TogglePublishGuideInput,
-): Promise<ActionResult<{ id: string; isPublished: boolean }>> {
-  const parsed = togglePublishGuideSchema.safeParse(input)
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
-  }
-
-  const { supabase, error: authError } = await requireAdmin()
-  if (authError) return { success: false, error: authError }
-
-  const { data: guide, error } = await supabase
-    .from('study_guides')
-    .update({
-      is_published: parsed.data.isPublished,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', parsed.data.id)
-    .select('area, subarea')
-    .single()
-
-  if (error) {
-    return { success: false, error: `Error al actualizar publicacion: ${error.message}` }
-  }
-
-  revalidateGuidePaths(guide?.area, guide?.subarea)
-  return { success: true, data: { id: parsed.data.id, isPublished: parsed.data.isPublished } }
-}
-
-// =====================================================
-// FLASHCARDS — Review (spaced repetition SM-2)
-// =====================================================
-export async function submitFlashcardReview(
-  input: SubmitFlashcardReviewInput,
-): Promise<
-  ActionResult<{ nextReviewISO: string; easeFactor: number; interval: number }>
-> {
-  const parsed = submitFlashcardReviewSchema.safeParse(input)
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.errors[0]?.message ?? 'Datos invalidos' }
-  }
-  const { flashcardId, quality } = parsed.data
-
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) return { success: false, error: ERROR_MESSAGES.notAuth }
-
-  // Validar que la flashcard exista y este activa para evitar progresos huerfanos.
-  const { data: flashcard, error: cardError } = await supabase
-    .from('flashcards')
-    .select('id, area, subarea, is_active')
-    .eq('id', flashcardId)
-    .single()
-  if (cardError || !flashcard || flashcard.is_active === false) {
-    return { success: false, error: 'Flashcard no encontrada' }
-  }
-
-  // Cargar progreso previo (puede no existir si es la primera vez).
-  const { data: prev } = await supabase
-    .from('user_flashcard_progress')
-    .select('*')
+  const { data: existing } = await supabase
+    .from('user_guide_progress')
+    .select('status')
     .eq('user_id', user.id)
-    .eq('flashcard_id', flashcardId)
+    .eq('guide_id', guideId)
     .maybeSingle()
 
-  // Derivar repetitions a partir del historial. Ver nota de diseno en
-  // spaced-repetition.ts. Si quality < 3 el algoritmo lo reseteara igualmente.
-  const prevSeen = prev?.times_seen ?? 0
-  const prevCorrect = prev?.times_correct ?? 0
-  const prevWrong = Math.max(0, prevSeen - prevCorrect)
-  const prevRepetitions = quality >= 3 ? Math.max(0, prevCorrect - prevWrong) : 0
-  const prevEase = prev?.ease_factor ?? DEFAULT_EASE_FACTOR
-  // Calcular intervalo previo aproximado a partir de las fechas almacenadas.
-  const prevInterval = calculatePrevInterval(prev?.last_seen, prev?.next_review)
+  if (existing) {
+    return { success: true }
+  }
 
-  const sm2 = calculateNextReview({
-    quality: quality as ReviewQuality,
-    easeFactor: prevEase,
-    interval: prevInterval,
-    repetitions: prevRepetitions,
+  const { error } = await supabase.from('user_guide_progress').insert({
+    user_id: user.id,
+    guide_id: guideId,
+    status: 'en_progreso',
+    percent_read: 0,
+    started_at: new Date().toISOString(),
   })
-
-  const isCorrect = quality >= 3
-  const newSeen = prevSeen + 1
-  const newCorrect = prevCorrect + (isCorrect ? 1 : 0)
-  const nowISO = new Date().toISOString()
-
-  const { error: upsertError } = await supabase
-    .from('user_flashcard_progress')
-    .upsert(
-      {
-        user_id: user.id,
-        flashcard_id: flashcardId,
-        times_seen: newSeen,
-        times_correct: newCorrect,
-        ease_factor: sm2.easeFactor,
-        last_seen: nowISO,
-        next_review: sm2.nextReviewISO,
-      },
-      { onConflict: 'user_id,flashcard_id' },
-    )
-
-  if (upsertError) {
-    return { success: false, error: `Error al guardar progreso: ${upsertError.message}` }
-  }
-
-  revalidatePath(`/study/${flashcard.area}/${flashcard.subarea}/flashcards`)
-  return {
-    success: true,
-    data: {
-      nextReviewISO: sm2.nextReviewISO,
-      easeFactor: sm2.easeFactor,
-      interval: sm2.interval,
-    },
-  }
+  if (error) return { success: false, error: error.message }
+  return { success: true }
 }
 
-// Estima el intervalo previo (en dias) entre last_seen y next_review.
-// Si falta data, devuelve 0 (que el algoritmo trata como primera vez).
-function calculatePrevInterval(
-  lastSeen: string | null | undefined,
-  nextReview: string | null | undefined,
-): number {
-  if (!lastSeen || !nextReview) return 0
-  const last = Date.parse(lastSeen)
-  const next = Date.parse(nextReview)
-  if (Number.isNaN(last) || Number.isNaN(next)) return 0
-  const diffDays = Math.round((next - last) / (24 * 60 * 60 * 1000))
-  return Math.max(0, diffDays)
+const progressSchema = z.object({
+  guideId: z.string().uuid(),
+  percent: z.number().int().min(0).max(100),
+  lastSectionId: z.string().uuid().nullable().optional(),
+  deltaSeconds: z.number().int().min(0).max(3600).optional(),
+})
+
+/**
+ * Heartbeat de lectura: actualiza percent_read, last_section_id y suma tiempo.
+ * El cliente lo llama cada ~30s.
+ */
+export async function updateReadingProgress(input: z.infer<typeof progressSchema>): Promise<ActionResult> {
+  const parsed = progressSchema.safeParse(input)
+  if (!parsed.success) return { success: false, error: 'Datos invalidos' }
+
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const { data: existing } = await supabase
+    .from('user_guide_progress')
+    .select('status, percent_read, time_spent_seconds')
+    .eq('user_id', user.id)
+    .eq('guide_id', parsed.data.guideId)
+    .maybeSingle()
+
+  const newPercent = Math.max(existing?.percent_read ?? 0, parsed.data.percent)
+  const newTime = (existing?.time_spent_seconds ?? 0) + (parsed.data.deltaSeconds ?? 0)
+
+  if (existing) {
+    const { error } = await supabase
+      .from('user_guide_progress')
+      .update({
+        percent_read: newPercent,
+        last_section_id: parsed.data.lastSectionId ?? null,
+        time_spent_seconds: newTime,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', user.id)
+      .eq('guide_id', parsed.data.guideId)
+    if (error) return { success: false, error: error.message }
+  } else {
+    const { error } = await supabase.from('user_guide_progress').insert({
+      user_id: user.id,
+      guide_id: parsed.data.guideId,
+      status: 'en_progreso',
+      percent_read: newPercent,
+      last_section_id: parsed.data.lastSectionId ?? null,
+      time_spent_seconds: newTime,
+      started_at: new Date().toISOString(),
+    })
+    if (error) return { success: false, error: error.message }
+  }
+  return { success: true }
+}
+
+/**
+ * Marca la guia como completada y otorga XP + dispara achievements.
+ * Solo si el user llego a percent >= 80% y time_spent >= 180s (3 min).
+ * Idempotente: si ya estaba completada no otorga XP de nuevo.
+ */
+export async function completeGuide(guideId: string): Promise<ActionResult<{ xpEarned: number }>> {
+  if (!isUuid(guideId)) return { success: false, error: 'ID invalido' }
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const [progressRes, guideRes] = await Promise.all([
+    supabase
+      .from('user_guide_progress')
+      .select('status, percent_read, time_spent_seconds')
+      .eq('user_id', user.id)
+      .eq('guide_id', guideId)
+      .maybeSingle(),
+    supabase.from('guides').select('id, title, weight_in_exam, slug, area_name, subarea_name').eq('id', guideId).single(),
+  ])
+
+  const progress = progressRes.data
+  const guide = guideRes.data
+  if (!guide) return { success: false, error: 'Guia no encontrada' }
+  if (!progress) return { success: false, error: 'No hay progreso registrado' }
+  if (progress.status === 'completado') {
+    return { success: true, data: { xpEarned: 0 } }
+  }
+  if ((progress.percent_read ?? 0) < 80) {
+    return { success: false, error: 'Aun no completaste 80% de la guia' }
+  }
+  if ((progress.time_spent_seconds ?? 0) < 180) {
+    return { success: false, error: 'Necesitas al menos 3 minutos leyendo' }
+  }
+
+  // XP: guias pesadas (weight_in_exam >= 12) dan 100 XP, las demas 50.
+  const xpEarned = (guide.weight_in_exam ?? 0) >= 12 ? 100 : 50
+
+  // Actualizar profile.xp_total
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('xp_total')
+    .eq('id', user.id)
+    .single()
+  const newXP = (profile?.xp_total ?? 0) + xpEarned
+  await supabase.from('profiles').update({ xp_total: newXP }).eq('id', user.id)
+
+  // Marcar guia como completada
+  await supabase
+    .from('user_guide_progress')
+    .update({
+      status: 'completado',
+      percent_read: 100,
+      completed_at: new Date().toISOString(),
+    })
+    .eq('user_id', user.id)
+    .eq('guide_id', guideId)
+
+  // Disparar achievements y notificacion
+  await unlockAchievements(supabase, user.id)
+  await createNotification({
+    userId: user.id,
+    type: 'level_up',
+    title: `Completaste "${guide.title}"`,
+    body: `Ganaste ${xpEarned} XP por completar la guia ${guide.area_name} — ${guide.subarea_name}`,
+    actionLink: '/study',
+  })
+
+  revalidatePath('/study')
+  revalidatePath(`/study/${guide.slug}`)
+  return { success: true, data: { xpEarned } }
+}
+
+/**
+ * Trae 5 reactivos del banco filtrados por seccion+area+subarea de la guia.
+ * Usados en el componente QuickQuiz embebido al final de la guia.
+ */
+export async function fetchQuickQuizQuestions(guideId: string): Promise<
+  ActionResult<Array<{
+    id: string
+    question_text: string
+    option_a: string
+    option_b: string
+    option_c: string
+    correct_answer: 'a' | 'b' | 'c'
+    explanation: string | null
+    difficulty: string | null
+  }>>
+> {
+  if (!isUuid(guideId)) return { success: false, error: 'ID invalido' }
+  const admin = createAdminClient()
+
+  const { data: guide } = await admin
+    .from('guides')
+    .select('section, area_num, subarea_num')
+    .eq('id', guideId)
+    .single()
+  if (!guide) return { success: false, error: 'Guia no encontrada' }
+
+  const { data, error } = await admin
+    .from('questions')
+    .select('id, question_text, option_a, option_b, option_c, correct_answer, explanation, difficulty')
+    .eq('is_active', true)
+    .eq('is_deleted', false)
+    .eq('section', guide.section)
+    .eq('area', guide.area_num)
+    .eq('subarea', guide.subarea_num)
+    .limit(50)
+  if (error) return { success: false, error: error.message }
+
+  const sample = shuffle(data ?? []).slice(0, 5).map((q) => ({
+    id: q.id,
+    question_text: q.question_text,
+    option_a: q.option_a,
+    option_b: q.option_b,
+    option_c: q.option_c,
+    correct_answer: (q.correct_answer as 'a' | 'b' | 'c'),
+    explanation: q.explanation,
+    difficulty: q.difficulty,
+  }))
+  return { success: true, data: sample }
+}
+
+function isUuid(s: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s)
 }

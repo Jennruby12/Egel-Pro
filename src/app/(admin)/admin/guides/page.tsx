@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { deleteGuide, togglePublishGuide } from '@/modules/study/actions'
+import { deleteGuide, togglePublishGuide } from '@/modules/study/_legacy_v1_actions'
 
 export default async function AdminGuidesPage() {
   const supabase = await createClient()

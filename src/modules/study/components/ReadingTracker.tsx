@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { Sparkles } from 'lucide-react'
-import { updateReadingProgress, completeGuide } from '@/modules/study/v2/actions'
+import { updateReadingProgress, completeGuide } from '@/modules/study/actions'
 
 type Props = {
   guideId: string

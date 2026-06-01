@@ -5,11 +5,11 @@ import { ChevronLeft, Clock, BookOpen, Sparkles } from 'lucide-react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { GlassCard } from '@/components/ui/glass-card'
 import { createClient } from '@/lib/supabase/server'
-import { GuideSection } from '@/modules/study/v2/components/GuideSection'
-import { ReadingTracker } from '@/modules/study/v2/components/ReadingTracker'
-import { ProgressDonut } from '@/modules/study/v2/components/ProgressDonut'
-import { findArea } from '@/modules/study/v2/lib/area-slugs'
-import { markGuideStarted } from '@/modules/study/v2/actions'
+import { GuideSection } from '@/modules/study/components/GuideSection'
+import { ReadingTracker } from '@/modules/study/components/ReadingTracker'
+import { ProgressDonut } from '@/modules/study/components/ProgressDonut'
+import { findArea } from '@/modules/study/lib/area-slugs'
+import { markGuideStarted } from '@/modules/study/actions'
 
 type Params = { areaSlug: string; guideSlug: string }
 type Props = { params: Promise<Params> }
@@ -90,7 +90,7 @@ export default async function GuidePage({ params }: Props) {
         </AuroraBackground>
 
         <header className="mb-6 space-y-3">
-          <Link href={`/study/v2/${area.slug}`} className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-aurora-2">
+          <Link href={`/study/${area.slug}`} className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-aurora-2">
             <ChevronLeft className="h-3 w-3" />
             {area.name}
           </Link>

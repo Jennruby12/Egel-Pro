@@ -11,7 +11,7 @@ import { AnimatedCounter } from '@/components/ui/animated-counter'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { cn } from '@/lib/utils/cn'
-import { submitFlashcardReview } from '@/modules/study/actions'
+import { submitFlashcardReview } from '@/modules/study/_legacy_v1_actions'
 import { FlashcardCard } from './FlashcardCard'
 
 export type DeckFlashcard = {
