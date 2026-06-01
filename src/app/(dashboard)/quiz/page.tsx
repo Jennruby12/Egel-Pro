@@ -12,31 +12,80 @@ import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = { title: 'Practicar' }
 
-async function getAvailableCounts(): Promise<Record<number, number>> {
+type AvailableCounts = {
+  disciplinar: Record<number, number>
+  transversal: Record<number, number>
+}
+
+async function getAvailableCounts(): Promise<AvailableCounts> {
   const supabase = await createClient()
   const { data } = await supabase
     .from('questions')
-    .select('area')
-    .eq('section', 'disciplinar')
+    .select('section, area')
     .eq('is_deleted', false)
     .eq('is_active', true)
-  const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0 }
+  const disciplinar: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0 }
+  const transversal: Record<number, number> = { 1: 0, 2: 0 }
   for (const row of data ?? []) {
-    counts[row.area] = (counts[row.area] ?? 0) + 1
+    if (row.section === 'disciplinar') {
+      disciplinar[row.area] = (disciplinar[row.area] ?? 0) + 1
+    } else if (row.section === 'transversal') {
+      transversal[row.area] = (transversal[row.area] ?? 0) + 1
+    }
   }
-  return counts
+  return { disciplinar, transversal }
+}
+
+/**
+ * Cuenta cuantas preguntas distintas ha visto el user (cualquier sesion).
+ * Se usa para el banner "Has visto X de Y" en /quiz.
+ */
+async function getUserSeenCount(userId: string): Promise<number> {
+  const supabase = await createClient()
+  // count(DISTINCT question_id) via PostgREST: traer todos los question_id y dedup en cliente
+  // Optimizacion: solo necesitamos contar, pero PostgREST no soporta distinct count direct.
+  // Hacemos paginas y dedup local. Para usuarios con <10K respuestas alcanza una pagina.
+  const seen = new Set<string>()
+  let offset = 0
+  const PAGE = 1000
+  while (true) {
+    const { data: sessions } = await supabase
+      .from('quiz_sessions')
+      .select('id')
+      .eq('user_id', userId)
+    const sessionIds = (sessions ?? []).map((s) => s.id)
+    if (sessionIds.length === 0) break
+    const { data, error } = await supabase
+      .from('quiz_answers')
+      .select('question_id')
+      .in('session_id', sessionIds)
+      .range(offset, offset + PAGE - 1)
+    if (error || !data || data.length === 0) break
+    for (const r of data) if (r.question_id) seen.add(r.question_id)
+    if (data.length < PAGE) break
+    offset += PAGE
+  }
+  return seen.size
 }
 
 export default async function QuizPage() {
   // Cleanup silencioso de sesiones zombi antes de cargar el form
   await cleanupEmptyInProgressSessions()
 
-  const [availableCounts, activeRes] = await Promise.all([
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const [availableCounts, activeRes, seenCount] = await Promise.all([
     getAvailableCounts(),
     getActiveQuizSession(),
+    user ? getUserSeenCount(user.id) : Promise.resolve(0),
   ])
   const activeSession = activeRes.success ? activeRes.data : null
-  const totalBank = Object.values(availableCounts).reduce((s, n) => s + n, 0)
+  const totalDisciplinar = Object.values(availableCounts.disciplinar).reduce((s, n) => s + n, 0)
+  const totalTransversal = Object.values(availableCounts.transversal).reduce((s, n) => s + n, 0)
+  const totalBank = totalDisciplinar + totalTransversal
+  const unseenCount = Math.max(0, totalBank - seenCount)
+  const seenPct = totalBank > 0 ? Math.round((seenCount / totalBank) * 100) : 0
   return (
     <div className="relative">
       <AuroraBackground variant="subtle" className="absolute inset-0 -z-10">
@@ -55,9 +104,31 @@ export default async function QuizPage() {
           Elige un modo y comienza a entrenar para el EGEL. Cada quiz suma XP, mantiene tu racha y te acerca a tu meta.
         </p>
         <p className="text-xs text-muted-foreground/70">
-          Banco disciplinar disponible: <span className="font-semibold text-aurora-2">{totalBank.toLocaleString('es-MX')}</span> reactivos
+          Banco completo: <span className="font-semibold text-aurora-2">{totalBank.toLocaleString('es-MX')}</span> reactivos
+          {' '}<span className="text-muted-foreground/50">({totalDisciplinar.toLocaleString('es-MX')} disciplinares + {totalTransversal.toLocaleString('es-MX')} transversales)</span>
         </p>
       </header>
+
+      {/* Banner: progreso de exploracion del banco */}
+      {user && totalBank > 0 ? (
+        <div className="mb-6 rounded-2xl border border-aurora-2/30 bg-aurora-2/5 p-4 backdrop-blur-md">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="text-sm">
+              Has visto <span className="font-semibold text-aurora-2">{seenCount.toLocaleString('es-MX')}</span> de <span className="font-semibold">{totalBank.toLocaleString('es-MX')}</span> preguntas
+              {' '}<span className="text-muted-foreground">({seenPct}%)</span>
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Te quedan <span className="font-semibold text-foreground">{unseenCount.toLocaleString('es-MX')}</span> sin tomar — tu proximo quiz las prioriza
+            </p>
+          </div>
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-bg-raised/60">
+            <div
+              className="h-full bg-gradient-to-r from-aurora-1 via-aurora-2 to-aurora-3 transition-all"
+              style={{ width: `${seenPct}%` }}
+            />
+          </div>
+        </div>
+      ) : null}
 
       {activeSession ? (
         <ResumeQuizBanner
@@ -69,7 +140,7 @@ export default async function QuizPage() {
         />
       ) : null}
 
-      <StartQuizForm availableCounts={availableCounts} />
+      <StartQuizForm availableCounts={availableCounts} unseenCount={unseenCount} />
     </div>
   )
 }

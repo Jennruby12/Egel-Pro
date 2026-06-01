@@ -180,14 +180,15 @@ export async function startQuizSession(
       if (!candidates || candidates.length === 0) continue
 
       // Picking inteligente: primero las no vistas, luego completar con las ya vistas
+      // Si onlyUnseen=true, NUNCA completar con seen (modo estricto).
       let picked: typeof candidates = []
       if (prioritizeUnseen && seenIds.size > 0) {
         const unseen = candidates.filter((c) => !seenIds.has(c.id))
         const seen = candidates.filter((c) => seenIds.has(c.id))
         const shuffledUnseen = shuffle(unseen)
-        const shuffledSeen = shuffle(seen)
         picked = shuffledUnseen.slice(0, count)
-        if (picked.length < count) {
+        if (picked.length < count && !data.onlyUnseen) {
+          const shuffledSeen = shuffle(seen)
           picked = picked.concat(shuffledSeen.slice(0, count - picked.length))
         }
       } else {

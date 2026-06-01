@@ -13,8 +13,20 @@ import { AreaSelector } from './AreaSelector'
 import { startQuizSession } from '@/modules/quiz/actions'
 import type { QuizMode } from '@/types/global'
 
+type AvailableCountsShape =
+  | Record<number, number>
+  | { disciplinar: Record<number, number>; transversal: Record<number, number> }
+
 type StartQuizFormProps = {
-  availableCounts?: Record<number, number>
+  availableCounts?: AvailableCountsShape
+  /** Cantidad de preguntas que el user nunca ha tomado (para toggle "solo nuevas") */
+  unseenCount?: number
+}
+
+function getDisciplinarCounts(ac?: AvailableCountsShape): Record<number, number> {
+  if (!ac) return { 1: 0, 2: 0, 3: 0, 4: 0 }
+  if ('disciplinar' in ac) return ac.disciplinar
+  return ac
 }
 
 // Modos donde el usuario puede ajustar cuantas preguntas (no aplica a simulacro/reto diario, fijos)
@@ -24,25 +36,29 @@ const PRESETS = [10, 25, 50, 100] as const
 const MIN_QUESTIONS = 5
 const MAX_QUESTIONS = 250
 
-export function StartQuizForm({ availableCounts }: StartQuizFormProps = {}) {
+export function StartQuizForm({ availableCounts, unseenCount = 0 }: StartQuizFormProps = {}) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [mode, setMode] = useState<QuizMode | null>(null)
   const [areas, setAreas] = useState<number[]>([])
   const [totalQuestions, setTotalQuestions] = useState<number>(20)
+  const [onlyUnseen, setOnlyUnseen] = useState<boolean>(false)
+
+  const disciplinarCounts = useMemo(() => getDisciplinarCounts(availableCounts), [availableCounts])
 
   const selectedMode = QUIZ_MODES.find((m) => m.id === mode)
   const allowAreaSelection =
     mode === 'practice' || mode === 'quick_exam' || mode === 'speed_challenge'
   const allowQuantityEdit = mode !== null && QUANTITY_EDITABLE_MODES.includes(mode)
+  const allowOnlyUnseen = mode === 'practice' || mode === 'quick_exam' || mode === 'speed_challenge'
 
   // Max real basado en areas seleccionadas (o todas si areas vacio)
   const maxAvailable = useMemo(() => {
-    if (!availableCounts) return MAX_QUESTIONS
+    if (!disciplinarCounts) return MAX_QUESTIONS
     const relevant = areas.length > 0 ? areas : [1, 2, 3, 4]
-    const sum = relevant.reduce((acc, a) => acc + (availableCounts[a] ?? 0), 0)
+    const sum = relevant.reduce((acc, a) => acc + (disciplinarCounts[a] ?? 0), 0)
     return Math.min(sum || MAX_QUESTIONS, MAX_QUESTIONS)
-  }, [availableCounts, areas])
+  }, [disciplinarCounts, areas])
 
   // Al cambiar de modo, sincroniza con el default del modo (clamped a max)
   useEffect(() => {
@@ -68,6 +84,11 @@ export function StartQuizForm({ availableCounts }: StartQuizFormProps = {}) {
       ? Math.min(Math.max(totalQuestions, MIN_QUESTIONS), maxAvailable)
       : selectedMode.defaults.total
 
+    if (allowOnlyUnseen && onlyUnseen && unseenCount === 0) {
+      toast.error('Ya tomaste todas las preguntas. Usa modo Repaso o desactiva "solo nuevas"')
+      return
+    }
+
     startTransition(async () => {
       const result = await startQuizSession({
         mode,
@@ -76,6 +97,7 @@ export function StartQuizForm({ availableCounts }: StartQuizFormProps = {}) {
         subareas: [],
         totalQuestions: finalTotal,
         timeLimitSeconds: selectedMode.defaults.timeLimitSeconds,
+        onlyUnseen: allowOnlyUnseen ? onlyUnseen : false,
       })
 
       if (!result.success) {
@@ -131,7 +153,38 @@ export function StartQuizForm({ availableCounts }: StartQuizFormProps = {}) {
               </div>
 
               {allowAreaSelection ? (
-                <AreaSelector selected={areas} onChange={setAreas} availableCounts={availableCounts} />
+                <AreaSelector selected={areas} onChange={setAreas} availableCounts={disciplinarCounts} />
+              ) : null}
+
+              {allowOnlyUnseen ? (
+                <button
+                  type="button"
+                  onClick={() => setOnlyUnseen((v) => !v)}
+                  className={`flex w-full items-center justify-between gap-3 rounded-lg border p-3 text-left transition-colors backdrop-blur-md ${
+                    onlyUnseen
+                      ? 'border-aurora-2/60 bg-aurora-2/10'
+                      : 'border-glass-border/30 bg-glass-bg/40 hover:border-aurora-2/30'
+                  }`}
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium">Solo preguntas nuevas</p>
+                    <p className="text-xs text-muted-foreground">
+                      Garantiza que ninguna pregunta repetida aparezca. Tienes <span className="font-semibold text-aurora-2">{unseenCount.toLocaleString('es-MX')}</span> sin tomar.
+                    </p>
+                  </div>
+                  <span
+                    className={`relative h-6 w-11 shrink-0 rounded-full border transition-colors ${
+                      onlyUnseen ? 'border-aurora-2 bg-aurora-2/30' : 'border-bg-border bg-bg-raised'
+                    }`}
+                    aria-hidden
+                  >
+                    <span
+                      className={`absolute top-0.5 h-5 w-5 rounded-full bg-foreground shadow-sm transition-transform ${
+                        onlyUnseen ? 'left-5' : 'left-0.5'
+                      }`}
+                    />
+                  </span>
+                </button>
               ) : null}
 
               {allowQuantityEdit ? (

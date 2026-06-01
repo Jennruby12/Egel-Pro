@@ -24,6 +24,8 @@ export const startQuizSchema = z.object({
   totalQuestions: z.number().int().min(1).max(250),
   /** null = sin limite */
   timeLimitSeconds: z.number().int().positive().nullable().default(null),
+  /** Si true, NUNCA incluye preguntas que el user ya contesto antes. */
+  onlyUnseen: z.boolean().optional().default(false),
 })
 
 export type StartQuizInput = z.infer<typeof startQuizSchema>
