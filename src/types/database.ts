@@ -155,6 +155,192 @@ export type Database = {
           },
         ]
       }
+      guide_concepts: {
+        Row: {
+          concept: string
+          definition_md: string | null
+          guide_id: string
+          id: string
+          importance: string | null
+          related_question_ids: string[] | null
+        }
+        Insert: {
+          concept: string
+          definition_md?: string | null
+          guide_id: string
+          id?: string
+          importance?: string | null
+          related_question_ids?: string[] | null
+        }
+        Update: {
+          concept?: string
+          definition_md?: string | null
+          guide_id?: string
+          id?: string
+          importance?: string | null
+          related_question_ids?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_concepts_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_sections: {
+        Row: {
+          body_md: string | null
+          created_at: string | null
+          guide_id: string
+          id: string
+          image_caption: string | null
+          image_url: string | null
+          metadata: Json | null
+          order_in_guide: number
+          section_type: string
+          title: string | null
+        }
+        Insert: {
+          body_md?: string | null
+          created_at?: string | null
+          guide_id: string
+          id?: string
+          image_caption?: string | null
+          image_url?: string | null
+          metadata?: Json | null
+          order_in_guide: number
+          section_type: string
+          title?: string | null
+        }
+        Update: {
+          body_md?: string | null
+          created_at?: string | null
+          guide_id?: string
+          id?: string
+          image_caption?: string | null
+          image_url?: string | null
+          metadata?: Json | null
+          order_in_guide?: number
+          section_type?: string
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_sections_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guides: {
+        Row: {
+          area_name: string
+          area_num: number
+          cover_image_url: string | null
+          created_at: string | null
+          difficulty: string | null
+          estimated_minutes: number | null
+          id: string
+          order_in_area: number | null
+          published: boolean | null
+          section: string
+          short_description: string | null
+          slug: string
+          subarea_name: string
+          subarea_num: number
+          title: string
+          updated_at: string | null
+          weight_in_exam: number | null
+        }
+        Insert: {
+          area_name: string
+          area_num: number
+          cover_image_url?: string | null
+          created_at?: string | null
+          difficulty?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          order_in_area?: number | null
+          published?: boolean | null
+          section: string
+          short_description?: string | null
+          slug: string
+          subarea_name: string
+          subarea_num: number
+          title: string
+          updated_at?: string | null
+          weight_in_exam?: number | null
+        }
+        Update: {
+          area_name?: string
+          area_num?: number
+          cover_image_url?: string | null
+          created_at?: string | null
+          difficulty?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          order_in_area?: number | null
+          published?: boolean | null
+          section?: string
+          short_description?: string | null
+          slug?: string
+          subarea_name?: string
+          subarea_num?: number
+          title?: string
+          updated_at?: string | null
+          weight_in_exam?: number | null
+        }
+        Relationships: []
+      }
+      user_guide_progress: {
+        Row: {
+          completed_at: string | null
+          guide_id: string
+          last_section_id: string | null
+          percent_read: number | null
+          started_at: string | null
+          status: string | null
+          time_spent_seconds: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          guide_id: string
+          last_section_id?: string | null
+          percent_read?: number | null
+          started_at?: string | null
+          status?: string | null
+          time_spent_seconds?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          guide_id?: string
+          last_section_id?: string | null
+          percent_read?: number | null
+          started_at?: string | null
+          status?: string | null
+          time_spent_seconds?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_guide_progress_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           action_link: string | null

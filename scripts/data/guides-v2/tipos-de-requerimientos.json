@@ -1,0 +1,124 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 1,
+    "area_name": "Analisis de Sistemas de Software",
+    "subarea_num": 1,
+    "subarea_name": "Tipos de requerimientos",
+    "slug": "tipos-de-requerimientos",
+    "title": "Tipos de requerimientos",
+    "short_description": "Funcionales vs no funcionales, atributos de calidad ISO/IEC 25010, restricciones, propiedades de un buen requerimiento (INVEST, SMART) y la diferencia entre validacion y verificacion.",
+    "weight_in_exam": 12,
+    "estimated_minutes": 45,
+    "difficulty": "intermedio",
+    "order_in_area": 1,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Requerimiento funcional (FR)", "definition_md": "Describe QUE hace el sistema: una capacidad, accion o transformacion que el software debe ofrecer. Ej. 'Permitir registrar pedidos con pago en linea'.", "importance": "alta" },
+    { "concept": "Requerimiento no funcional (NFR)", "definition_md": "Describe COMO se comporta el sistema: rendimiento, seguridad, usabilidad, etc. Ej. 'Responder en menos de 2 segundos al 95% de las peticiones'.", "importance": "alta" },
+    { "concept": "Atributo de calidad", "definition_md": "Caracteristica medible del sistema definida por ISO/IEC 25010: funcionalidad, eficiencia, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad, portabilidad.", "importance": "alta" },
+    { "concept": "Restriccion", "definition_md": "Limite impuesto al diseno o tecnologia (regulatorio, organizacional, tecnico). No es lo mismo que NFR.", "importance": "media" },
+    { "concept": "Validacion", "definition_md": "Estamos construyendo el producto CORRECTO? Confirma que el software cumple las necesidades del usuario.", "importance": "alta" },
+    { "concept": "Verificacion", "definition_md": "Estamos construyendo el producto CORRECTAMENTE? Confirma que el software cumple su especificacion.", "importance": "alta" },
+    { "concept": "MoSCoW", "definition_md": "Tecnica de priorizacion: Must have, Should have, Could have, Won't have.", "importance": "media" },
+    { "concept": "INVEST", "definition_md": "Acronimo de calidad de historias de usuario: Independent, Negotiable, Valuable, Estimable, Small, Testable.", "importance": "media" },
+    { "concept": "SMART", "definition_md": "Acronimo aplicable a NFR medibles: Specific, Measurable, Achievable, Relevant, Time-bound.", "importance": "media" },
+    { "concept": "IEEE 29148", "definition_md": "Estandar internacional para ingenieria de requerimientos. Define ciclo de vida y estructura del SRS.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea es la mas pesada de Area 1 con **12 reactivos** en el EGEL. Su objetivo es que distingas con precision los TIPOS de requerimientos (funcionales, no funcionales, dominio, restricciones), conozcas la taxonomia oficial **ISO/IEC 25010** de atributos de calidad y manejes el vocabulario para priorizar (MoSCoW, Kano) y validar (validacion vs verificacion).\n\nLa confusion clasica del examen es mezclar **NFR** con **restricciones** o asumir que cualquier metrica de tiempo es NFR. Tambien suelen distractar entre **validacion** y **verificacion**. Si te llevas claros estos pares conceptuales y memorizas las **8 caracteristicas ISO/IEC 25010**, esta subarea te aporta puntos seguros."
+    },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Sistema bancario: separar FR de NFR",
+      "body_md": "Considera un sistema de banca movil para una fintech mexicana regulada por la CNBV.\n\n**Funcionales (QUE):**\n- Permitir transferencias SPEI entre cuentas propias y de terceros.\n- Generar comprobantes fiscales con folio electronico.\n- Bloquear la cuenta tras 3 intentos fallidos de PIN.\n\n**No funcionales (COMO):**\n- *Rendimiento*: responder en < 2 segundos al 95% de las peticiones bajo 500 usuarios concurrentes.\n- *Seguridad*: cifrado AES-256 en reposo y TLS 1.3 en transito; cumplir PCI-DSS para tarjetas.\n- *Disponibilidad*: 99.9% mensual (max 43 min de downtime).\n\n**Restricciones:**\n- Cumplir LFPDPPP para datos personales.\n- Sistema central debe correr en infraestructura local (no nube publica) por regulacion CNBV.\n\nNota como una restriccion como \"correr on-premise\" NO es un NFR del producto — es un limite impuesto por el negocio o el regulador. Distinguir esto es el #1 error en el EGEL."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Telemedicina: NFRs criticos",
+      "body_md": "Una startup de telemedicina conecta pacientes con medicos via video y guarda expedientes clinicos. Identifica los NFR mas criticos:\n\n1. **Privacidad y seguridad** (LFPDPPP + NOM-024-SSA3): expediente cifrado, acceso auditable, consentimiento explicito del paciente.\n2. **Disponibilidad**: 99.95% — una caida de 1h puede traducirse en consultas perdidas y reembolsos.\n3. **Latencia de video**: < 200ms para conversacion fluida.\n4. **Concurrencia**: pico de 1,000 videollamadas simultaneas en hora alta.\n5. **Portabilidad**: app movil iOS + Android + web (atributo ISO/IEC 25010 'portabilidad').\n6. **Mantenibilidad**: equipo pequeno, codigo modular, tests automatizados (afecta time-to-market).\n\nLa pregunta clasica del EGEL es: \"el sistema debe soportar 1,000 consultas concurrentes\". ¿Que tipo de requerimiento es? **NFR de rendimiento/capacidad**, NO funcional."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Funcional vs No funcional vs Restriccion",
+      "metadata": {
+        "headers": ["Aspecto", "Funcional (FR)", "No funcional (NFR)", "Restriccion"],
+        "rows": [
+          ["Pregunta que responde", "QUE hace el sistema", "COMO se comporta", "QUE limita al sistema"],
+          ["Ejemplo tipico", "'Permitir login con email'", "'Login < 1s en 95% casos'", "'Debe correr en Java 17'"],
+          ["Verificable", "Si con caso de prueba", "Si con metricas", "Si con auditoria"],
+          ["Origen", "Stakeholders", "Atributos de calidad", "Tecnologia/regulacion"],
+          ["Cambia con tiempo", "Si, evolutivos", "Pocas veces", "Casi nunca"],
+          ["Ejemplo ISO/IEC 25010", "N/A", "Eficiencia, Seguridad", "N/A"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para gestionar requerimientos",
+      "metadata": {
+        "tools": [
+          { "name": "Jama Connect", "url": "https://www.jamasoftware.com/", "description": "Gestion de requerimientos con trazabilidad end-to-end. Estandar en industrias reguladas (aeronautica, medica)." },
+          { "name": "IBM DOORS", "url": "https://www.ibm.com/products/requirements-management", "description": "Suite empresarial para requerimientos en proyectos grandes con control de cambios formal." },
+          { "name": "Visure Requirements", "url": "https://visuresolutions.com/", "description": "ALM completo con generacion de SRS conforme a IEEE 29148." },
+          { "name": "Jira", "url": "https://www.atlassian.com/software/jira", "description": "Story tracking para equipos agiles. Util para FRs en formato historia de usuario." },
+          { "name": "Confluence", "url": "https://www.atlassian.com/software/confluence", "description": "Documentacion colaborativa de SRS y especificaciones." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "SRS", "def": "Software Requirements Specification — documento maestro que recopila FRs, NFRs y restricciones (IEEE 29148)." },
+          { "term": "IEEE 29148", "def": "Estandar ISO/IEEE para procesos y formato de ingenieria de requerimientos. Sucede al antiguo IEEE 830." },
+          { "term": "ISO/IEC 25010", "def": "Modelo de calidad de software con 8 caracteristicas: funcionalidad, eficiencia, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad, portabilidad." },
+          { "term": "SMART", "def": "Specific, Measurable, Achievable, Relevant, Time-bound. Criterios para NFRs verificables." },
+          { "term": "INVEST", "def": "Independent, Negotiable, Valuable, Estimable, Small, Testable. Calidad de historias de usuario." },
+          { "term": "MoSCoW", "def": "Tecnica de priorizacion: Must, Should, Could, Won't have." },
+          { "term": "Atributo de calidad", "def": "Caracteristica medible del sistema (ej. disponibilidad, mantenibilidad). Base de los NFR." },
+          { "term": "Restriccion", "def": "Limite impuesto al diseno o tecnologia. NO es NFR." },
+          { "term": "Validacion", "def": "Confirma que el software cumple las necesidades del usuario (¿correcto?)." },
+          { "term": "Verificacion", "def": "Confirma que el software cumple la especificacion (¿bien construido?)." }
+        ]
+      }
+    },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Sommerville — Ingenieria de Software (Cap. 4)", "url": "https://www.pearsonenespanol.com/mexico/educacion-superior/sommerville-ingenieria-software-9-edicion" },
+          { "title": "Wiegers & Beatty — Software Requirements (3a ed.)", "url": "https://www.microsoftpressstore.com/store/software-requirements-9780735679665" },
+          { "title": "IEEE 29148-2018 — Systems and software engineering — Life cycle processes — Requirements engineering", "url": "https://standards.ieee.org/ieee/29148/6937/" },
+          { "title": "ISO/IEC 25010 — Modelo de calidad de software", "url": "https://www.iso.org/standard/35733.html" },
+          { "title": "Pressman — Ingenieria de Software (7a ed.)", "url": "https://www.mheducation.com.mx/" }
+        ]
+      }
+    }
+  ]
+}

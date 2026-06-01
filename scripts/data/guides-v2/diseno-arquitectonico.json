@@ -1,0 +1,119 @@
+{
+  "guide": {
+    "section": "disciplinar",
+    "area_num": 2,
+    "area_name": "Diseno de Sistemas de Software",
+    "subarea_num": 1,
+    "subarea_name": "Diseno arquitectonico de software",
+    "slug": "diseno-arquitectonico",
+    "title": "Diseno arquitectonico de software",
+    "short_description": "Estilos y patrones arquitectonicos (monolito, microservicios, hexagonal, event-driven), vistas 4+1 de Kruchten, metodos de evaluacion (ATAM, SAAM) y patrones de resiliencia (Saga, Circuit Breaker, API Gateway).",
+    "weight_in_exam": 10,
+    "estimated_minutes": 45,
+    "difficulty": "intermedio",
+    "order_in_area": 1,
+    "published": true
+  },
+  "concepts": [
+    { "concept": "Arquitectura de software", "definition_md": "Estructura de alto nivel del sistema: componentes principales, sus responsabilidades y como interactuan. Define decisiones costosas de cambiar (lenguaje, base de datos, topologia de despliegue).", "importance": "alta" },
+    { "concept": "Estilo arquitectonico", "definition_md": "Familia general de organizacion (cliente-servidor, capas, pipes-and-filters, event-driven). Define vocabulario y restricciones a nivel macro.", "importance": "alta" },
+    { "concept": "Patron arquitectonico", "definition_md": "Solucion reusable a un problema recurrente en cierto contexto. Ej. MVC, Microservicios, Hexagonal, CQRS. Mas concreto que un estilo.", "importance": "alta" },
+    { "concept": "Vistas 4+1 de Kruchten", "definition_md": "Modelo para documentar arquitectura desde 5 perspectivas: logica (clases), de proceso (concurrencia), de desarrollo (modulos), fisica (despliegue) y escenarios (+1, casos de uso que validan las otras 4).", "importance": "alta" },
+    { "concept": "ATAM", "definition_md": "Architecture Tradeoff Analysis Method (SEI). Evalua una arquitectura contra atributos de calidad mediante escenarios y descubre puntos de sensibilidad y trade-offs entre atributos.", "importance": "alta" },
+    { "concept": "SAAM", "definition_md": "Software Architecture Analysis Method. Precursor de ATAM. Se enfoca en modificabilidad mediante escenarios directos e indirectos.", "importance": "media" },
+    { "concept": "CQRS", "definition_md": "Command Query Responsibility Segregation. Separa el modelo de escritura (comandos) del modelo de lectura (queries) para escalar y modelar cada lado independientemente.", "importance": "alta" },
+    { "concept": "Event Sourcing", "definition_md": "Persistir el estado como una secuencia inmutable de eventos en lugar del estado final. Permite auditoria total y reconstruir el estado en cualquier momento.", "importance": "media" },
+    { "concept": "Microservicios", "definition_md": "Estilo que descompone el sistema en servicios pequenos, desplegables de forma independiente, organizados por capacidades de negocio y comunicados via API o mensajeria.", "importance": "alta" },
+    { "concept": "Monolito", "definition_md": "Aplicacion desplegada como una sola unidad. Puede ser modular internamente. Ofrece simplicidad operacional pero acoplamiento al ciclo de despliegue.", "importance": "alta" },
+    { "concept": "Arquitectura hexagonal", "definition_md": "Tambien llamada Ports and Adapters (Alistair Cockburn). El nucleo de dominio se aisla de la infraestructura mediante puertos (interfaces) y adaptadores (implementaciones).", "importance": "alta" },
+    { "concept": "Saga", "definition_md": "Patron para transacciones distribuidas: secuencia de transacciones locales coordinadas por orquestacion (controlador central) o coreografia (eventos). Cada paso tiene una compensacion.", "importance": "alta" },
+    { "concept": "Circuit Breaker", "definition_md": "Patron de resiliencia (Michael Nygard). Detecta fallos repetidos a un servicio dependiente y abre el circuito para evitar cascadas; reintenta tras un timeout.", "importance": "alta" },
+    { "concept": "API Gateway", "definition_md": "Punto unico de entrada que enruta peticiones a microservicios, agrega respuestas, aplica autenticacion, rate limiting y observabilidad.", "importance": "alta" }
+  ],
+  "sections": [
+    {
+      "type": "intro",
+      "order": 1,
+      "title": null,
+      "body_md": "Esta subarea aporta **10 reactivos** en el EGEL ISOFT y es la puerta de entrada al Area 2 (Diseno). El examen evalua que distingas un **estilo** de un **patron arquitectonico**, que reconozcas cuando conviene un monolito frente a microservicios, y que asocies cada patron de resiliencia con el problema que resuelve.\n\nLos errores tipicos son: confundir **MVC** (patron de presentacion) con un estilo arquitectonico, asumir que microservicios siempre escala mejor que un monolito, o mezclar **CQRS** con **Event Sourcing** (son independientes aunque se combinen).\n\nDomina los siguientes ejes y resuelves la subarea con seguridad:\n\n1. **Vistas 4+1 de Kruchten**: que perspectiva responde cada vista.\n2. **Trade-offs**: monolito vs microservicios vs hexagonal en acoplamiento, despliegue y complejidad operacional.\n3. **Evaluacion**: para que sirven ATAM y SAAM y que entregables generan.\n4. **Resiliencia**: Saga, Circuit Breaker y API Gateway, con el sintoma que cada uno mitiga."
+    },
+    { "type": "concept", "order": 2, "title": "Conceptos clave", "metadata": null },
+    {
+      "type": "example",
+      "order": 3,
+      "title": "Fintech con 50,000 transacciones por segundo",
+      "body_md": "Una fintech mexicana de pagos similar a Clip esta migrando de un monolito Java a una arquitectura distribuida porque debe soportar **50,000 transacciones por segundo** en horarios pico (Buen Fin, dia de quincena) y bajar el tiempo medio entre despliegues de 2 semanas a 1 dia.\n\n**Decisiones de arquitectura:**\n\n- **Estilo**: microservicios organizados por capacidad de negocio (Cobros, Conciliacion, Antifraude, Notificaciones, Liquidacion).\n- **Comunicacion**: sincrona via REST para queries del cliente movil; asincrona via **Apache Kafka** para eventos de dominio (PagoAprobado, ContraCargoRecibido).\n- **API Gateway** (Kong) para autenticacion OAuth 2.0, rate limiting por cliente y observabilidad centralizada.\n- **Saga orquestada** en el flujo de cobro: 1) reservar limite tarjeta, 2) validar antifraude, 3) confirmar con red, 4) liquidar al comercio. Si falla el paso 3, compensar pasos 1 y 2.\n- **Circuit Breaker** (Resilience4j) protege llamadas a la red de Mastercard: si > 50% falla en 60s, abre el circuito 30s y degrada con respuesta cacheada.\n- **CQRS**: modelo de escritura en PostgreSQL (transacciones ACID); modelo de lectura para dashboards en ClickHouse.\n\nEsta configuracion absorbe los 50k tx/s pero introduce complejidad operacional: 30+ servicios, observabilidad distribuida (OpenTelemetry, Grafana), y necesidad de un equipo de plataforma dedicado. El equipo descarto seguir con monolito porque el cuello de botella estaba en el ciclo de despliegue, no en el codigo."
+    },
+    {
+      "type": "case_study",
+      "order": 4,
+      "title": "Migracion de un sistema legacy a arquitectura hexagonal",
+      "body_md": "Una distribuidora mexicana de medicamentos (1,200 sucursales) opera un ERP Java legacy con logica de negocio incrustada en stored procedures de Oracle y JSPs. Quieren migrar a la nube y reemplazar Oracle por PostgreSQL en 18 meses sin detener operaciones.\n\n**Diagnostico:** el dominio (reglas de surtido, caducidades, lote, controlados COFEPRIS) esta acoplado a la base de datos. Cualquier cambio de motor SQL requiere reescribir cientos de procedimientos.\n\n**Estrategia: arquitectura hexagonal.**\n\n1. **Extraer el nucleo de dominio** a un modulo Java puro (sin dependencias de Oracle, JSP o framework). Aqui viven las entidades `Lote`, `Medicamento`, `Receta`, las reglas de surtido y los servicios de dominio.\n2. **Definir puertos** (interfaces): `RepositorioLote`, `EmisorComprobante`, `ValidadorCOFEPRIS`.\n3. **Adaptadores actuales**: implementaciones que conectan los puertos contra Oracle y los servicios SOAP existentes.\n4. **Adaptadores nuevos**: implementaciones para PostgreSQL y para una API REST.\n5. **Migracion progresiva**: cada sucursal cambia su adaptador cuando se valida. El nucleo no se toca.\n\n**Resultado a los 12 meses:** 60% de las sucursales corren sobre PostgreSQL en AWS; el nucleo de dominio se cubre con 2,400 tests unitarios que corren en 18 segundos. La hexagonal aislo el costo del cambio tecnologico en los adaptadores."
+    },
+    {
+      "type": "comparison_table",
+      "order": 5,
+      "title": "Monolito vs Microservicios vs Hexagonal",
+      "metadata": {
+        "headers": ["Aspecto", "Monolito", "Microservicios", "Hexagonal"],
+        "rows": [
+          ["Unidad de despliegue", "Una sola app", "N servicios independientes", "Una app (puede ser monolito o servicio)"],
+          ["Acoplamiento interno", "Alto si no es modular", "Bajo entre servicios", "Bajo: dominio aislado de infra"],
+          ["Complejidad operacional", "Baja", "Alta (orquestacion, observabilidad, mallas)", "Media"],
+          ["Escalado", "Vertical o replicas del todo", "Por servicio segun carga", "Igual que su contenedor"],
+          ["Tiempo a primer release", "Rapido", "Lento (requiere plataforma)", "Medio"],
+          ["Casos de uso ideales", "Startup, MVP, equipo < 10", "Dominio grande, equipos autonomos, escala variable", "Reemplazar tecnologia (DB, framework) sin tocar dominio"],
+          ["Riesgo principal", "Despliegue acoplado", "Latencia distribuida, consistencia eventual", "Sobre-ingenieria si el dominio es trivial"]
+        ]
+      }
+    },
+    {
+      "type": "tool",
+      "order": 6,
+      "title": "Herramientas para modelar y documentar arquitectura",
+      "metadata": {
+        "tools": [
+          { "name": "ArchiMate", "url": "https://www.opengroup.org/archimate-forum", "description": "Lenguaje estandar (Open Group) para modelar arquitectura empresarial: negocio, aplicacion, tecnologia." },
+          { "name": "C4 Model", "url": "https://c4model.com/", "description": "Notacion de Simon Brown para describir arquitectura en 4 niveles: Contexto, Contenedores, Componentes, Codigo." },
+          { "name": "Structurizr", "url": "https://structurizr.com/", "description": "Herramienta as-code para generar diagramas C4 desde DSL o codigo Java/.NET." },
+          { "name": "draw.io / diagrams.net", "url": "https://www.drawio.com/", "description": "Editor libre de diagramas con plantillas para C4, UML y nube (AWS, Azure, GCP)." },
+          { "name": "Lucidchart", "url": "https://www.lucidchart.com/", "description": "SaaS colaborativo de diagramas con integraciones a Jira y Confluence." }
+        ]
+      }
+    },
+    {
+      "type": "glossary",
+      "order": 7,
+      "title": "Glosario",
+      "metadata": {
+        "terms": [
+          { "term": "ATAM", "def": "Architecture Tradeoff Analysis Method del SEI. Evalua arquitectura contra atributos de calidad mediante escenarios." },
+          { "term": "SAAM", "def": "Software Architecture Analysis Method. Antecesor de ATAM enfocado en modificabilidad." },
+          { "term": "Punto de sensibilidad", "def": "Decision arquitectonica de la que depende fuertemente un atributo de calidad. Cambiarla impacta ese atributo." },
+          { "term": "Trade-off", "def": "Decision que afecta dos o mas atributos de calidad en sentidos opuestos (ej. seguridad vs rendimiento)." },
+          { "term": "Atributo de calidad", "def": "Caracteristica no funcional medible (disponibilidad, escalabilidad, mantenibilidad) — ver ISO/IEC 25010." },
+          { "term": "Vista", "def": "Representacion de la arquitectura desde una perspectiva (logica, fisica, de proceso, de desarrollo, escenarios)." },
+          { "term": "Escenario", "def": "Caso concreto de uso, modificacion o falla usado para evaluar la arquitectura (ATAM)." },
+          { "term": "Puerto", "def": "Interfaz del nucleo de dominio en arquitectura hexagonal." },
+          { "term": "Adaptador", "def": "Implementacion concreta de un puerto que conecta el dominio con infraestructura externa." }
+        ]
+      }
+    },
+    { "type": "quick_quiz", "order": 8, "title": "Quick Quiz", "metadata": null },
+    {
+      "type": "references",
+      "order": 9,
+      "title": "Referencias",
+      "metadata": {
+        "refs": [
+          { "title": "Bass, Clements, Kazman — Software Architecture in Practice (4a ed., SEI)", "url": "https://www.pearson.com/en-us/subject-catalog/p/software-architecture-in-practice/P200000009445" },
+          { "title": "Fowler — Patterns of Enterprise Application Architecture", "url": "https://martinfowler.com/books/eaa.html" },
+          { "title": "Microsoft Azure Architecture Center", "url": "https://learn.microsoft.com/azure/architecture/" },
+          { "title": "Kruchten — The 4+1 View Model of Architecture (IEEE Software, 1995)", "url": "https://www.cs.ubc.ca/~gregor/teaching/papers/4+1view-architecture.pdf" },
+          { "title": "Cockburn — Hexagonal Architecture (Ports and Adapters)", "url": "https://alistair.cockburn.us/hexagonal-architecture/" },
+          { "title": "Nygard — Release It! (2a ed., Pragmatic)", "url": "https://pragprog.com/titles/mnee2/release-it-second-edition/" }
+        ]
+      }
+    }
+  ]
+}
