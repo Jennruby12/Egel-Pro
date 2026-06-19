@@ -1,7 +1,6 @@
 # EGELPro
 
-[![CI](https://github.com/USER/egel-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/USER/egel-pro/actions/workflows/ci.yml)
-[![Deploy](https://github.com/USER/egel-pro/actions/workflows/deploy.yml/badge.svg)](https://github.com/USER/egel-pro/actions/workflows/deploy.yml)
+[![CI](https://github.com/Leonard-ssj/Egel-Pro/actions/workflows/ci.yml/badge.svg)](https://github.com/Leonard-ssj/Egel-Pro/actions/workflows/ci.yml)
 
 Simulador web para preparar el EGEL Plus ISOFT — Next.js 14 + Supabase + Tailwind.
 
@@ -48,15 +47,12 @@ npm run email:dev     # Preview React Email templates
 
 ## CI/CD
 
-- **CI** (`.github/workflows/ci.yml`): typecheck + lint + unit tests + build en cada push/PR. Job E2E con Playwright (necesita secrets de Supabase) corre en push o PR no-draft.
-- **Deploy** (`.github/workflows/deploy.yml`): push a `main` -> deploy automatico a Vercel prod.
+- **CI** (`.github/workflows/ci.yml`): typecheck + lint + unit tests + build en cada push/PR a `main` y `dev`. El job E2E con Playwright corre **solo bajo demanda** (pestana Actions -> Run workflow), porque necesita un Supabase real con datos sembrados; en push/PR el webServer se cuelga.
+- **Deploy**: lo maneja la **integracion Git de Vercel** (no hay workflow de deploy). Conecta el repo en Vercel -> proyecto `egel-pro` -> Settings -> Git, con branch de produccion `main`. Cada push a `main` despliega automaticamente.
 
-Secrets requeridos en GitHub repo (Settings -> Secrets and variables -> Actions):
+Secrets opcionales en GitHub repo (Settings -> Secrets and variables -> Actions), solo si quieres que el build de CI use tu instancia de Supabase:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `VERCEL_TOKEN` (https://vercel.com/account/tokens)
-- `VERCEL_ORG_ID` y `VERCEL_PROJECT_ID` (obtener con `vercel link`)
 
 ## Documentacion
 
