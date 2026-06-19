@@ -40,9 +40,11 @@ export function SparklesText({
   }, [count])
 
   return (
-    <span className={cn('relative inline-block', className)}>
-      {/* Texto base */}
-      <span className="relative z-10">{children}</span>
+    <span className="relative inline-block">
+      {/* Texto base. La className (p. ej. "text-aurora") va AQUI, sobre el span que
+          contiene el texto: background-clip:text necesita estar en el mismo elemento
+          que los glifos, si no el texto hereda color:transparent y queda invisible. */}
+      <span className={cn('relative z-10', className)}>{children}</span>
 
       {/* Sparkles flotando alrededor */}
       <span aria-hidden className="pointer-events-none absolute -inset-4">
