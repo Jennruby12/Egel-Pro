@@ -44,20 +44,20 @@ export function Sidebar({ role }: { role: Role }) {
   const items = NAV_ITEMS.filter((item) => !item.adminOnly || role === 'admin')
 
   return (
-    <aside className="relative hidden w-60 shrink-0 border-r border-bg-border/50 md:block">
+    <aside className="sticky top-0 hidden h-screen w-60 shrink-0 self-start overflow-hidden border-r border-bg-border/50 md:flex md:flex-col">
       {/* Glass backdrop */}
       <div className="glass absolute inset-0 rounded-none border-l-0 border-t-0 border-b-0" />
 
-      <div className="sticky top-0 flex h-screen flex-col">
+      <div className="relative z-10 flex h-full flex-col">
         <Link
           href="/dashboard"
-          className="flex h-16 items-center gap-2 border-b border-bg-border/40 px-6 text-lg font-bold"
+          className="flex h-16 shrink-0 items-center gap-2 border-b border-bg-border/40 px-6 text-lg font-bold"
         >
           <span className="text-aurora">EGEL</span>
           <span className="text-foreground">Pro</span>
         </Link>
 
-        <nav className="flex-1 space-y-0.5 p-3">
+        <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
           {items.map((item) => {
             const active =
               pathname === item.href || pathname.startsWith(`${item.href}/`)
@@ -102,7 +102,7 @@ export function Sidebar({ role }: { role: Role }) {
           })}
         </nav>
 
-        <div className="border-t border-bg-border/40 p-3 space-y-2">
+        <div className="mt-auto shrink-0 border-t border-bg-border/40 p-3 space-y-2">
           <form action={signOut}>
             <button
               type="submit"

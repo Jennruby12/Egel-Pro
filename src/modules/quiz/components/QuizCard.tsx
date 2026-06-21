@@ -17,6 +17,7 @@ import { QuizProgress } from './QuizProgress'
 import { QuestionDisplay } from './QuestionDisplay'
 import { OptionsList } from './OptionsList'
 import { QuizControls } from './QuizControls'
+import { QuestionFeedbackChips } from './QuestionFeedbackChips'
 import { useQuizStore } from '@/modules/quiz/store/quiz-store'
 import { useQuizTimer } from '@/modules/quiz/hooks/useQuizTimer'
 import { submitAnswer, completeSession } from '@/modules/quiz/actions'
@@ -258,6 +259,10 @@ export function QuizCard({
                 disabled={isFinishing}
                 onSelect={handleSelect}
               />
+              {/* Feedback de calidad de la pregunta (distinto de "Marcar"/bookmark).
+                  El usuario reporta si la pregunta es floja: muy facil, respuestas
+                  obvias, etc. Alimenta el contador en BD. */}
+              <QuestionFeedbackChips questionId={currentQuestion.id} />
             </motion.div>
           </AnimatePresence>
         </GlassCard>

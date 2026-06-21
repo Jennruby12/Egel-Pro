@@ -34,6 +34,10 @@ export const metadata: Metadata = {
     'ingenieria de software',
   ],
   authors: [{ name: 'EGELPro' }],
+  alternates: { canonical: '/' },
+  // Las imagenes OG/Twitter las genera Next por convencion de archivo
+  // (src/app/opengraph-image.tsx y twitter-image.tsx) en PNG, que SI renderiza
+  // en redes sociales (el SVG no).
   openGraph: {
     type: 'website',
     locale: 'es_MX',
@@ -41,20 +45,11 @@ export const metadata: Metadata = {
     siteName: 'EGELPro',
     title: siteTitle,
     description: siteDescription,
-    images: [
-      {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'EGELPro - Simulador EGEL',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/og-image.svg'],
   },
   robots: { index: true, follow: true },
   verification: {},
