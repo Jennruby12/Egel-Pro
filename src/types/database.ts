@@ -297,50 +297,6 @@ export type Database = {
         }
         Relationships: []
       }
-      user_guide_progress: {
-        Row: {
-          completed_at: string | null
-          guide_id: string
-          last_section_id: string | null
-          percent_read: number | null
-          started_at: string | null
-          status: string | null
-          time_spent_seconds: number | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          completed_at?: string | null
-          guide_id: string
-          last_section_id?: string | null
-          percent_read?: number | null
-          started_at?: string | null
-          status?: string | null
-          time_spent_seconds?: number | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          completed_at?: string | null
-          guide_id?: string
-          last_section_id?: string | null
-          percent_read?: number | null
-          started_at?: string | null
-          status?: string | null
-          time_spent_seconds?: number | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_guide_progress_guide_id_fkey"
-            columns: ["guide_id"]
-            isOneToOne: false
-            referencedRelation: "guides"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       notifications: {
         Row: {
           action_link: string | null
@@ -509,6 +465,45 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      question_feedback: {
+        Row: {
+          created_at: string | null
+          id: string
+          question_id: string
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          question_id: string
+          reason: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          question_id?: string
+          reason?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_feedback_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "question_feedback_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -977,6 +972,50 @@ export type Database = {
           },
         ]
       }
+      user_guide_progress: {
+        Row: {
+          completed_at: string | null
+          guide_id: string
+          last_section_id: string | null
+          percent_read: number | null
+          started_at: string | null
+          status: string | null
+          time_spent_seconds: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          guide_id: string
+          last_section_id?: string | null
+          percent_read?: number | null
+          started_at?: string | null
+          status?: string | null
+          time_spent_seconds?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          guide_id?: string
+          last_section_id?: string | null
+          percent_read?: number | null
+          started_at?: string | null
+          status?: string | null
+          time_spent_seconds?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_guide_progress_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_notes: {
         Row: {
           content: string
@@ -1090,6 +1129,20 @@ export type Database = {
         }[]
       }
       is_admin: { Args: never; Returns: boolean }
+      question_feedback_counts: {
+        Args: never
+        Returns: {
+          area: number
+          confusa: number
+          desactualizada: number
+          mal_redactada: number
+          muy_facil: number
+          question_id: string
+          question_text: string
+          respuestas_obvias: number
+          total: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

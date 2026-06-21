@@ -7,6 +7,7 @@ import { MagicButton } from '@/components/ui/magic-button'
 import { ResultsCard } from '@/modules/quiz/components/ResultsCard'
 import { AreaBreakdown, type AreaBreakdownRow } from '@/modules/quiz/components/AreaBreakdown'
 import { AnswerReview, type ReviewItem } from '@/modules/quiz/components/AnswerReview'
+import { getMyQuestionFeedback } from '@/modules/quiz/feedback-actions'
 import { DISCIPLINAR_AREAS } from '@/lib/constants/egel'
 import type { PerformanceLevel, CorrectAnswer } from '@/types/global'
 
@@ -68,6 +69,12 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
 
   const answers = (rawAnswers ?? []) as unknown as AnswerRow[]
 
+  // Feedback de calidad ya marcado por el usuario, para precargar los chips
+  const reviewedQuestionIds = answers
+    .filter((a) => a.questions)
+    .map((a) => a.question_id)
+  const feedbackMap = await getMyQuestionFeedback(reviewedQuestionIds)
+
   // Construir review items
   const reviewItems: ReviewItem[] = answers
     .filter((a): a is AnswerRow & { questions: NonNullable<AnswerRow['questions']> } => Boolean(a.questions))
@@ -85,6 +92,7 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
       userAnswer: (a.user_answer as CorrectAnswer | null) ?? null,
       isCorrect: a.is_correct,
       explanation: a.questions.explanation,
+      feedbackReasons: feedbackMap[a.question_id] ?? [],
     }))
 
   // Construir breakdown por area

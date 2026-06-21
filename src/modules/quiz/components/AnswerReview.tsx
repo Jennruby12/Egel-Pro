@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, X, MinusCircle, ChevronDown } from 'lucide-react'
 import { GlassCard } from '@/components/ui/glass-card'
 import { cn } from '@/lib/utils/cn'
+import { QuestionFeedbackChips } from './QuestionFeedbackChips'
 
 export type ReviewItem = {
   questionId: string
@@ -20,6 +21,8 @@ export type ReviewItem = {
   userAnswer: 'a' | 'b' | 'c' | null
   isCorrect: boolean | null
   explanation: string | null
+  /** Razones de feedback de calidad que el usuario ya marco para esta pregunta. */
+  feedbackReasons?: string[]
 }
 
 type AnswerReviewProps = {
@@ -184,6 +187,11 @@ function ReviewRow({ item, index }: { item: ReviewItem; index: number }) {
                   <p className="leading-relaxed">{item.explanation}</p>
                 </div>
               ) : null}
+
+              <QuestionFeedbackChips
+                questionId={item.questionId}
+                initialReasons={item.feedbackReasons}
+              />
             </div>
           </motion.div>
         )}
