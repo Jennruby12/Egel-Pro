@@ -35,11 +35,23 @@ export default async function DashboardLayout({
   const role = (profile?.role ?? 'student') as Role
 
   return (
-    <AuroraBackground variant="subtle" className="min-h-screen">
-      <div className="relative z-10 flex min-h-screen">
+    <div className="relative min-h-screen">
+      {/* Fondo aurora como capa FIJA detras del contenido. Va aparte (no como
+          wrapper) porque AuroraBackground usa overflow-hidden, y un ancestro con
+          overflow-hidden rompe el position: sticky del Sidebar (footer se despegaba). */}
+      <div aria-hidden className="fixed inset-0 -z-10">
+        <AuroraBackground variant="subtle" className="h-full w-full">
+          <span className="block h-full w-full" />
+        </AuroraBackground>
+      </div>
+
+      <div className="flex min-h-screen">
         <Sidebar role={role} />
 
-        <div className="flex flex-1 flex-col">
+        {/* min-w-0: permite que esta columna se encoja por debajo del ancho
+            intrinseco de su contenido (tablas/codigo de las guias), evitando que
+            empuje el layout y recorte texto en movil. */}
+        <div className="flex min-w-0 flex-1 flex-col">
           <Header
             fullName={profile?.full_name ?? null}
             email={profile?.email ?? user.email ?? ''}
@@ -47,7 +59,7 @@ export default async function DashboardLayout({
             level={profile?.level ?? 1}
             streakCurrent={profile?.streak_current ?? 0}
           />
-          <main className="safe-x flex-1 px-4 pb-24 pt-4 sm:px-6 sm:pt-6 md:px-8 md:pb-8">
+          <main className="safe-x flex-1 overflow-x-clip px-4 pb-24 pt-4 sm:px-6 sm:pt-6 md:px-8 md:pb-8">
             <PageTransition>{children}</PageTransition>
           </main>
           <OfflineIndicator />
@@ -60,6 +72,6 @@ export default async function DashboardLayout({
           <StreakTouch />
         </div>
       </div>
-    </AuroraBackground>
+    </div>
   )
 }

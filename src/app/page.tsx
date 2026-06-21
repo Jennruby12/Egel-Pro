@@ -28,8 +28,28 @@ export default async function HomePage() {
 
   if (user) redirect('/dashboard')
 
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://egel-pro.vercel.app'
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalApplication',
+    name: 'EGELPro',
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web, Android, iOS',
+    url: siteUrl,
+    inLanguage: 'es-MX',
+    description:
+      'Simulador, guias de estudio y gamificacion para preparar el EGEL Plus ISOFT (CENEVAL) en Ingenieria de Software.',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'MXN' },
+    audience: { '@type': 'EducationalAudience', educationalRole: 'student' },
+  }
+
   return (
     <div className="relative min-h-screen">
+      {/* SEO: datos estructurados para rich results de Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ===== HERO ===== */}
       <AuroraBackground variant="intense" className="min-h-screen">
         {/* Nav minimal */}
