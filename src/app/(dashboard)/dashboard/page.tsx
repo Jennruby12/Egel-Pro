@@ -58,6 +58,7 @@ export default async function DashboardPage() {
     recentSessionsRes,
     last7StreaksRes,
     todayStreakRes,
+    completedCountRes,
   ] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('user_progress').select('*').eq('user_id', user.id),
@@ -80,6 +81,12 @@ export default async function DashboardPage() {
       .eq('user_id', user.id)
       .eq('date', todayISO)
       .maybeSingle(),
+    // Conteo REAL de quizzes completados (no el de recientes, que esta topado a 5)
+    supabase
+      .from('quiz_sessions')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('status', 'completed'),
   ])
 
   const profile = profileRes.data
@@ -140,7 +147,7 @@ export default async function DashboardPage() {
         <QuickStatsCard
           totalQuestions={totalQuestions}
           averageAccuracy={averageAccuracy}
-          totalQuizzes={recentSessions.length}
+          totalQuizzes={completedCountRes.count ?? 0}
           bestStreak={profile?.streak_max ?? 0}
         />
       </BentoCard>
