@@ -100,11 +100,13 @@ const config: Config = {
       },
       fontSize: {
         // Type scale completa (display + body)
-        'display-2xl': ['4.5rem', { lineHeight: '1', letterSpacing: '-0.04em', fontWeight: '700' }],
-        'display-xl':  ['3.75rem', { lineHeight: '1.05', letterSpacing: '-0.035em', fontWeight: '700' }],
-        'display-lg':  ['3rem', { lineHeight: '1.1', letterSpacing: '-0.03em', fontWeight: '700' }],
-        'display-md':  ['2.25rem', { lineHeight: '1.15', letterSpacing: '-0.025em', fontWeight: '700' }],
-        'display-sm':  ['1.875rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '600' }],
+        // lineHeight con holgura suficiente para no recortar descendentes (g, p, y)
+        // ni el texto con gradiente (background-clip: text).
+        'display-2xl': ['4.5rem', { lineHeight: '1.08', letterSpacing: '-0.04em', fontWeight: '700' }],
+        'display-xl':  ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.035em', fontWeight: '700' }],
+        'display-lg':  ['3rem', { lineHeight: '1.15', letterSpacing: '-0.03em', fontWeight: '700' }],
+        'display-md':  ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.025em', fontWeight: '700' }],
+        'display-sm':  ['1.875rem', { lineHeight: '1.25', letterSpacing: '-0.02em', fontWeight: '600' }],
       },
       borderRadius: {
         sm:   '6px',

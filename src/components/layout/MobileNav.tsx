@@ -33,7 +33,7 @@ export function MobileNav() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'relative flex flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[9px] font-medium leading-tight transition-colors',
+                    'relative flex flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[10px] font-medium leading-tight transition-colors',
                     active ? 'text-brand-400' : 'text-muted-foreground',
                   )}
                 >
@@ -50,7 +50,7 @@ export function MobileNav() {
                       active && 'scale-110',
                     )}
                   />
-                  <span className="relative z-10 truncate max-w-full">{item.label}</span>
+                  <span className="relative z-10 whitespace-nowrap">{item.label}</span>
                 </Link>
               </li>
             )
@@ -60,10 +60,10 @@ export function MobileNav() {
               <button
                 type="submit"
                 aria-label="Cerrar sesion"
-                className="relative flex w-full flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[9px] font-medium leading-tight text-muted-foreground transition-colors hover:text-danger"
+                className="relative flex w-full flex-col items-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[10px] font-medium leading-tight text-muted-foreground transition-colors hover:text-danger"
               >
                 <LogOut className="relative z-10 h-4 w-4" />
-                <span className="relative z-10 truncate max-w-full">Salir</span>
+                <span className="relative z-10 whitespace-nowrap">Salir</span>
               </button>
             </form>
           </li>
