@@ -9,9 +9,19 @@ const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/auth', '/offl
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
+  // Defensa: si faltan las env vars de Supabase (p.ej. mal configuradas en un
+  // entorno de preview), NO reventar el middleware con un 500 global. Dejamos
+  // pasar la request para que al menos las paginas publicas rendericen.
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error('[middleware] Faltan NEXT_PUBLIC_SUPABASE_URL / ANON_KEY en este entorno')
+    return supabaseResponse
+  }
+
   const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
