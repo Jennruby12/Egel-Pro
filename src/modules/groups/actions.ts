@@ -62,8 +62,13 @@ export async function createGroup(input: CreateGroupInput): Promise<ActionResult
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'No autenticado' }
 
-  const role = await getUserRole(supabase, user.id)
-  if (role !== 'teacher' && role !== 'admin') {
+  // Rol + organización del maestro (si pertenece a una, el grupo la hereda).
+  const { data: me } = await supabase
+    .from('profiles')
+    .select('role, organization_id')
+    .eq('id', user.id)
+    .single()
+  if (me?.role !== 'teacher' && me?.role !== 'admin') {
     return { success: false, error: 'Necesitas ser maestro para crear grupos' }
   }
 
@@ -85,6 +90,7 @@ export async function createGroup(input: CreateGroupInput): Promise<ActionResult
         name: parsed.data.name,
         exam_id: parsed.data.examId,
         owner_id: user.id,
+        organization_id: me?.organization_id ?? null,
         join_code,
       })
       .select('id')

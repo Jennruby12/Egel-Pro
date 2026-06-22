@@ -15,6 +15,7 @@ import {
   LogOut,
   Bell,
   GraduationCap,
+  Building2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { signOut } from '@/modules/auth/actions'
@@ -26,6 +27,7 @@ type NavItem = {
   icon: typeof LayoutDashboard
   adminOnly?: boolean
   teacherOnly?: boolean
+  orgManagerOnly?: boolean
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -35,6 +37,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/study',        label: 'Estudiar',     icon: BookOpen },
   { href: '/progress',     label: 'Progreso',     icon: TrendingUp },
   { href: '/teacher',       label: 'Grupos',         icon: GraduationCap, teacherOnly: true },
+  { href: '/org',           label: 'Mi organizacion', icon: Building2, orgManagerOnly: true },
   { href: '/achievements',  label: 'Logros',         icon: Trophy },
   { href: '/leaderboard',   label: 'Ranking',        icon: Trophy },
   { href: '/notifications', label: 'Notificaciones', icon: Bell },
@@ -42,11 +45,12 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin',        label: 'Admin',        icon: Settings, adminOnly: true },
 ]
 
-export function Sidebar({ role }: { role: Role }) {
+export function Sidebar({ role, orgManager = false }: { role: Role; orgManager?: boolean }) {
   const pathname = usePathname()
   const items = NAV_ITEMS.filter((item) => {
     if (item.adminOnly) return role === 'admin'
     if (item.teacherOnly) return role === 'teacher' || role === 'admin'
+    if (item.orgManagerOnly) return orgManager || role === 'admin'
     return true
   })
 

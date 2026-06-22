@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   ArrowLeft,
   GraduationCap,
+  Building2,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { signOut } from '@/modules/auth/actions'
@@ -19,6 +20,7 @@ const ADMIN_LINKS = [
   { href: '/admin/questions', label: 'Preguntas', icon: FileQuestion },
   { href: '/admin/guides', label: 'Guias', icon: BookOpen },
   { href: '/admin/exams', label: 'Examenes', icon: GraduationCap },
+  { href: '/admin/orgs', label: 'Organizaciones', icon: Building2 },
   { href: '/admin/users', label: 'Usuarios', icon: Users },
 ] as const
 

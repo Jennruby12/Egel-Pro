@@ -34,6 +34,9 @@ export default async function DashboardLayout({
   }
 
   const role = (profile?.role ?? 'student') as Role
+  const isOrgManager =
+    Boolean(profile?.organization_id) &&
+    (profile?.org_role === 'owner' || profile?.org_role === 'manager')
 
   return (
     <div className="relative min-h-screen">
@@ -47,7 +50,7 @@ export default async function DashboardLayout({
       </div>
 
       <div className="flex min-h-screen">
-        <Sidebar role={role} />
+        <Sidebar role={role} orgManager={isOrgManager} />
 
         {/* min-w-0: permite que esta columna se encoja por debajo del ancho
             intrinseco de su contenido (tablas/codigo de las guias), evitando que
