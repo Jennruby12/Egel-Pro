@@ -15,19 +15,76 @@
     "published": true
   },
   "concepts": [
-    { "concept": "Elicitacion", "definition_md": "Proceso de descubrir, capturar y entender los requerimientos del sistema desde los stakeholders. NO es solo 'preguntar': involucra observar, prototipar y analizar documentos.", "importance": "alta" },
-    { "concept": "Entrevista estructurada", "definition_md": "Conversacion guiada por preguntas predefinidas y abiertas/cerradas. Util cuando hay stakeholders identificados y el dominio es conocido. Se contrasta con la entrevista no estructurada (exploratoria).", "importance": "alta" },
-    { "concept": "JAD (Joint Application Development)", "definition_md": "Taller intensivo de 1-5 dias con stakeholders, usuarios, analistas y facilitador. Reduce ciclos de elicitacion al colocar a todos en una sala con reglas claras.", "importance": "alta" },
-    { "concept": "Metodo Delphi", "definition_md": "Tecnica anonima e iterativa con expertos: cada ronda se comparten respuestas agregadas y se busca convergencia. Util para estimar esfuerzo o priorizar sin sesgo de autoridad.", "importance": "media" },
-    { "concept": "MoSCoW", "definition_md": "Priorizacion en 4 categorias: Must have (criticos), Should have (importantes), Could have (deseables) y Won't have (excluidos en este release). Estandar en proyectos agiles.", "importance": "alta" },
-    { "concept": "Modelo Kano", "definition_md": "Clasifica requerimientos segun satisfaccion del usuario: basicos (must-be), de desempeno (one-dimensional), atractivos (delighters), indiferentes e inversos. Ayuda a detectar features que enamoran vs. obvios.", "importance": "alta" },
-    { "concept": "AHP (Analytic Hierarchy Process)", "definition_md": "Tecnica de priorizacion multicriterio de Saaty. Compara pares de requerimientos contra criterios (costo, valor, riesgo) y genera pesos cuantitativos. Util en proyectos con muchos stakeholders.", "importance": "media" },
-    { "concept": "Prototipado throwaway", "definition_md": "Prototipo desechable construido rapido para validar un requerimiento ambiguo. Se descarta tras aprender; NO se evoluciona a produccion.", "importance": "alta" },
-    { "concept": "Prototipado evolutivo", "definition_md": "Prototipo que SI se refina iterativamente hasta convertirse en el producto final. Requiere arquitectura solida desde el inicio.", "importance": "alta" },
-    { "concept": "ETHICS", "definition_md": "Effective Technical and Human Implementation of Computer-based Systems. Metodologia sociotecnica de Enid Mumford: involucra usuarios en el diseno para validar necesidades reales.", "importance": "media" },
-    { "concept": "Stakeholder", "definition_md": "Cualquier persona, grupo u organizacion afectada por o que afecta al sistema. Incluye usuarios finales, sponsors, reguladores, soporte, operaciones, etc.", "importance": "alta" },
-    { "concept": "Walkthrough", "definition_md": "Revision informal del documento de requerimientos donde el autor 'pasea' al equipo por el contenido. Menos rigurosa que la inspeccion Fagan.", "importance": "media" },
-    { "concept": "Inspeccion Fagan", "definition_md": "Revision formal con roles definidos (moderador, autor, lector, inspector), checklist y metricas de defectos. Maxima rigurosidad para validar SRS o codigo critico.", "importance": "alta" }
+    {
+      "concept": "Elicitacion",
+      "definition_md": "Proceso de descubrir, capturar y entender los requerimientos del sistema desde los stakeholders. NO es solo 'preguntar': involucra observar, prototipar y analizar documentos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Entrevista estructurada",
+      "definition_md": "Conversacion guiada por preguntas predefinidas y abiertas/cerradas. Util cuando hay stakeholders identificados y el dominio es conocido. Se contrasta con la entrevista no estructurada (exploratoria).",
+      "importance": "alta"
+    },
+    {
+      "concept": "JAD (Joint Application Development)",
+      "definition_md": "Taller intensivo de 1-5 dias con stakeholders, usuarios, analistas y facilitador. Reduce ciclos de elicitacion al colocar a todos en una sala con reglas claras.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Metodo Delphi",
+      "definition_md": "Tecnica anonima e iterativa con expertos: cada ronda se comparten respuestas agregadas y se busca convergencia. Util para estimar esfuerzo o priorizar sin sesgo de autoridad.",
+      "importance": "media"
+    },
+    {
+      "concept": "MoSCoW",
+      "definition_md": "Priorizacion en 4 categorias: Must have (criticos), Should have (importantes), Could have (deseables) y Won't have (excluidos en este release). Estandar en proyectos agiles.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Modelo Kano",
+      "definition_md": "Clasifica requerimientos segun satisfaccion del usuario: basicos (must-be), de desempeno (one-dimensional), atractivos (delighters), indiferentes e inversos. Ayuda a detectar features que enamoran vs. obvios.",
+      "importance": "alta"
+    },
+    {
+      "concept": "AHP (Analytic Hierarchy Process)",
+      "definition_md": "Tecnica de priorizacion multicriterio de Saaty. Compara pares de requerimientos contra criterios (costo, valor, riesgo) y genera pesos cuantitativos. Util en proyectos con muchos stakeholders.",
+      "importance": "media"
+    },
+    {
+      "concept": "Prototipado throwaway",
+      "definition_md": "Prototipo desechable construido rapido para validar un requerimiento ambiguo. Se descarta tras aprender; NO se evoluciona a produccion.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Prototipado evolutivo",
+      "definition_md": "Prototipo que SI se refina iterativamente hasta convertirse en el producto final. Requiere arquitectura solida desde el inicio.",
+      "importance": "alta"
+    },
+    {
+      "concept": "ETHICS",
+      "definition_md": "Effective Technical and Human Implementation of Computer-based Systems. Metodologia sociotecnica de Enid Mumford: involucra usuarios en el diseno para validar necesidades reales.",
+      "importance": "media"
+    },
+    {
+      "concept": "Stakeholder",
+      "definition_md": "Cualquier persona, grupo u organizacion afectada por o que afecta al sistema. Incluye usuarios finales, sponsors, reguladores, soporte, operaciones, etc.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Walkthrough",
+      "definition_md": "Revision informal del documento de requerimientos donde el autor 'pasea' al equipo por el contenido. Menos rigurosa que la inspeccion Fagan.",
+      "importance": "media"
+    },
+    {
+      "concept": "Inspeccion Fagan",
+      "definition_md": "Revision formal con roles definidos (moderador, autor, lector, inspector), checklist y metricas de defectos. Maxima rigurosidad para validar SRS o codigo critico.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Estudio de viabilidad (factibilidad)",
+      "definition_md": "Analisis temprano que determina si vale la pena construir el sistema. Dimensiones: **tecnica** (existe la tecnologia y el know-how), **economica** (costo-beneficio, ROI), **operativa** (la organizacion y los usuarios lo adoptaran), **legal** (cumple normas y regulaciones) y **de calendario/temporal** (se puede entregar a tiempo). Su resultado alimenta la decision de continuar el proyecto.",
+      "importance": "alta"
+    }
   ],
   "sections": [
     {
@@ -59,20 +116,98 @@
       "order": 5,
       "title": "Tecnicas de elicitacion vs priorizacion vs validacion",
       "metadata": {
-        "headers": ["Tecnica", "Categoria", "Cuando usar", "Costo/Esfuerzo", "Limitacion"],
+        "headers": [
+          "Tecnica",
+          "Categoria",
+          "Cuando usar",
+          "Costo/Esfuerzo",
+          "Limitacion"
+        ],
         "rows": [
-          ["Entrevista estructurada", "Elicitacion", "Stakeholders identificados, dominio conocido", "Bajo", "Sesgo del entrevistador"],
-          ["JAD", "Elicitacion", "Multiples stakeholders, plazo corto", "Alto (logistica)", "Requiere facilitador experto"],
-          ["Observacion etnografica", "Elicitacion", "Procesos tacitos o no documentados", "Medio", "Lento, requiere acceso"],
-          ["Prototipado throwaway", "Elicitacion + Validacion", "Requerimientos ambiguos o visuales", "Bajo-Medio", "Tentacion de no descartar"],
-          ["Prototipado evolutivo", "Elicitacion + Construccion", "Requerimientos estables", "Alto", "Necesita arquitectura solida"],
-          ["MoSCoW", "Priorizacion", "Backlog grande, agile, MVP", "Bajo", "Subjetiva sin criterios claros"],
-          ["Kano", "Priorizacion", "Diferenciar features que enamoran vs obvios", "Medio (encuesta)", "Requiere base de usuarios"],
-          ["AHP", "Priorizacion", "Multicriterio con stakeholders en conflicto", "Alto", "Calculos complejos"],
-          ["Delphi", "Priorizacion + Estimacion", "Expertos dispersos, evitar sesgo de autoridad", "Medio", "Lento (varias rondas)"],
-          ["Walkthrough", "Validacion", "Revision rapida e informal", "Bajo", "Detecta menos defectos"],
-          ["Inspeccion Fagan", "Validacion", "SRS critico, software regulado", "Alto", "Requiere disciplina y roles"],
-          ["ETHICS", "Validacion sociotecnica", "Sistemas con alto impacto humano", "Alto", "Largo, requiere cultura participativa"]
+          [
+            "Entrevista estructurada",
+            "Elicitacion",
+            "Stakeholders identificados, dominio conocido",
+            "Bajo",
+            "Sesgo del entrevistador"
+          ],
+          [
+            "JAD",
+            "Elicitacion",
+            "Multiples stakeholders, plazo corto",
+            "Alto (logistica)",
+            "Requiere facilitador experto"
+          ],
+          [
+            "Observacion etnografica",
+            "Elicitacion",
+            "Procesos tacitos o no documentados",
+            "Medio",
+            "Lento, requiere acceso"
+          ],
+          [
+            "Prototipado throwaway",
+            "Elicitacion + Validacion",
+            "Requerimientos ambiguos o visuales",
+            "Bajo-Medio",
+            "Tentacion de no descartar"
+          ],
+          [
+            "Prototipado evolutivo",
+            "Elicitacion + Construccion",
+            "Requerimientos estables",
+            "Alto",
+            "Necesita arquitectura solida"
+          ],
+          [
+            "MoSCoW",
+            "Priorizacion",
+            "Backlog grande, agile, MVP",
+            "Bajo",
+            "Subjetiva sin criterios claros"
+          ],
+          [
+            "Kano",
+            "Priorizacion",
+            "Diferenciar features que enamoran vs obvios",
+            "Medio (encuesta)",
+            "Requiere base de usuarios"
+          ],
+          [
+            "AHP",
+            "Priorizacion",
+            "Multicriterio con stakeholders en conflicto",
+            "Alto",
+            "Calculos complejos"
+          ],
+          [
+            "Delphi",
+            "Priorizacion + Estimacion",
+            "Expertos dispersos, evitar sesgo de autoridad",
+            "Medio",
+            "Lento (varias rondas)"
+          ],
+          [
+            "Walkthrough",
+            "Validacion",
+            "Revision rapida e informal",
+            "Bajo",
+            "Detecta menos defectos"
+          ],
+          [
+            "Inspeccion Fagan",
+            "Validacion",
+            "SRS critico, software regulado",
+            "Alto",
+            "Requiere disciplina y roles"
+          ],
+          [
+            "ETHICS",
+            "Validacion sociotecnica",
+            "Sistemas con alto impacto humano",
+            "Alto",
+            "Largo, requiere cultura participativa"
+          ]
         ]
       }
     },
@@ -82,11 +217,31 @@
       "title": "Herramientas para elicitacion y priorizacion",
       "metadata": {
         "tools": [
-          { "name": "Mural", "url": "https://www.mural.co/", "description": "Pizarra colaborativa para JAD remoto, story mapping y priorizacion MoSCoW con plantillas listas." },
-          { "name": "Miro", "url": "https://miro.com/", "description": "Equivalente a Mural con fuerte integracion a Jira y Confluence. Soporta votacion y dot voting para priorizar." },
-          { "name": "Figma", "url": "https://www.figma.com/", "description": "Estandar para prototipos throwaway de alta fidelidad. Permite pruebas con usuarios via FigJam y modo presentacion." },
-          { "name": "Productboard", "url": "https://www.productboard.com/", "description": "Plataforma de gestion de productos con priorizacion Kano, scoring RICE y validacion de hipotesis." },
-          { "name": "MoSCoW Now", "url": "https://www.moscownow.com/", "description": "Herramienta especializada en talleres de priorizacion MoSCoW remota con timer y agregacion de votos." }
+          {
+            "name": "Mural",
+            "url": "https://www.mural.co/",
+            "description": "Pizarra colaborativa para JAD remoto, story mapping y priorizacion MoSCoW con plantillas listas."
+          },
+          {
+            "name": "Miro",
+            "url": "https://miro.com/",
+            "description": "Equivalente a Mural con fuerte integracion a Jira y Confluence. Soporta votacion y dot voting para priorizar."
+          },
+          {
+            "name": "Figma",
+            "url": "https://www.figma.com/",
+            "description": "Estandar para prototipos throwaway de alta fidelidad. Permite pruebas con usuarios via FigJam y modo presentacion."
+          },
+          {
+            "name": "Productboard",
+            "url": "https://www.productboard.com/",
+            "description": "Plataforma de gestion de productos con priorizacion Kano, scoring RICE y validacion de hipotesis."
+          },
+          {
+            "name": "MoSCoW Now",
+            "url": "https://www.moscownow.com/",
+            "description": "Herramienta especializada en talleres de priorizacion MoSCoW remota con timer y agregacion de votos."
+          }
         ]
       }
     },
@@ -96,16 +251,46 @@
       "title": "Glosario",
       "metadata": {
         "terms": [
-          { "term": "MoSCoW", "def": "Tecnica de priorizacion en 4 niveles: Must, Should, Could, Won't have." },
-          { "term": "JAD", "def": "Joint Application Development. Taller intensivo de 1-5 dias con stakeholders, facilitador y reglas claras." },
-          { "term": "Delphi", "def": "Tecnica anonima e iterativa con expertos para alcanzar consenso sin sesgo de autoridad." },
-          { "term": "ETHICS", "def": "Effective Technical and Human Implementation of Computer-based Systems. Metodologia sociotecnica de Mumford." },
-          { "term": "Kano", "def": "Modelo que clasifica requerimientos en basicos, de desempeno, atractivos, indiferentes e inversos segun satisfaccion del usuario." },
-          { "term": "AHP", "def": "Analytic Hierarchy Process. Priorizacion multicriterio por comparacion de pares (Saaty)." },
-          { "term": "Story map", "def": "Visualizacion bidimensional de historias de usuario organizadas por viaje del usuario y prioridad de release." },
-          { "term": "Throwaway prototype", "def": "Prototipo desechable construido rapido para validar y luego descartar." },
-          { "term": "Walkthrough", "def": "Revision informal donde el autor recorre el documento con el equipo." },
-          { "term": "Inspeccion Fagan", "def": "Revision formal con roles (moderador, autor, lector, inspector), checklist y metricas de defectos." }
+          {
+            "term": "MoSCoW",
+            "def": "Tecnica de priorizacion en 4 niveles: Must, Should, Could, Won't have."
+          },
+          {
+            "term": "JAD",
+            "def": "Joint Application Development. Taller intensivo de 1-5 dias con stakeholders, facilitador y reglas claras."
+          },
+          {
+            "term": "Delphi",
+            "def": "Tecnica anonima e iterativa con expertos para alcanzar consenso sin sesgo de autoridad."
+          },
+          {
+            "term": "ETHICS",
+            "def": "Effective Technical and Human Implementation of Computer-based Systems. Metodologia sociotecnica de Mumford."
+          },
+          {
+            "term": "Kano",
+            "def": "Modelo que clasifica requerimientos en basicos, de desempeno, atractivos, indiferentes e inversos segun satisfaccion del usuario."
+          },
+          {
+            "term": "AHP",
+            "def": "Analytic Hierarchy Process. Priorizacion multicriterio por comparacion de pares (Saaty)."
+          },
+          {
+            "term": "Story map",
+            "def": "Visualizacion bidimensional de historias de usuario organizadas por viaje del usuario y prioridad de release."
+          },
+          {
+            "term": "Throwaway prototype",
+            "def": "Prototipo desechable construido rapido para validar y luego descartar."
+          },
+          {
+            "term": "Walkthrough",
+            "def": "Revision informal donde el autor recorre el documento con el equipo."
+          },
+          {
+            "term": "Inspeccion Fagan",
+            "def": "Revision formal con roles (moderador, autor, lector, inspector), checklist y metricas de defectos."
+          }
         ]
       }
     },
@@ -121,11 +306,26 @@
       "title": "Referencias",
       "metadata": {
         "refs": [
-          { "title": "Sommerville — Ingenieria de Software (Cap. 4: Ingenieria de Requerimientos)", "url": "https://www.pearsonenespanol.com/mexico/educacion-superior/sommerville-ingenieria-software-9-edicion" },
-          { "title": "Wiegers & Beatty — Software Requirements (3a ed.)", "url": "https://www.microsoftpressstore.com/store/software-requirements-9780735679665" },
-          { "title": "Mike Cohn — User Stories Applied", "url": "https://www.mountaingoatsoftware.com/books/user-stories-applied" },
-          { "title": "Enid Mumford — ETHICS: Designing Human Systems", "url": "https://link.springer.com/book/10.1007/978-1-349-18892-7" },
-          { "title": "Thomas Saaty — The Analytic Hierarchy Process", "url": "https://www.rwspublications.com/" }
+          {
+            "title": "Sommerville — Ingenieria de Software (Cap. 4: Ingenieria de Requerimientos)",
+            "url": "https://www.pearsonenespanol.com/mexico/educacion-superior/sommerville-ingenieria-software-9-edicion"
+          },
+          {
+            "title": "Wiegers & Beatty — Software Requirements (3a ed.)",
+            "url": "https://www.microsoftpressstore.com/store/software-requirements-9780735679665"
+          },
+          {
+            "title": "Mike Cohn — User Stories Applied",
+            "url": "https://www.mountaingoatsoftware.com/books/user-stories-applied"
+          },
+          {
+            "title": "Enid Mumford — ETHICS: Designing Human Systems",
+            "url": "https://link.springer.com/book/10.1007/978-1-349-18892-7"
+          },
+          {
+            "title": "Thomas Saaty — The Analytic Hierarchy Process",
+            "url": "https://www.rwspublications.com/"
+          }
         ]
       }
     }

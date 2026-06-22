@@ -89,6 +89,16 @@
       "concept": "Modelo de Boehm",
       "definition_md": "Modelo jerarquico de calidad que parte de la utilidad general (as-is utility, maintainability, portability) y la descompone en caracteristicas intermedias y primitivas medibles.",
       "importance": "media"
+    },
+    {
+      "concept": "Pruebas de caja negra",
+      "definition_md": "Tecnica funcional que valida entradas y salidas contra la especificacion **sin conocer el codigo interno**. Disenos tipicos: particiones de equivalencia, valores limite (boundary) y tablas de decision. Responde a *que* hace el sistema.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Pruebas de caja blanca",
+      "definition_md": "Tecnica estructural que **examina el codigo interno** y mide cobertura de sentencias, ramas, condiciones y caminos (relacionada con la complejidad ciclomatica de McCabe). Responde a *como* lo hace el sistema. Complementa a la caja negra.",
+      "importance": "alta"
     }
   ],
   "sections": [
