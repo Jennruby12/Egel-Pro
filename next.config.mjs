@@ -9,6 +9,8 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  // Pagina servida cuando navegas sin red y la ruta no esta en cache.
+  fallbacks: { document: '/offline' },
   // Runtime caching. IMPORTANTE: NUNCA cachear /auth/v1/* (login, tokens, signup,
   // logout, /user). Si lo haces, en mobile el SW puede retornar respuestas stale
   // del cache y la sesion se rompe (user aparece logged in cuando ya no lo esta,
@@ -16,8 +18,22 @@ const withPWA = require('next-pwa')({
   // server, sin cache intermedio. Mismo para /rest/v1/* en mutaciones.
   runtimeCaching: [
     {
+      // Navegaciones (documentos HTML): NetworkFirst para tener fresco online,
+      // pero servir la ultima version cacheada (o /offline) cuando no hay red.
+      // Asi la app ABRE sin internet en rutas ya visitadas.
+      urlPattern: ({ request }) => request.mode === 'navigate',
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'pages',
+        networkTimeoutSeconds: 5,
+        expiration: { maxEntries: 32, maxAgeSeconds: 60 * 60 * 24 },
+        cacheableResponse: { statuses: [200] },
+      },
+    },
+    {
       urlPattern: /^https:\/\/[^/]+\.supabase\.co\/auth\/v1\/.*/i,
       handler: 'NetworkOnly',
+      options: {},
     },
     {
       // Solo cachear GET reads, no POST/PATCH/DELETE
