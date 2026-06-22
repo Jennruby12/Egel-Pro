@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils/cn'
+import { MermaidDiagram } from '@/components/ui/MermaidDiagram'
 
 type Props = {
   area: number
@@ -14,6 +15,8 @@ type Props = {
   correctAnswer: 'a' | 'b' | 'c'
   difficulty: 'easy' | 'medium' | 'hard'
   explanation?: string | null
+  diagram?: string | null
+  imageUrl?: string | null
 }
 
 const DIFFICULTY_VARIANT: Record<string, 'success' | 'warning' | 'destructive'> = {
@@ -44,6 +47,13 @@ export function QuestionPreview(props: Props) {
         <p className="font-medium leading-relaxed">
           {props.questionText || <span className="text-muted-foreground">[texto de la pregunta]</span>}
         </p>
+        {props.diagram ? <MermaidDiagram chart={props.diagram} /> : null}
+        {props.imageUrl ? (
+          <div className="overflow-hidden rounded-lg border border-bg-border">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={props.imageUrl} alt="" className="max-h-[300px] w-full object-contain" />
+          </div>
+        ) : null}
         <ul className="space-y-2">
           {options.map((opt) => {
             const isCorrect = opt.label === props.correctAnswer

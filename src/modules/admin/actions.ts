@@ -31,6 +31,8 @@ function normalizeInput(input: QuestionFormInput) {
     ...input,
     stimulus_id: input.stimulus_id && input.stimulus_id !== '' ? input.stimulus_id : null,
     explanation: input.explanation && input.explanation !== '' ? input.explanation : null,
+    diagram: input.diagram && input.diagram !== '' ? input.diagram : null,
+    image_url: input.image_url && input.image_url !== '' ? input.image_url : null,
   }
 }
 

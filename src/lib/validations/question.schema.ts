@@ -23,6 +23,10 @@ export const questionFormSchema = z.object({
   tags: z.array(z.string()),
   is_active: z.boolean(),
   is_pilot: z.boolean(),
+  // Diagrama del enunciado en formato Mermaid (UML/clases/PERT). Opcional.
+  diagram: z.string().max(5000).optional().or(z.literal('')),
+  // Imagen del enunciado (URL absoluta). Opcional.
+  image_url: z.string().url('URL invalida').max(1000).optional().or(z.literal('')),
 })
 
 export type QuestionFormInput = z.infer<typeof questionFormSchema>

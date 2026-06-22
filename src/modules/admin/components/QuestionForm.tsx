@@ -50,6 +50,8 @@ const EMPTY_DEFAULTS: QuestionFormInput = {
   tags: [],
   is_active: true,
   is_pilot: false,
+  diagram: '',
+  image_url: '',
 }
 
 function fromExisting(q: Tables<'questions'>): QuestionFormInput {
@@ -71,6 +73,8 @@ function fromExisting(q: Tables<'questions'>): QuestionFormInput {
     tags: q.tags ?? [],
     is_active: q.is_active ?? true,
     is_pilot: q.is_pilot ?? false,
+    diagram: q.diagram ?? '',
+    image_url: q.image_url ?? '',
   }
 }
 
@@ -329,6 +333,54 @@ export function QuestionForm({ initialData }: Props) {
             )}
           />
 
+          {/* Diagrama UML (Mermaid) opcional */}
+          <FormField
+            control={form.control}
+            name="diagram"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Diagrama UML (Mermaid) — opcional</FormLabel>
+                <FormControl>
+                  <Textarea
+                    rows={4}
+                    placeholder={'classDiagram\n  class Pedido {\n    +int folio\n    +calcularTotal() float\n  }'}
+                    className="font-mono text-xs"
+                    {...field}
+                    value={field.value ?? ''}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Notacion Mermaid (classDiagram, sequenceDiagram, flowchart). Se renderiza en el enunciado.{' '}
+                  <a href="/study/uml" target="_blank" className="text-aurora-2 hover:underline">
+                    Abrir visualizador
+                  </a>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Imagen del enunciado (URL) opcional */}
+          <FormField
+            control={form.control}
+            name="image_url"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Imagen del enunciado (URL) — opcional</FormLabel>
+                <FormControl>
+                  <Input
+                    type="url"
+                    placeholder="https://..."
+                    {...field}
+                    value={field.value ?? ''}
+                  />
+                </FormControl>
+                <FormDescription>URL absoluta de una imagen (diagrama, captura, etc.)</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <div className="flex items-center justify-between pt-2">
             <Button
               type="button"
@@ -357,6 +409,8 @@ export function QuestionForm({ initialData }: Props) {
             correctAnswer={values.correct_answer}
             difficulty={values.difficulty}
             explanation={values.explanation}
+            diagram={values.diagram}
+            imageUrl={values.image_url}
           />
         </div>
       ) : null}
