@@ -12,6 +12,9 @@ import { DangerZone } from '@/modules/auth/components/DangerZone'
 import { NotificationPrefsForm } from '@/modules/auth/components/NotificationPrefsForm'
 import { ExportQuestionsButton } from '@/modules/auth/components/ExportQuestionsButton'
 import { ExamSwitcher } from '@/modules/auth/components/ExamSwitcher'
+import { JoinGroupCard } from '@/modules/groups/components/JoinGroupCard'
+import { BecomeTeacherButton } from '@/modules/groups/components/BecomeTeacherButton'
+import { LeaveGroupButton } from '@/modules/groups/components/LeaveGroupButton'
 
 export const metadata = { title: 'Perfil' }
 
@@ -38,6 +41,16 @@ export default async function ProfilePage() {
     .select('id, name, code')
     .eq('is_active', true)
     .order('created_at', { ascending: true })
+
+  // Grupos a los que pertenece el alumno (como miembro)
+  const { data: myMemberships } = await supabase
+    .from('group_members')
+    .select('group_id, groups ( id, name, join_code )')
+    .eq('user_id', user.id)
+  const myGroups = (myMemberships ?? [])
+    .map((m) => m.groups as { id: string; name: string; join_code: string } | null)
+    .filter((g): g is { id: string; name: string; join_code: string } => Boolean(g))
+  const isTeacher = profile.role === 'teacher' || profile.role === 'admin'
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -92,6 +105,52 @@ export default async function ProfilePage() {
           Elige el examen que estas preparando. Determina tus preguntas, simulacro y progreso.
         </p>
         <ExamSwitcher exams={activeExams ?? []} activeExamId={profile.active_exam_id} />
+      </GlassCard>
+
+      <GlassCard variant="elevated" padding="lg" className="space-y-5">
+        <div>
+          <h2 className="mb-1 text-lg font-semibold">Grupos</h2>
+          <p className="text-sm text-muted-foreground">
+            Unete al grupo de tu maestro con un codigo, o crea tus propios grupos.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Unirme a un grupo</p>
+          <JoinGroupCard />
+        </div>
+
+        {myGroups.length > 0 ? (
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Mis grupos</p>
+            <ul className="space-y-1.5">
+              {myGroups.map((g) => (
+                <li key={g.id} className="flex items-center justify-between rounded-md bg-bg-base px-3 py-2 text-sm">
+                  <span>
+                    {g.name} <span className="font-mono text-xs text-muted-foreground">· {g.join_code}</span>
+                  </span>
+                  <LeaveGroupButton groupId={g.id} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
+        <div className="flex flex-wrap items-center gap-3 border-t border-bg-border/60 pt-4">
+          {isTeacher ? (
+            <Link
+              href="/teacher"
+              className="inline-flex h-10 items-center gap-2 rounded-md border border-bg-border px-4 text-sm font-medium transition-colors hover:bg-bg-raised"
+            >
+              Ir a mis grupos (maestro)
+            </Link>
+          ) : (
+            <>
+              <p className="text-sm text-muted-foreground">¿Eres maestro y quieres crear grupos?</p>
+              <BecomeTeacherButton />
+            </>
+          )}
+        </div>
       </GlassCard>
 
       <GlassCard variant="elevated" padding="lg">

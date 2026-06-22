@@ -14,6 +14,7 @@ import {
   Sparkles,
   LogOut,
   Bell,
+  GraduationCap,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { signOut } from '@/modules/auth/actions'
@@ -24,6 +25,7 @@ type NavItem = {
   label: string
   icon: typeof LayoutDashboard
   adminOnly?: boolean
+  teacherOnly?: boolean
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -32,6 +34,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/simulacro',    label: 'Simulacro',    icon: Sparkles },
   { href: '/study',        label: 'Estudiar',     icon: BookOpen },
   { href: '/progress',     label: 'Progreso',     icon: TrendingUp },
+  { href: '/teacher',       label: 'Grupos',         icon: GraduationCap, teacherOnly: true },
   { href: '/achievements',  label: 'Logros',         icon: Trophy },
   { href: '/leaderboard',   label: 'Ranking',        icon: Trophy },
   { href: '/notifications', label: 'Notificaciones', icon: Bell },
@@ -41,7 +44,11 @@ const NAV_ITEMS: NavItem[] = [
 
 export function Sidebar({ role }: { role: Role }) {
   const pathname = usePathname()
-  const items = NAV_ITEMS.filter((item) => !item.adminOnly || role === 'admin')
+  const items = NAV_ITEMS.filter((item) => {
+    if (item.adminOnly) return role === 'admin'
+    if (item.teacherOnly) return role === 'teacher' || role === 'admin'
+    return true
+  })
 
   return (
     <aside className="sticky top-0 hidden h-screen w-60 shrink-0 self-start overflow-hidden border-r border-bg-border/50 md:flex md:flex-col">

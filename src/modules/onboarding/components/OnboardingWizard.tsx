@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils/cn'
 import { WelcomeStep } from './WelcomeStep'
+import { PathStep } from './PathStep'
 import { ExamDateStep } from './ExamDateStep'
 import {
   DiagnosticStep,
@@ -18,10 +19,11 @@ type WizardProps = {
   questions: DiagnosticQuestion[]
 }
 
-type Step = 'welcome' | 'exam-date' | 'diagnostic' | 'goal' | 'summary'
+type Step = 'welcome' | 'path' | 'exam-date' | 'diagnostic' | 'goal' | 'summary'
 
 const STEPS_ORDER: Step[] = [
   'welcome',
+  'path',
   'exam-date',
   'diagnostic',
   'goal',
@@ -30,6 +32,7 @@ const STEPS_ORDER: Step[] = [
 
 const STEP_LABELS: Record<Step, string> = {
   welcome: 'Bienvenido',
+  path: 'Inicio',
   'exam-date': 'Examen',
   diagnostic: 'Diagnostico',
   goal: 'Meta',
@@ -85,9 +88,11 @@ export function OnboardingWizard({ fullName, questions }: WizardProps) {
           {step === 'welcome' && (
             <WelcomeStep
               fullName={fullName}
-              onNext={() => go('exam-date')}
+              onNext={() => go('path')}
             />
           )}
+
+          {step === 'path' && <PathStep onContinue={() => go('exam-date')} />}
 
           {step === 'exam-date' && (
             <ExamDateStep
@@ -97,7 +102,7 @@ export function OnboardingWizard({ fullName, questions }: WizardProps) {
                 setExamDate(e)
                 setUniversity(u)
               }}
-              onBack={() => go('welcome')}
+              onBack={() => go('path')}
               onNext={() => go('diagnostic')}
             />
           )}

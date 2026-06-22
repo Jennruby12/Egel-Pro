@@ -87,6 +87,25 @@ export async function getDiagnosticQuestions(): Promise<{
 }
 
 /**
+ * Marca el onboarding como completado SIN redirigir (el cliente decide a dónde
+ * navegar). Útil para el camino "Soy maestro" → /teacher.
+ */
+export async function markOnboardingDone(): Promise<ActionResult> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ onboarding_completed: true, goal_level: 'sobresaliente' })
+    .eq('id', user.id)
+  if (error) return { success: false, error: error.message }
+
+  revalidatePath('/', 'layout')
+  return { success: true }
+}
+
+/**
  * Permite saltar el onboarding (lo marca como completado sin datos).
  * Util para usuarios que quieren explorar sin compromiso.
  */

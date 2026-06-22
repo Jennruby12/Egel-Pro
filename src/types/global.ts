@@ -6,7 +6,7 @@ export type ServerActionResult<T = unknown> =
   | { success: true; data: T }
   | { error: string; details?: unknown }
 
-export type Role = 'student' | 'admin'
+export type Role = 'student' | 'teacher' | 'admin'
 export type OrgRole = 'member' | 'manager' | 'owner'
 export type Plan = 'free' | 'pro' | 'pro_lifetime'
 export type Section = 'disciplinar' | 'transversal'

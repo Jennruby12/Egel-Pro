@@ -300,6 +300,100 @@ export type Database = {
           },
         ]
       }
+      group_members: {
+        Row: {
+          group_id: string
+          id: string
+          joined_at: string | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          joined_at?: string | null
+          role?: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          joined_at?: string | null
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      groups: {
+        Row: {
+          created_at: string | null
+          exam_id: string
+          id: string
+          is_active: boolean
+          join_code: string
+          name: string
+          organization_id: string | null
+          owner_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          exam_id: string
+          id?: string
+          is_active?: boolean
+          join_code: string
+          name: string
+          organization_id?: string | null
+          owner_id: string
+        }
+        Update: {
+          created_at?: string | null
+          exam_id?: string
+          id?: string
+          is_active?: boolean
+          join_code?: string
+          name?: string
+          organization_id?: string | null
+          owner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groups_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "groups_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "groups_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       guide_concepts: {
         Row: {
           concept: string
@@ -1366,6 +1460,17 @@ export type Database = {
         }[]
       }
       is_admin: { Args: never; Returns: boolean }
+      is_group_member: { Args: { gid: string }; Returns: boolean }
+      is_group_owner: { Args: { gid: string }; Returns: boolean }
+      is_teacher_of: { Args: { member_id: string }; Returns: boolean }
+      join_group_by_code: {
+        Args: { p_code: string }
+        Returns: {
+          exam_id: string
+          group_id: string
+          group_name: string
+        }[]
+      }
       question_feedback_counts: {
         Args: never
         Returns: {
