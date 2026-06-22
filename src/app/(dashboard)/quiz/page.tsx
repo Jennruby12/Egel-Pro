@@ -5,6 +5,7 @@ import { SparklesText } from '@/components/ui/sparkles-text'
 import { StartQuizForm } from '@/modules/quiz/components/StartQuizForm'
 import { ResumeQuizBanner } from '@/modules/quiz/components/ResumeQuizBanner'
 import { OfflineDownloadCard } from '@/modules/quiz/components/OfflineDownloadCard'
+import { WeakAreasButton } from '@/modules/quiz/components/WeakAreasButton'
 import {
   getActiveQuizSession,
   cleanupEmptyInProgressSessions,
@@ -138,6 +139,13 @@ export default async function QuizPage() {
               style={{ width: `${seenPct}%` }}
             />
           </div>
+        </div>
+      ) : null}
+
+      {/* Atajo: practica enfocada en areas debiles */}
+      {user ? (
+        <div className="mb-4">
+          <WeakAreasButton />
         </div>
       ) : null}
 

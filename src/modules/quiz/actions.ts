@@ -1063,3 +1063,47 @@ export async function getSimulacroState(
     },
   }
 }
+
+/**
+ * Inicia una practica enfocada en las areas mas debiles del usuario (menor
+ * precision en user_progress). Reutiliza startQuizSession. Si el usuario aun no
+ * tiene progreso, cae a todas las areas.
+ */
+export async function startWeakAreasQuiz(
+  totalQuestions = 20,
+): Promise<ActionResult<StartQuizResult>> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: ERROR_MESSAGES.notAuth }
+
+  const { data: progress } = await supabase
+    .from('user_progress')
+    .select('area, questions_attempted, questions_correct')
+    .eq('user_id', user.id)
+
+  const byArea = new Map<number, { attempted: number; correct: number }>()
+  for (const p of progress ?? []) {
+    if (p.area < 1 || p.area > 4) continue
+    const b = byArea.get(p.area) ?? { attempted: 0, correct: 0 }
+    b.attempted += p.questions_attempted ?? 0
+    b.correct += p.questions_correct ?? 0
+    byArea.set(p.area, b)
+  }
+  // Las 2 areas con menor precision (con al menos un intento). Vacio = todas.
+  const weakAreas = Array.from(byArea.entries())
+    .filter(([, b]) => b.attempted > 0)
+    .map(([area, b]) => ({ area, acc: b.correct / b.attempted }))
+    .sort((a, b) => a.acc - b.acc)
+    .slice(0, 2)
+    .map((r) => r.area)
+
+  return startQuizSession({
+    mode: 'practice',
+    section: 'disciplinar',
+    areas: weakAreas,
+    subareas: [],
+    totalQuestions,
+    timeLimitSeconds: null,
+    onlyUnseen: false,
+  })
+}
