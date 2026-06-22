@@ -563,6 +563,7 @@ export type Database = {
           correct_answer: string
           created_at: string | null
           created_by: string | null
+          diagram: string | null
           difficulty: string | null
           explanation: string | null
           id: string
@@ -590,6 +591,7 @@ export type Database = {
           correct_answer: string
           created_at?: string | null
           created_by?: string | null
+          diagram?: string | null
           difficulty?: string | null
           explanation?: string | null
           id?: string
@@ -617,6 +619,7 @@ export type Database = {
           correct_answer?: string
           created_at?: string | null
           created_by?: string | null
+          diagram?: string | null
           difficulty?: string | null
           explanation?: string | null
           id?: string

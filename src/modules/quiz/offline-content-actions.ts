@@ -21,6 +21,7 @@ export type OfflineQuestion = {
   explanation: string | null
   difficulty: string | null
   image_url: string | null
+  diagram: string | null
 }
 
 export type OfflineBundle = {
@@ -33,7 +34,7 @@ export type OfflineBundle = {
 type Result<T> = { success: true; data: T } | { success: false; error: string }
 
 const SELECT =
-  'id, section, area, area_name, subarea, subarea_name, question_text, option_a, option_b, option_c, correct_answer, explanation, difficulty, image_url, updated_at'
+  'id, section, area, area_name, subarea, subarea_name, question_text, option_a, option_b, option_c, correct_answer, explanation, difficulty, image_url, diagram, updated_at'
 
 /** Descarga TODAS las preguntas activas (paginado: Supabase corta en 1000). */
 export async function getOfflineQuestionBundle(): Promise<Result<OfflineBundle>> {

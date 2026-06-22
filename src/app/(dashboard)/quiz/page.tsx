@@ -20,19 +20,29 @@ type AvailableCounts = {
 
 async function getAvailableCounts(): Promise<AvailableCounts> {
   const supabase = await createClient()
-  const { data } = await supabase
-    .from('questions')
-    .select('section, area')
-    .eq('is_deleted', false)
-    .eq('is_active', true)
   const disciplinar: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0 }
   const transversal: Record<number, number> = { 1: 0, 2: 0 }
-  for (const row of data ?? []) {
-    if (row.section === 'disciplinar') {
-      disciplinar[row.area] = (disciplinar[row.area] ?? 0) + 1
-    } else if (row.section === 'transversal') {
-      transversal[row.area] = (transversal[row.area] ?? 0) + 1
+  // Paginar: PostgREST corta en 1000 filas por defecto, y el banco tiene >1000
+  // activas. Sin paginar, el conteo del banco salia mal (1000 en vez de ~1238).
+  const PAGE = 1000
+  let from = 0
+  while (true) {
+    const { data, error } = await supabase
+      .from('questions')
+      .select('section, area')
+      .eq('is_deleted', false)
+      .eq('is_active', true)
+      .range(from, from + PAGE - 1)
+    if (error || !data || data.length === 0) break
+    for (const row of data) {
+      if (row.section === 'disciplinar') {
+        disciplinar[row.area] = (disciplinar[row.area] ?? 0) + 1
+      } else if (row.section === 'transversal') {
+        transversal[row.area] = (transversal[row.area] ?? 0) + 1
+      }
     }
+    if (data.length < PAGE) break
+    from += PAGE
   }
   return { disciplinar, transversal }
 }
