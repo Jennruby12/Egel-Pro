@@ -134,15 +134,19 @@ export async function signOut(): Promise<void> {
 // =====================================================
 // GOOGLE OAUTH
 // =====================================================
-export async function signInWithGoogle(): Promise<ActionResult<{ url: string }>> {
+export async function signInWithGoogle(next?: string): Promise<ActionResult<{ url: string }>> {
   const supabase = await createClient()
   const headersList = await headers()
   const origin = headersList.get('origin') ?? getSiteUrl()
 
+  // Solo aceptamos rutas internas como destino (evita open-redirect).
+  const safeNext = next && next.startsWith('/') ? next : null
+  const callback = `${origin}/auth/callback${safeNext ? `?next=${encodeURIComponent(safeNext)}` : ''}`
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: callback,
       queryParams: { access_type: 'offline', prompt: 'consent' },
     },
   })

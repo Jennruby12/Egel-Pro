@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { GlassCard } from '@/components/ui/glass-card'
 import { GroupCodeActions } from '@/modules/groups/components/GroupCodeActions'
+import { ShareInviteButton } from '@/modules/groups/components/ShareInviteButton'
 import { getExamConfig } from '@/lib/exams/exam-config'
 
 export const dynamic = 'force-dynamic'
@@ -90,8 +91,12 @@ export default async function TeacherGroupPage({ params }: { params: Promise<Par
       <GlassCard variant="elevated" padding="lg" className="space-y-3">
         <p className="text-sm font-medium">Codigo de acceso</p>
         <GroupCodeActions groupId={group.id} joinCode={group.join_code} isActive={group.is_active} />
+        <div className="pt-1">
+          <ShareInviteButton code={group.join_code} groupName={group.name} examName={examConfig?.name} />
+        </div>
         <p className="text-xs text-muted-foreground">
-          Los alumnos lo ingresan en su onboarding o en Perfil → Grupos para unirse.
+          Comparte el enlace por WhatsApp: tus alumnos entran con Google y quedan en el grupo,
+          sin manejar correos. Tambien pueden meter el codigo en su onboarding o en Perfil → Grupos.
         </p>
       </GlassCard>
 

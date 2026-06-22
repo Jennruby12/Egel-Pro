@@ -4,7 +4,7 @@ import type { Database } from '@/types/database'
 
 type CookieToSet = { name: string; value: string; options: CookieOptions }
 
-const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/auth', '/offline']
+const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/auth', '/offline', '/join']
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })

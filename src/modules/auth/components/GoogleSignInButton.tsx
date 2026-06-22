@@ -14,8 +14,11 @@ export const GOOGLE_OAUTH_ENABLED =
 
 export function GoogleSignInButton({
   label = 'Continuar con Google',
+  next,
 }: {
   label?: string
+  /** Ruta interna a la que volver tras el login (p.ej. /join/CODE). */
+  next?: string
 }) {
   const [loading, setLoading] = useState(false)
 
@@ -25,7 +28,7 @@ export function GoogleSignInButton({
 
   async function handleClick() {
     setLoading(true)
-    const result = await signInWithGoogle()
+    const result = await signInWithGoogle(next)
     if (!result.success) {
       toast.error(result.error)
       setLoading(false)

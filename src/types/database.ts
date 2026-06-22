@@ -1459,6 +1459,14 @@ export type Database = {
           xp_total: number
         }[]
       }
+      group_public_by_code: {
+        Args: { p_code: string }
+        Returns: {
+          name: string
+          exam_name: string
+          is_active: boolean
+        }[]
+      }
       is_admin: { Args: never; Returns: boolean }
       is_group_member: { Args: { gid: string }; Returns: boolean }
       is_group_owner: { Args: { gid: string }; Returns: boolean }
