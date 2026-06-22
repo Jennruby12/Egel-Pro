@@ -133,3 +133,27 @@ export async function toggleQuestionActive(id: string, isActive: boolean): Promi
   revalidatePath('/quiz')
   return { success: true, data: { id } }
 }
+
+/**
+ * Activa en lote todas las preguntas piloto aun inactivas (flujo de revisar y
+ * aprobar el contenido nuevo cargado como piloto). Devuelve cuantas se activaron
+ * en el campo `id` del resultado.
+ */
+export async function activatePilotQuestions(): Promise<ActionResult> {
+  const { error: authError, supabase } = await requireAdmin()
+  if (authError) return { success: false, error: authError }
+
+  const { data, error } = await supabase
+    .from('questions')
+    .update({ is_active: true })
+    .eq('is_pilot', true)
+    .eq('is_active', false)
+    .eq('is_deleted', false)
+    .select('id')
+
+  if (error) return { success: false, error: `Error: ${error.message}` }
+
+  revalidatePath('/admin/questions')
+  revalidatePath('/quiz')
+  return { success: true, data: { id: String(data?.length ?? 0) } }
+}

@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Pencil, Trash2, Eye, EyeOff } from 'lucide-react'
+import { Pencil, Trash2, Eye, EyeOff, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import {
   Table,
@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import { deleteQuestion, toggleQuestionActive } from '@/modules/admin/actions'
+import { deleteQuestion, toggleQuestionActive, activatePilotQuestions } from '@/modules/admin/actions'
 import type { Tables } from '@/types/database'
 
 type Row = Pick<
@@ -44,10 +44,27 @@ export function QuestionsTable({ rows }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [search, setSearch] = useState('')
+  const [onlyPilot, setOnlyPilot] = useState(false)
 
-  const filtered = rows.filter((r) =>
-    r.question_text.toLowerCase().includes(search.toLowerCase()),
-  )
+  const pilotInactiveCount = rows.filter((r) => r.is_pilot && !r.is_active).length
+
+  const filtered = rows.filter((r) => {
+    if (onlyPilot && !(r.is_pilot && !r.is_active)) return false
+    return r.question_text.toLowerCase().includes(search.toLowerCase())
+  })
+
+  function handleActivatePilots() {
+    if (!confirm(`Activar ${pilotInactiveCount} preguntas piloto? Entraran al quiz y contaran para score.`)) return
+    startTransition(async () => {
+      const result = await activatePilotQuestions()
+      if (!result.success) {
+        toast.error(result.error)
+        return
+      }
+      toast.success(`${result.data?.id ?? 0} preguntas piloto activadas`)
+      router.refresh()
+    })
+  }
 
   function handleDelete(id: string) {
     if (!confirm('Eliminar esta pregunta? Se hace soft delete (recuperable desde la DB).')) return
@@ -85,6 +102,28 @@ export function QuestionsTable({ rows }: Props) {
         <p className="text-sm text-muted-foreground">
           {filtered.length} de {rows.length} preguntas
         </p>
+        <button
+          type="button"
+          onClick={() => setOnlyPilot((v) => !v)}
+          className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${
+            onlyPilot
+              ? 'border-aurora-2/60 bg-aurora-2/15 text-aurora-2'
+              : 'border-bg-border bg-bg-raised/40 text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Solo piloto/inactivas{pilotInactiveCount > 0 ? ` (${pilotInactiveCount})` : ''}
+        </button>
+        {pilotInactiveCount > 0 ? (
+          <Button
+            size="sm"
+            onClick={handleActivatePilots}
+            disabled={pending}
+            className="gap-1.5"
+          >
+            <CheckCircle2 className="h-4 w-4" />
+            Activar {pilotInactiveCount} piloto
+          </Button>
+        ) : null}
       </div>
 
       <div className="rounded-md border border-bg-border">
