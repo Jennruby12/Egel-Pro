@@ -2,6 +2,7 @@
 
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils/cn'
+import { MermaidDiagram } from '@/components/ui/MermaidDiagram'
 import type { QuizQuestionForClient } from '@/modules/quiz/types'
 
 type QuestionDisplayProps = {
@@ -55,6 +56,7 @@ export function QuestionDisplay({ question }: QuestionDisplayProps) {
       <h2 className="text-base font-medium leading-relaxed sm:text-lg md:text-xl lg:text-2xl">
         {question.question_text}
       </h2>
+      {question.diagram ? <MermaidDiagram chart={question.diagram} /> : null}
       {question.image_url ? (
         <div className="overflow-hidden rounded-lg border border-bg-border/40 bg-bg-raised/40">
           {/* Imagen del enunciado (UML, diagrama, tabla). Usamos img normal para

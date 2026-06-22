@@ -47,7 +47,7 @@ const files = readdirSync(DATA_DIR).filter((f) => f.endsWith('.json'))
 console.log(`Archivos a procesar: ${files.length}\n`)
 
 const VALID_TYPES = new Set([
-  'intro', 'concept', 'example', 'diagram', 'tool', 'case_study',
+  'intro', 'concept', 'example', 'diagram', 'uml', 'tool', 'case_study',
   'comparison_table', 'glossary', 'quick_quiz', 'references',
 ])
 

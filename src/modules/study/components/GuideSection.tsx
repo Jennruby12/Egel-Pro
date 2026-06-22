@@ -6,6 +6,7 @@ import { ToolBadge } from './ToolBadge'
 import { GlossaryAccordion } from './GlossaryAccordion'
 import { ComparisonTable } from './ComparisonTable'
 import { QuickQuiz } from './QuickQuiz'
+import { MermaidDiagram } from '@/components/ui/MermaidDiagram'
 import { ExternalLink, BookOpen } from 'lucide-react'
 
 type Concept = {
@@ -39,6 +40,7 @@ const TYPE_LABEL: Record<string, string> = {
   concept: 'Conceptos clave',
   example: 'Ejemplo',
   diagram: 'Diagrama',
+  uml: 'Diagrama UML',
   tool: 'Herramientas',
   case_study: 'Caso de estudio',
   comparison_table: 'Comparativa',
@@ -87,6 +89,11 @@ function renderBody(section: Section, concepts: Concept[], guideId: string, guid
           title={section.title}
         />
       ) : null
+
+    case 'uml': {
+      const mermaid = (section.metadata?.mermaid as string | undefined) ?? section.body_md ?? ''
+      return mermaid ? <MermaidDiagram chart={mermaid} /> : null
+    }
 
     case 'tool': {
       const tools = (section.metadata?.tools as Array<{ name: string; url?: string; description?: string }>) ?? []

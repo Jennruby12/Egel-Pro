@@ -82,6 +82,13 @@ export default async function StudyV2Hub() {
         <p className="max-w-2xl text-base text-muted-foreground">
           19 guias completas del temario oficial EGEL Plus ISOFT — conceptos, ejemplos, diagramas, quick quiz y referencias por subarea.
         </p>
+        <Link
+          href="/study/uml"
+          className="inline-flex items-center gap-1.5 rounded-full border border-aurora-2/40 bg-aurora-2/10 px-3 py-1 text-xs font-medium text-aurora-2 backdrop-blur-md transition-colors hover:bg-aurora-2/20"
+        >
+          <BookOpen className="h-3.5 w-3.5" /> Visualizador de diagramas UML
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </header>
 
       {/* Resumen global */}
