@@ -15,18 +15,81 @@
     "published": true
   },
   "concepts": [
-    { "concept": "ISO/IEC 25010", "definition_md": "Modelo de calidad de producto de software con 8 caracteristicas: adecuacion funcional, eficiencia de desempeno, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad y portabilidad. Sucede a ISO/IEC 9126.", "importance": "alta" },
-    { "concept": "CMMI", "definition_md": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos: 1 Inicial, 2 Gestionado, 3 Definido, 4 Cuantitativamente gestionado, 5 Optimizado.", "importance": "alta" },
-    { "concept": "IEEE 730", "definition_md": "Estandar para el Plan de Aseguramiento de Calidad de Software (SQAP). Define estructura: proposito, referencias, gestion, documentacion, estandares, revisiones, pruebas, reportes y herramientas.", "importance": "alta" },
-    { "concept": "Complejidad ciclomatica (McCabe)", "definition_md": "Metrica que cuenta el numero de caminos linealmente independientes en el codigo. Formula: V(G) = E - N + 2, o tambien numero de decisiones + 1. Recomendacion: V(G) <= 10 por funcion.", "importance": "alta" },
-    { "concept": "TDD (Test Driven Development)", "definition_md": "Ciclo Red-Green-Refactor: escribir test que falla, codigo minimo para que pase, refactorizar. Mejora diseno y reduce defectos.", "importance": "alta" },
-    { "concept": "BDD (Behavior Driven Development)", "definition_md": "Extension de TDD orientada al comportamiento desde la perspectiva del negocio. Usa lenguaje Gherkin (Given-When-Then) y herramientas como Cucumber.", "importance": "media" },
-    { "concept": "MTBF", "definition_md": "Mean Time Between Failures. Tiempo promedio entre dos fallas consecutivas. Indicador de fiabilidad en sistemas reparables. MTBF = tiempo total operativo / numero de fallas.", "importance": "alta" },
-    { "concept": "MTTR", "definition_md": "Mean Time To Repair. Tiempo promedio para reparar una falla. Indicador de mantenibilidad. Disponibilidad = MTBF / (MTBF + MTTR).", "importance": "alta" },
-    { "concept": "MTTF", "definition_md": "Mean Time To Failure. Tiempo promedio hasta la primera falla. Aplica a sistemas no reparables (un componente que se reemplaza).", "importance": "media" },
-    { "concept": "V&V (Verificacion y Validacion)", "definition_md": "Verificacion: se construye el producto correctamente segun la especificacion. Validacion: se construye el producto correcto segun las necesidades del usuario.", "importance": "alta" },
-    { "concept": "Piramide de pruebas", "definition_md": "Estrategia de balance de pruebas: base amplia de unitarias (rapidas, baratas), capa media de integracion, cima delgada de E2E (lentas, costosas). Propuesta por Mike Cohn.", "importance": "alta" },
-    { "concept": "Niveles de pruebas", "definition_md": "Unitarias (componente aislado), Integracion (interaccion entre modulos), Sistema (producto completo en ambiente similar a produccion), Aceptacion (validacion con usuario o cliente, UAT).", "importance": "alta" }
+    {
+      "concept": "ISO/IEC 25010",
+      "definition_md": "Modelo de calidad de producto de software con 8 caracteristicas: adecuacion funcional, eficiencia de desempeno, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad y portabilidad. Sucede a ISO/IEC 9126.",
+      "importance": "alta"
+    },
+    {
+      "concept": "CMMI",
+      "definition_md": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos: 1 Inicial, 2 Gestionado, 3 Definido, 4 Cuantitativamente gestionado, 5 Optimizado.",
+      "importance": "alta"
+    },
+    {
+      "concept": "IEEE 730",
+      "definition_md": "Estandar para el Plan de Aseguramiento de Calidad de Software (SQAP). Define estructura: proposito, referencias, gestion, documentacion, estandares, revisiones, pruebas, reportes y herramientas.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Complejidad ciclomatica (McCabe)",
+      "definition_md": "Metrica que cuenta el numero de caminos linealmente independientes en el codigo. Formula: V(G) = E - N + 2, o tambien numero de decisiones + 1. Recomendacion: V(G) <= 10 por funcion.",
+      "importance": "alta"
+    },
+    {
+      "concept": "TDD (Test Driven Development)",
+      "definition_md": "Ciclo Red-Green-Refactor: escribir test que falla, codigo minimo para que pase, refactorizar. Mejora diseno y reduce defectos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "BDD (Behavior Driven Development)",
+      "definition_md": "Extension de TDD orientada al comportamiento desde la perspectiva del negocio. Usa lenguaje Gherkin (Given-When-Then) y herramientas como Cucumber.",
+      "importance": "media"
+    },
+    {
+      "concept": "MTBF",
+      "definition_md": "Mean Time Between Failures. Tiempo promedio entre dos fallas consecutivas. Indicador de fiabilidad en sistemas reparables. MTBF = tiempo total operativo / numero de fallas.",
+      "importance": "alta"
+    },
+    {
+      "concept": "MTTR",
+      "definition_md": "Mean Time To Repair. Tiempo promedio para reparar una falla. Indicador de mantenibilidad. Disponibilidad = MTBF / (MTBF + MTTR).",
+      "importance": "alta"
+    },
+    {
+      "concept": "MTTF",
+      "definition_md": "Mean Time To Failure. Tiempo promedio hasta la primera falla. Aplica a sistemas no reparables (un componente que se reemplaza).",
+      "importance": "media"
+    },
+    {
+      "concept": "V&V (Verificacion y Validacion)",
+      "definition_md": "Verificacion: se construye el producto correctamente segun la especificacion. Validacion: se construye el producto correcto segun las necesidades del usuario.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Piramide de pruebas",
+      "definition_md": "Estrategia de balance de pruebas: base amplia de unitarias (rapidas, baratas), capa media de integracion, cima delgada de E2E (lentas, costosas). Propuesta por Mike Cohn.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Niveles de pruebas",
+      "definition_md": "Unitarias (componente aislado), Integracion (interaccion entre modulos), Sistema (producto completo en ambiente similar a produccion), Aceptacion (validacion con usuario o cliente, UAT).",
+      "importance": "alta"
+    },
+    {
+      "concept": "Modelo de McCall",
+      "definition_md": "Modelo de calidad (1977) que organiza los factores en tres perspectivas: **Operacion** (correccion, fiabilidad, eficiencia, integridad, usabilidad), **Revision** (mantenibilidad, flexibilidad, facilidad de prueba) y **Transicion** (portabilidad, reusabilidad, interoperabilidad).",
+      "importance": "alta"
+    },
+    {
+      "concept": "Six Sigma",
+      "definition_md": "Metodologia de mejora basada en datos que busca <= **3.4 defectos por millon de oportunidades (DPMO)**. Usa el ciclo **DMAIC** (Definir, Medir, Analizar, Mejorar, Controlar) para procesos existentes y DMADV para nuevos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Modelo de Boehm",
+      "definition_md": "Modelo jerarquico de calidad que parte de la utilidad general (as-is utility, maintainability, portability) y la descompone en caracteristicas intermedias y primitivas medibles.",
+      "importance": "media"
+    }
   ],
   "sections": [
     {
@@ -58,13 +121,43 @@
       "order": 5,
       "title": "Niveles de madurez CMMI",
       "metadata": {
-        "headers": ["Nivel", "Nombre", "Caracteristica distintiva", "Ejemplo de practica"],
+        "headers": [
+          "Nivel",
+          "Nombre",
+          "Caracteristica distintiva",
+          "Ejemplo de practica"
+        ],
         "rows": [
-          ["1", "Inicial", "Procesos caoticos, ad-hoc, dependientes de heroes", "Equipos que reaccionan a crisis sin documentar nada"],
-          ["2", "Gestionado", "Procesos planificados y ejecutados por proyecto", "Gestion de requerimientos, planeacion, control de calidad basico por proyecto"],
-          ["3", "Definido", "Procesos estandar de la organizacion, adaptados por proyecto", "Plantillas corporativas, capacitacion formal, definicion de procesos comunes"],
-          ["4", "Cuantitativamente gestionado", "Procesos medidos y controlados estadisticamente", "Control estadistico de procesos (SPC), modelos predictivos de defectos"],
-          ["5", "Optimizado", "Mejora continua basada en datos cuantitativos", "Innovacion de procesos, causal analysis and resolution, eliminacion de causas raiz"]
+          [
+            "1",
+            "Inicial",
+            "Procesos caoticos, ad-hoc, dependientes de heroes",
+            "Equipos que reaccionan a crisis sin documentar nada"
+          ],
+          [
+            "2",
+            "Gestionado",
+            "Procesos planificados y ejecutados por proyecto",
+            "Gestion de requerimientos, planeacion, control de calidad basico por proyecto"
+          ],
+          [
+            "3",
+            "Definido",
+            "Procesos estandar de la organizacion, adaptados por proyecto",
+            "Plantillas corporativas, capacitacion formal, definicion de procesos comunes"
+          ],
+          [
+            "4",
+            "Cuantitativamente gestionado",
+            "Procesos medidos y controlados estadisticamente",
+            "Control estadistico de procesos (SPC), modelos predictivos de defectos"
+          ],
+          [
+            "5",
+            "Optimizado",
+            "Mejora continua basada en datos cuantitativos",
+            "Innovacion de procesos, causal analysis and resolution, eliminacion de causas raiz"
+          ]
         ]
       }
     },
@@ -74,14 +167,46 @@
       "title": "Herramientas de aseguramiento de calidad",
       "metadata": {
         "tools": [
-          { "name": "SonarQube", "url": "https://www.sonarsource.com/products/sonarqube/", "description": "Analisis estatico de codigo: complejidad ciclomatica, code smells, cobertura, deuda tecnica. Integrable a CI/CD con quality gates." },
-          { "name": "JUnit", "url": "https://junit.org/", "description": "Framework de pruebas unitarias estandar en Java. Base para TDD en ecosistema JVM." },
-          { "name": "pytest", "url": "https://docs.pytest.org/", "description": "Framework moderno de pruebas para Python. Soporta fixtures, parametrizacion y plugins de cobertura." },
-          { "name": "Selenium", "url": "https://www.selenium.dev/", "description": "Automatizacion de pruebas E2E sobre navegadores. Util para pruebas de aceptacion de UIs web." },
-          { "name": "Postman", "url": "https://www.postman.com/", "description": "Plataforma para pruebas de APIs REST y GraphQL con colecciones, mocks y monitores automatizados." },
-          { "name": "JMeter", "url": "https://jmeter.apache.org/", "description": "Pruebas de carga y rendimiento. Mide tiempos de respuesta, throughput y concurrencia." },
-          { "name": "Cucumber", "url": "https://cucumber.io/", "description": "Framework BDD que ejecuta especificaciones en formato Gherkin (Given-When-Then)." },
-          { "name": "TestRail", "url": "https://www.testrail.com/", "description": "Gestion de casos de prueba, ejecuciones y reportes. Estandar para equipos de QA formales." }
+          {
+            "name": "SonarQube",
+            "url": "https://www.sonarsource.com/products/sonarqube/",
+            "description": "Analisis estatico de codigo: complejidad ciclomatica, code smells, cobertura, deuda tecnica. Integrable a CI/CD con quality gates."
+          },
+          {
+            "name": "JUnit",
+            "url": "https://junit.org/",
+            "description": "Framework de pruebas unitarias estandar en Java. Base para TDD en ecosistema JVM."
+          },
+          {
+            "name": "pytest",
+            "url": "https://docs.pytest.org/",
+            "description": "Framework moderno de pruebas para Python. Soporta fixtures, parametrizacion y plugins de cobertura."
+          },
+          {
+            "name": "Selenium",
+            "url": "https://www.selenium.dev/",
+            "description": "Automatizacion de pruebas E2E sobre navegadores. Util para pruebas de aceptacion de UIs web."
+          },
+          {
+            "name": "Postman",
+            "url": "https://www.postman.com/",
+            "description": "Plataforma para pruebas de APIs REST y GraphQL con colecciones, mocks y monitores automatizados."
+          },
+          {
+            "name": "JMeter",
+            "url": "https://jmeter.apache.org/",
+            "description": "Pruebas de carga y rendimiento. Mide tiempos de respuesta, throughput y concurrencia."
+          },
+          {
+            "name": "Cucumber",
+            "url": "https://cucumber.io/",
+            "description": "Framework BDD que ejecuta especificaciones en formato Gherkin (Given-When-Then)."
+          },
+          {
+            "name": "TestRail",
+            "url": "https://www.testrail.com/",
+            "description": "Gestion de casos de prueba, ejecuciones y reportes. Estandar para equipos de QA formales."
+          }
         ]
       }
     },
@@ -91,16 +216,46 @@
       "title": "Glosario",
       "metadata": {
         "terms": [
-          { "term": "ISO/IEC 25010", "def": "Modelo de calidad de producto de software con 8 caracteristicas. Sucesor de ISO/IEC 9126." },
-          { "term": "CMMI", "def": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos." },
-          { "term": "V&V", "def": "Verificacion (segun especificacion) y Validacion (segun necesidades del usuario)." },
-          { "term": "TDD", "def": "Test Driven Development. Ciclo Red-Green-Refactor: test primero, codigo despues." },
-          { "term": "BDD", "def": "Behavior Driven Development. Especificacion ejecutable con Gherkin (Given-When-Then)." },
-          { "term": "MTBF", "def": "Mean Time Between Failures. Tiempo promedio entre fallas en sistemas reparables." },
-          { "term": "MTTR", "def": "Mean Time To Repair. Tiempo promedio para reparar una falla." },
-          { "term": "Defect density", "def": "Defectos por KLOC o por punto de funcion. Indicador de calidad del producto." },
-          { "term": "Complejidad ciclomatica", "def": "Metrica de McCabe que cuenta caminos independientes. V(G) = decisiones + 1." },
-          { "term": "Smoke test", "def": "Pruebas rapidas que validan que el build basico funciona antes de pruebas mas profundas." }
+          {
+            "term": "ISO/IEC 25010",
+            "def": "Modelo de calidad de producto de software con 8 caracteristicas. Sucesor de ISO/IEC 9126."
+          },
+          {
+            "term": "CMMI",
+            "def": "Capability Maturity Model Integration. Cinco niveles de madurez de procesos."
+          },
+          {
+            "term": "V&V",
+            "def": "Verificacion (segun especificacion) y Validacion (segun necesidades del usuario)."
+          },
+          {
+            "term": "TDD",
+            "def": "Test Driven Development. Ciclo Red-Green-Refactor: test primero, codigo despues."
+          },
+          {
+            "term": "BDD",
+            "def": "Behavior Driven Development. Especificacion ejecutable con Gherkin (Given-When-Then)."
+          },
+          {
+            "term": "MTBF",
+            "def": "Mean Time Between Failures. Tiempo promedio entre fallas en sistemas reparables."
+          },
+          {
+            "term": "MTTR",
+            "def": "Mean Time To Repair. Tiempo promedio para reparar una falla."
+          },
+          {
+            "term": "Defect density",
+            "def": "Defectos por KLOC o por punto de funcion. Indicador de calidad del producto."
+          },
+          {
+            "term": "Complejidad ciclomatica",
+            "def": "Metrica de McCabe que cuenta caminos independientes. V(G) = decisiones + 1."
+          },
+          {
+            "term": "Smoke test",
+            "def": "Pruebas rapidas que validan que el build basico funciona antes de pruebas mas profundas."
+          }
         ]
       }
     },
@@ -116,11 +271,26 @@
       "title": "Referencias",
       "metadata": {
         "refs": [
-          { "title": "ISO/IEC 25010:2011 — Systems and software Quality Requirements and Evaluation (SQuaRE)", "url": "https://www.iso.org/standard/35733.html" },
-          { "title": "CMMI Institute — CMMI for Development", "url": "https://cmmiinstitute.com/cmmi" },
-          { "title": "IEEE 730-2014 — Standard for Software Quality Assurance Processes", "url": "https://standards.ieee.org/ieee/730/5284/" },
-          { "title": "Kent Beck — Test Driven Development: By Example", "url": "https://www.oreilly.com/library/view/test-driven-development/0321146530/" },
-          { "title": "McCabe — A Complexity Measure (IEEE TSE 1976)", "url": "https://ieeexplore.ieee.org/document/1702388" }
+          {
+            "title": "ISO/IEC 25010:2011 — Systems and software Quality Requirements and Evaluation (SQuaRE)",
+            "url": "https://www.iso.org/standard/35733.html"
+          },
+          {
+            "title": "CMMI Institute — CMMI for Development",
+            "url": "https://cmmiinstitute.com/cmmi"
+          },
+          {
+            "title": "IEEE 730-2014 — Standard for Software Quality Assurance Processes",
+            "url": "https://standards.ieee.org/ieee/730/5284/"
+          },
+          {
+            "title": "Kent Beck — Test Driven Development: By Example",
+            "url": "https://www.oreilly.com/library/view/test-driven-development/0321146530/"
+          },
+          {
+            "title": "McCabe — A Complexity Measure (IEEE TSE 1976)",
+            "url": "https://ieeexplore.ieee.org/document/1702388"
+          }
         ]
       }
     }

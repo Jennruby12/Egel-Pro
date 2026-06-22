@@ -15,16 +15,66 @@
     "published": true
   },
   "concepts": [
-    { "concept": "Tipado estatico vs dinamico", "definition_md": "Estatico: el tipo se conoce y verifica en tiempo de compilacion (Java, TypeScript, C#). Dinamico: el tipo se resuelve en tiempo de ejecucion (JavaScript, Python, Ruby). El estatico atrapa errores temprano; el dinamico es mas flexible para prototipar.", "importance": "alta" },
-    { "concept": "Tipado fuerte vs debil", "definition_md": "Fuerte: no permite mezclar tipos sin conversion explicita (Python, Java). Debil: el lenguaje hace coerciones implicitas (JavaScript: '5' + 3 === '53'). Es ortogonal al estatico/dinamico.", "importance": "alta" },
-    { "concept": "Compilado, interpretado y transpilado", "definition_md": "Compilado: codigo fuente -> binario (C, Go, Rust). Interpretado: ejecucion linea a linea por un runtime (Python, JS). Transpilado: traducido de un lenguaje fuente a otro lenguaje fuente equivalente (TypeScript -> JavaScript, JSX -> JS).", "importance": "alta" },
-    { "concept": "JavaScript ES6+", "definition_md": "Version de ECMAScript 2015 en adelante. Introduce let/const, arrow functions, clases, destructuring, modulos ES, promesas, async/await y spread/rest. Es el estandar moderno del lenguaje.", "importance": "alta" },
-    { "concept": "TypeScript", "definition_md": "Superset de JavaScript con tipado estatico opcional desarrollado por Microsoft. Compila (transpila) a JS plano. Anade interfaces, generics, enums y verificacion estructural.", "importance": "alta" },
-    { "concept": "HTML5 semantico", "definition_md": "Uso de etiquetas con significado (header, nav, main, article, section, aside, footer) en lugar de divs genericos. Mejora accesibilidad, SEO y mantenibilidad.", "importance": "media" },
-    { "concept": "CSS3 (Flexbox y Grid)", "definition_md": "Flexbox: layout unidimensional (fila o columna). Grid: layout bidimensional (filas y columnas simultaneas). Ambos reemplazaron a floats y tablas para construir interfaces responsivas.", "importance": "alta" },
-    { "concept": "JSON y JSON Schema", "definition_md": "JSON: formato ligero de intercambio basado en pares clave-valor. JSON Schema: lenguaje declarativo para validar la estructura de un documento JSON (tipos, requeridos, rangos).", "importance": "media" },
-    { "concept": "XML", "definition_md": "Lenguaje de marcado extensible y verboso, usado en sistemas heredados (SOAP, configuraciones, intercambio B2B). Se valida con XSD y se consulta con XPath.", "importance": "media" },
-    { "concept": "Expresiones regulares (regex)", "definition_md": "Lenguaje de patrones para buscar, validar y reemplazar texto. Sintaxis comun: ^ inicio, $ fin, \\d digito, \\w palabra, + uno o mas, * cero o mas, ? opcional, [] clase, () grupo.", "importance": "media" }
+    {
+      "concept": "Tipado estatico vs dinamico",
+      "definition_md": "Estatico: el tipo se conoce y verifica en tiempo de compilacion (Java, TypeScript, C#). Dinamico: el tipo se resuelve en tiempo de ejecucion (JavaScript, Python, Ruby). El estatico atrapa errores temprano; el dinamico es mas flexible para prototipar.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Tipado fuerte vs debil",
+      "definition_md": "Fuerte: no permite mezclar tipos sin conversion explicita (Python, Java). Debil: el lenguaje hace coerciones implicitas (JavaScript: '5' + 3 === '53'). Es ortogonal al estatico/dinamico.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Compilado, interpretado y transpilado",
+      "definition_md": "Compilado: codigo fuente -> binario (C, Go, Rust). Interpretado: ejecucion linea a linea por un runtime (Python, JS). Transpilado: traducido de un lenguaje fuente a otro lenguaje fuente equivalente (TypeScript -> JavaScript, JSX -> JS).",
+      "importance": "alta"
+    },
+    {
+      "concept": "JavaScript ES6+",
+      "definition_md": "Version de ECMAScript 2015 en adelante. Introduce let/const, arrow functions, clases, destructuring, modulos ES, promesas, async/await y spread/rest. Es el estandar moderno del lenguaje.",
+      "importance": "alta"
+    },
+    {
+      "concept": "TypeScript",
+      "definition_md": "Superset de JavaScript con tipado estatico opcional desarrollado por Microsoft. Compila (transpila) a JS plano. Anade interfaces, generics, enums y verificacion estructural.",
+      "importance": "alta"
+    },
+    {
+      "concept": "HTML5 semantico",
+      "definition_md": "Uso de etiquetas con significado (header, nav, main, article, section, aside, footer) en lugar de divs genericos. Mejora accesibilidad, SEO y mantenibilidad.",
+      "importance": "media"
+    },
+    {
+      "concept": "CSS3 (Flexbox y Grid)",
+      "definition_md": "Flexbox: layout unidimensional (fila o columna). Grid: layout bidimensional (filas y columnas simultaneas). Ambos reemplazaron a floats y tablas para construir interfaces responsivas.",
+      "importance": "alta"
+    },
+    {
+      "concept": "JSON y JSON Schema",
+      "definition_md": "JSON: formato ligero de intercambio basado en pares clave-valor. JSON Schema: lenguaje declarativo para validar la estructura de un documento JSON (tipos, requeridos, rangos).",
+      "importance": "media"
+    },
+    {
+      "concept": "XML",
+      "definition_md": "Lenguaje de marcado extensible y verboso, usado en sistemas heredados (SOAP, configuraciones, intercambio B2B). Se valida con XSD y se consulta con XPath.",
+      "importance": "media"
+    },
+    {
+      "concept": "Expresiones regulares (regex)",
+      "definition_md": "Lenguaje de patrones para buscar, validar y reemplazar texto. Sintaxis comun: ^ inicio, $ fin, \\d digito, \\w palabra, + uno o mas, * cero o mas, ? opcional, [] clase, () grupo.",
+      "importance": "media"
+    },
+    {
+      "concept": "Arreglos (arrays)",
+      "definition_md": "Estructura contigua de acceso aleatorio: acceso por indice **O(1)**, busqueda de un valor **O(n)**, insercion/borrado en medio **O(n)**.",
+      "importance": "media"
+    },
+    {
+      "concept": "Arboles",
+      "definition_md": "Estructura jerarquica. En un **arbol binario de busqueda balanceado** la busqueda/insercion/borrado son **O(log n)**; si se degenera, **O(n)**. Recorridos: inorden, preorden, postorden.",
+      "importance": "media"
+    }
   ],
   "sections": [
     {
@@ -33,7 +83,12 @@
       "title": null,
       "body_md": "Esta subarea aporta **10 reactivos** en Area 3 del EGEL. Se enfoca en que distingas los **sistemas de tipos** (estatico/dinamico, fuerte/debil), los **modelos de ejecucion** (compilado/interpretado/transpilado) y los lenguajes y formatos mas usados en desarrollo web moderno: JavaScript ES6+, TypeScript, HTML5, CSS3, JSON y regex.\n\nLas trampas clasicas del examen son: (1) confundir tipado estatico con fuerte; (2) creer que TypeScript se ejecuta directamente en el navegador (no, se transpila a JS); (3) no recordar que Python es **dinamico pero fuerte**, mientras que JavaScript es **dinamico y debil**.\n\nSi memorizas las cuatro combinaciones de tipado con un ejemplo cada una y entiendes la cadena fuente -> transpilador -> bundler -> runtime, te llevas la mayoria de los puntos. Adicional: domina al menos una expresion regular comun (email, telefono) porque suele aparecer."
     },
-    { "type": "concept", "order": 2, "title": "Conceptos clave", "metadata": null },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
     {
       "type": "example",
       "order": 3,
@@ -51,14 +106,56 @@
       "order": 5,
       "title": "Java vs Python vs JavaScript vs TypeScript",
       "metadata": {
-        "headers": ["Aspecto", "Java", "Python", "JavaScript", "TypeScript"],
+        "headers": [
+          "Aspecto",
+          "Java",
+          "Python",
+          "JavaScript",
+          "TypeScript"
+        ],
         "rows": [
-          ["Tipado", "Estatico, fuerte", "Dinamico, fuerte", "Dinamico, debil", "Estatico, fuerte"],
-          ["Modelo de ejecucion", "Compilado a bytecode (JVM)", "Interpretado", "Interpretado / JIT", "Transpilado a JS"],
-          ["Runtime principal", "JVM", "CPython", "V8, SpiderMonkey", "Node, navegador (via JS)"],
-          ["Caso de uso fuerte", "Backend empresarial", "Data, ML, scripting", "Web front y back", "Apps grandes JS/TS"],
-          ["POO", "Si, basada en clases", "Si, multiparadigma", "Si, prototipos y clases", "Si, clases + interfaces"],
-          ["Ejemplo de error tipico", "NullPointerException", "TypeError en runtime", "undefined is not a function", "Type error en compilacion"]
+          [
+            "Tipado",
+            "Estatico, fuerte",
+            "Dinamico, fuerte",
+            "Dinamico, debil",
+            "Estatico, fuerte"
+          ],
+          [
+            "Modelo de ejecucion",
+            "Compilado a bytecode (JVM)",
+            "Interpretado",
+            "Interpretado / JIT",
+            "Transpilado a JS"
+          ],
+          [
+            "Runtime principal",
+            "JVM",
+            "CPython",
+            "V8, SpiderMonkey",
+            "Node, navegador (via JS)"
+          ],
+          [
+            "Caso de uso fuerte",
+            "Backend empresarial",
+            "Data, ML, scripting",
+            "Web front y back",
+            "Apps grandes JS/TS"
+          ],
+          [
+            "POO",
+            "Si, basada en clases",
+            "Si, multiparadigma",
+            "Si, prototipos y clases",
+            "Si, clases + interfaces"
+          ],
+          [
+            "Ejemplo de error tipico",
+            "NullPointerException",
+            "TypeError en runtime",
+            "undefined is not a function",
+            "Type error en compilacion"
+          ]
         ]
       }
     },
@@ -68,12 +165,36 @@
       "title": "Herramientas del ecosistema JS/TS",
       "metadata": {
         "tools": [
-          { "name": "Node.js", "url": "https://nodejs.org/", "description": "Runtime de JavaScript fuera del navegador basado en V8. Permite servidores, CLIs y scripts." },
-          { "name": "TypeScript", "url": "https://www.typescriptlang.org/", "description": "Compilador `tsc` que transpila .ts a .js y verifica tipos estaticamente." },
-          { "name": "Babel", "url": "https://babeljs.io/", "description": "Transpilador de JS moderno (ES2020+) a versiones compatibles con navegadores antiguos." },
-          { "name": "Webpack", "url": "https://webpack.js.org/", "description": "Bundler clasico: empaqueta modulos JS, CSS y assets en bundles optimizados." },
-          { "name": "Vite", "url": "https://vitejs.dev/", "description": "Bundler moderno basado en ES modules con HMR ultrarrapido. Reemplazo de Webpack en proyectos nuevos." },
-          { "name": "ESLint", "url": "https://eslint.org/", "description": "Linter para JS/TS que detecta errores y aplica reglas de estilo configurables." }
+          {
+            "name": "Node.js",
+            "url": "https://nodejs.org/",
+            "description": "Runtime de JavaScript fuera del navegador basado en V8. Permite servidores, CLIs y scripts."
+          },
+          {
+            "name": "TypeScript",
+            "url": "https://www.typescriptlang.org/",
+            "description": "Compilador `tsc` que transpila .ts a .js y verifica tipos estaticamente."
+          },
+          {
+            "name": "Babel",
+            "url": "https://babeljs.io/",
+            "description": "Transpilador de JS moderno (ES2020+) a versiones compatibles con navegadores antiguos."
+          },
+          {
+            "name": "Webpack",
+            "url": "https://webpack.js.org/",
+            "description": "Bundler clasico: empaqueta modulos JS, CSS y assets en bundles optimizados."
+          },
+          {
+            "name": "Vite",
+            "url": "https://vitejs.dev/",
+            "description": "Bundler moderno basado en ES modules con HMR ultrarrapido. Reemplazo de Webpack en proyectos nuevos."
+          },
+          {
+            "name": "ESLint",
+            "url": "https://eslint.org/",
+            "description": "Linter para JS/TS que detecta errores y aplica reglas de estilo configurables."
+          }
         ]
       }
     },
@@ -83,31 +204,81 @@
       "title": "Glosario",
       "metadata": {
         "terms": [
-          { "term": "ECMAScript", "def": "Especificacion estandar (ECMA-262) que define el lenguaje JavaScript. ES6 = ES2015." },
-          { "term": "Transpilar", "def": "Traducir codigo fuente de un lenguaje a otro de nivel similar (TS -> JS, JSX -> JS, SASS -> CSS)." },
-          { "term": "Hoisting", "def": "Comportamiento de JS por el que declaraciones de var y function se 'elevan' al inicio del scope." },
-          { "term": "Closure", "def": "Funcion que captura variables del scope donde fue creada, aun despues de que ese scope termine." },
-          { "term": "Regex", "def": "Patron de texto declarativo usado para buscar, validar o reemplazar cadenas." },
-          { "term": "JIT", "def": "Just-In-Time compilation. Optimizacion del runtime que compila partes calientes del codigo a maquina." },
-          { "term": "Bundler", "def": "Herramienta que empaqueta multiples archivos fuente en bundles listos para el navegador." },
-          { "term": "Tipado estructural", "def": "Sistema de tipos donde la compatibilidad se decide por la forma del objeto, no por su nombre. TypeScript lo usa." },
-          { "term": "Coercion", "def": "Conversion implicita de tipos hecha por el lenguaje (ej. JS convierte numero a string al concatenar)." },
-          { "term": "Polyfill", "def": "Pieza de codigo que provee una API moderna en navegadores antiguos que no la implementan." }
+          {
+            "term": "ECMAScript",
+            "def": "Especificacion estandar (ECMA-262) que define el lenguaje JavaScript. ES6 = ES2015."
+          },
+          {
+            "term": "Transpilar",
+            "def": "Traducir codigo fuente de un lenguaje a otro de nivel similar (TS -> JS, JSX -> JS, SASS -> CSS)."
+          },
+          {
+            "term": "Hoisting",
+            "def": "Comportamiento de JS por el que declaraciones de var y function se 'elevan' al inicio del scope."
+          },
+          {
+            "term": "Closure",
+            "def": "Funcion que captura variables del scope donde fue creada, aun despues de que ese scope termine."
+          },
+          {
+            "term": "Regex",
+            "def": "Patron de texto declarativo usado para buscar, validar o reemplazar cadenas."
+          },
+          {
+            "term": "JIT",
+            "def": "Just-In-Time compilation. Optimizacion del runtime que compila partes calientes del codigo a maquina."
+          },
+          {
+            "term": "Bundler",
+            "def": "Herramienta que empaqueta multiples archivos fuente en bundles listos para el navegador."
+          },
+          {
+            "term": "Tipado estructural",
+            "def": "Sistema de tipos donde la compatibilidad se decide por la forma del objeto, no por su nombre. TypeScript lo usa."
+          },
+          {
+            "term": "Coercion",
+            "def": "Conversion implicita de tipos hecha por el lenguaje (ej. JS convierte numero a string al concatenar)."
+          },
+          {
+            "term": "Polyfill",
+            "def": "Pieza de codigo que provee una API moderna en navegadores antiguos que no la implementan."
+          }
         ]
       }
     },
-    { "type": "quick_quiz", "order": 8, "title": "Quick Quiz", "metadata": null },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
     {
       "type": "references",
       "order": 9,
       "title": "Referencias",
       "metadata": {
         "refs": [
-          { "title": "MDN Web Docs — JavaScript Reference", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-          { "title": "TypeScript Handbook (oficial)", "url": "https://www.typescriptlang.org/docs/handbook/intro.html" },
-          { "title": "ECMA-262 — ECMAScript Language Specification", "url": "https://tc39.es/ecma262/" },
-          { "title": "MDN — HTML5 Semantic Elements", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element" },
-          { "title": "CSS Tricks — A Complete Guide to Flexbox y Grid", "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/" }
+          {
+            "title": "MDN Web Docs — JavaScript Reference",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+          },
+          {
+            "title": "TypeScript Handbook (oficial)",
+            "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+          },
+          {
+            "title": "ECMA-262 — ECMAScript Language Specification",
+            "url": "https://tc39.es/ecma262/"
+          },
+          {
+            "title": "MDN — HTML5 Semantic Elements",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element"
+          },
+          {
+            "title": "CSS Tricks — A Complete Guide to Flexbox y Grid",
+            "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/"
+          }
         ]
       }
     }

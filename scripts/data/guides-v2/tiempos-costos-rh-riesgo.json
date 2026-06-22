@@ -15,18 +15,81 @@
     "published": true
   },
   "concepts": [
-    { "concept": "WBS (Work Breakdown Structure)", "definition_md": "Descomposicion jerarquica del trabajo en entregables y paquetes de trabajo manejables. Regla 8/80: cada paquete entre 8 y 80 horas.", "importance": "alta" },
-    { "concept": "PERT", "definition_md": "Program Evaluation and Review Technique. Estima duraciones con tres puntos: Optimista (O), Mas probable (M) y Pesimista (P). Formula: Te = (O + 4M + P) / 6.", "importance": "alta" },
-    { "concept": "CPM (Ruta critica)", "definition_md": "Critical Path Method. Identifica la secuencia mas larga de actividades dependientes que determina la duracion minima del proyecto. Cualquier retraso en la ruta critica retrasa el proyecto.", "importance": "alta" },
-    { "concept": "Diagrama de Gantt", "definition_md": "Cronograma visual de barras horizontales que muestra duracion, dependencias y avance de tareas. Util para comunicacion con stakeholders no tecnicos.", "importance": "alta" },
-    { "concept": "COCOMO", "definition_md": "Constructive Cost Model (Boehm). Estima esfuerzo en personas-mes a partir de KLOC. Modos: Basico (E = a * KLOC^b), Intermedio (incluye 15 factores), Detallado.", "importance": "alta" },
-    { "concept": "Puntos de funcion (IFPUG)", "definition_md": "Metrica funcional independiente del lenguaje. Mide entradas externas, salidas externas, consultas, archivos logicos internos y de interfaz. Estandar ISO/IEC 20926.", "importance": "alta" },
-    { "concept": "Matriz RACI", "definition_md": "Asignacion de responsabilidades: Responsible (ejecuta), Accountable (rinde cuentas, unico), Consulted (opina antes), Informed (se le avisa).", "importance": "alta" },
-    { "concept": "Analisis FODA", "definition_md": "Fortalezas, Oportunidades, Debilidades y Amenazas. Herramienta de diagnostico estrategico al inicio de un proyecto.", "importance": "media" },
-    { "concept": "EVM (Earned Value Management)", "definition_md": "Tecnica de control integrado de alcance, tiempo y costo. Indicadores clave: PV (planeado), EV (ganado), AC (actual), CV = EV - AC, SV = EV - PV, CPI = EV / AC, SPI = EV / PV.", "importance": "alta" },
-    { "concept": "Estrategias de respuesta al riesgo", "definition_md": "Para riesgos negativos: Evitar, Transferir, Mitigar, Aceptar. Para positivos (oportunidades): Explotar, Compartir, Mejorar, Aceptar.", "importance": "alta" },
-    { "concept": "EMV (Valor Monetario Esperado)", "definition_md": "Esperanza estadistica de un riesgo: EMV = Probabilidad x Impacto monetario. Permite priorizar la reserva de contingencia.", "importance": "media" },
-    { "concept": "Reserva de contingencia y de gestion", "definition_md": "Contingencia: presupuesto para riesgos conocidos identificados. Gestion: para riesgos desconocidos (incognitas-incognitas). Ambas forman la linea base de costos.", "importance": "media" }
+    {
+      "concept": "WBS (Work Breakdown Structure)",
+      "definition_md": "Descomposicion jerarquica del trabajo en entregables y paquetes de trabajo manejables. Regla 8/80: cada paquete entre 8 y 80 horas.",
+      "importance": "alta"
+    },
+    {
+      "concept": "PERT",
+      "definition_md": "Program Evaluation and Review Technique. Estima duraciones con tres puntos: Optimista (O), Mas probable (M) y Pesimista (P). Formula: Te = (O + 4M + P) / 6.",
+      "importance": "alta"
+    },
+    {
+      "concept": "CPM (Ruta critica)",
+      "definition_md": "Critical Path Method. Identifica la secuencia mas larga de actividades dependientes que determina la duracion minima del proyecto. Cualquier retraso en la ruta critica retrasa el proyecto.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Diagrama de Gantt",
+      "definition_md": "Cronograma visual de barras horizontales que muestra duracion, dependencias y avance de tareas. Util para comunicacion con stakeholders no tecnicos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "COCOMO",
+      "definition_md": "Constructive Cost Model (Boehm). Estima esfuerzo en personas-mes a partir de KLOC. Modos: Basico (E = a * KLOC^b), Intermedio (incluye 15 factores), Detallado.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Puntos de funcion (IFPUG)",
+      "definition_md": "Metrica funcional independiente del lenguaje. Mide entradas externas, salidas externas, consultas, archivos logicos internos y de interfaz. Estandar ISO/IEC 20926.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Matriz RACI",
+      "definition_md": "Asignacion de responsabilidades: Responsible (ejecuta), Accountable (rinde cuentas, unico), Consulted (opina antes), Informed (se le avisa).",
+      "importance": "alta"
+    },
+    {
+      "concept": "Analisis FODA",
+      "definition_md": "Fortalezas, Oportunidades, Debilidades y Amenazas. Herramienta de diagnostico estrategico al inicio de un proyecto.",
+      "importance": "media"
+    },
+    {
+      "concept": "EVM (Earned Value Management)",
+      "definition_md": "Tecnica de control integrado de alcance, tiempo y costo. Indicadores clave: PV (planeado), EV (ganado), AC (actual), CV = EV - AC, SV = EV - PV, CPI = EV / AC, SPI = EV / PV.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Estrategias de respuesta al riesgo",
+      "definition_md": "Para riesgos negativos: Evitar, Transferir, Mitigar, Aceptar. Para positivos (oportunidades): Explotar, Compartir, Mejorar, Aceptar.",
+      "importance": "alta"
+    },
+    {
+      "concept": "EMV (Valor Monetario Esperado)",
+      "definition_md": "Esperanza estadistica de un riesgo: EMV = Probabilidad x Impacto monetario. Permite priorizar la reserva de contingencia.",
+      "importance": "media"
+    },
+    {
+      "concept": "Reserva de contingencia y de gestion",
+      "definition_md": "Contingencia: presupuesto para riesgos conocidos identificados. Gestion: para riesgos desconocidos (incognitas-incognitas). Ambas forman la linea base de costos.",
+      "importance": "media"
+    },
+    {
+      "concept": "Puntos de funcion",
+      "definition_md": "Metrica de tamano funcional independiente del lenguaje. Cuenta cinco componentes ponderados por complejidad: entradas externas (EI), salidas (EO), consultas (EQ), archivos logicos internos (ILF) y de interfaz (EIF).",
+      "importance": "alta"
+    },
+    {
+      "concept": "PERT y ruta critica",
+      "definition_md": "Tecnica de planificacion con tiempos probabilisticos: **te = (O + 4M + P) / 6** y varianza ((P-O)/6)^2. La **ruta critica** es el camino mas largo de la red; sus actividades no tienen holgura.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Estimacion por lineas de codigo",
+      "definition_md": "A partir de la **productividad** (LDC por persona-mes) y el tamano estimado se obtiene el esfuerzo en personas-mes; dividido entre el plazo da el numero de personas necesarias.",
+      "importance": "media"
+    }
   ],
   "sections": [
     {
@@ -58,12 +121,37 @@
       "order": 5,
       "title": "Estrategias de respuesta a riesgos negativos",
       "metadata": {
-        "headers": ["Estrategia", "Que hace", "Cuando aplicarla", "Ejemplo en software"],
+        "headers": [
+          "Estrategia",
+          "Que hace",
+          "Cuando aplicarla",
+          "Ejemplo en software"
+        ],
         "rows": [
-          ["Evitar", "Elimina la causa del riesgo cambiando el plan", "Riesgo de alto impacto y baja tolerancia", "Cancelar uso de libreria sin soporte y elegir alternativa madura"],
-          ["Transferir", "Traslada la responsabilidad a un tercero", "Existe un actor especializado dispuesto a asumirlo", "Contratar seguro de ciberseguridad o tercerizar pentest"],
-          ["Mitigar", "Reduce probabilidad o impacto", "Riesgo identificable y controlable", "Code reviews, pair programming, pruebas automatizadas, ADRs"],
-          ["Aceptar", "No actuar y dejar reserva", "Costo de tratarlo supera el EMV o no hay control posible", "Cambios regulatorios externos, fallas de proveedores cloud"]
+          [
+            "Evitar",
+            "Elimina la causa del riesgo cambiando el plan",
+            "Riesgo de alto impacto y baja tolerancia",
+            "Cancelar uso de libreria sin soporte y elegir alternativa madura"
+          ],
+          [
+            "Transferir",
+            "Traslada la responsabilidad a un tercero",
+            "Existe un actor especializado dispuesto a asumirlo",
+            "Contratar seguro de ciberseguridad o tercerizar pentest"
+          ],
+          [
+            "Mitigar",
+            "Reduce probabilidad o impacto",
+            "Riesgo identificable y controlable",
+            "Code reviews, pair programming, pruebas automatizadas, ADRs"
+          ],
+          [
+            "Aceptar",
+            "No actuar y dejar reserva",
+            "Costo de tratarlo supera el EMV o no hay control posible",
+            "Cambios regulatorios externos, fallas de proveedores cloud"
+          ]
         ]
       }
     },
@@ -73,12 +161,36 @@
       "title": "Herramientas para gestion de proyectos",
       "metadata": {
         "tools": [
-          { "name": "Microsoft Project", "url": "https://www.microsoft.com/microsoft-365/project/project-management-software", "description": "Estandar empresarial para Gantt, CPM y nivelacion de recursos. Integra costos y EVM nativamente." },
-          { "name": "Jira", "url": "https://www.atlassian.com/software/jira", "description": "Tracking agil de backlog, sprints y burndown. Plugins para Gantt y EVM (BigPicture, Structure)." },
-          { "name": "ProjectLibre", "url": "https://www.projectlibre.com/", "description": "Alternativa open source a MS Project. Soporta WBS, Gantt, PERT y ruta critica." },
-          { "name": "GanttProject", "url": "https://www.ganttproject.biz/", "description": "Herramienta gratuita ligera para Gantt y CPM. Util en proyectos pequenos o academicos." },
-          { "name": "Smartsheet", "url": "https://www.smartsheet.com/", "description": "Plataforma hibrida hoja de calculo + project management. Buena para PMOs distribuidos." },
-          { "name": "Risk Register en Excel", "url": "https://www.pmi.org/", "description": "Plantilla con columnas: ID, descripcion, probabilidad, impacto, EMV, estrategia, responsable, estado. Sigue siendo el formato mas usado." }
+          {
+            "name": "Microsoft Project",
+            "url": "https://www.microsoft.com/microsoft-365/project/project-management-software",
+            "description": "Estandar empresarial para Gantt, CPM y nivelacion de recursos. Integra costos y EVM nativamente."
+          },
+          {
+            "name": "Jira",
+            "url": "https://www.atlassian.com/software/jira",
+            "description": "Tracking agil de backlog, sprints y burndown. Plugins para Gantt y EVM (BigPicture, Structure)."
+          },
+          {
+            "name": "ProjectLibre",
+            "url": "https://www.projectlibre.com/",
+            "description": "Alternativa open source a MS Project. Soporta WBS, Gantt, PERT y ruta critica."
+          },
+          {
+            "name": "GanttProject",
+            "url": "https://www.ganttproject.biz/",
+            "description": "Herramienta gratuita ligera para Gantt y CPM. Util en proyectos pequenos o academicos."
+          },
+          {
+            "name": "Smartsheet",
+            "url": "https://www.smartsheet.com/",
+            "description": "Plataforma hibrida hoja de calculo + project management. Buena para PMOs distribuidos."
+          },
+          {
+            "name": "Risk Register en Excel",
+            "url": "https://www.pmi.org/",
+            "description": "Plantilla con columnas: ID, descripcion, probabilidad, impacto, EMV, estrategia, responsable, estado. Sigue siendo el formato mas usado."
+          }
         ]
       }
     },
@@ -88,18 +200,54 @@
       "title": "Glosario",
       "metadata": {
         "terms": [
-          { "term": "WBS", "def": "Work Breakdown Structure. Descomposicion jerarquica orientada a entregables." },
-          { "term": "PERT", "def": "Tecnica de estimacion de tres puntos. Te = (O + 4M + P) / 6." },
-          { "term": "CPM", "def": "Critical Path Method. Secuencia mas larga de actividades dependientes que define la duracion minima." },
-          { "term": "COCOMO", "def": "Modelo de estimacion de esfuerzo de Boehm basado en KLOC con tres modos: organico, semilibre y empotrado." },
-          { "term": "KLOC", "def": "Miles de lineas de codigo (Kilo Lines Of Code). Unidad de medida de tamano en COCOMO." },
-          { "term": "RACI", "def": "Matriz de asignacion: Responsible, Accountable, Consulted, Informed." },
-          { "term": "FODA", "def": "Fortalezas, Oportunidades, Debilidades, Amenazas. Diagnostico estrategico." },
-          { "term": "EVM", "def": "Earned Value Management. Integra alcance, tiempo y costo con PV, EV, AC, CV, SV, CPI, SPI." },
-          { "term": "EMV", "def": "Valor Monetario Esperado = Probabilidad x Impacto. Base de la reserva de contingencia." },
-          { "term": "Milestone", "def": "Hito sin duracion que marca un evento significativo (entrega, aprobacion, go-live)." },
-          { "term": "Deliverable", "def": "Producto verificable, tangible y medible que debe entregar el proyecto." },
-          { "term": "Riesgo residual", "def": "Riesgo que queda despues de aplicar una estrategia de respuesta." }
+          {
+            "term": "WBS",
+            "def": "Work Breakdown Structure. Descomposicion jerarquica orientada a entregables."
+          },
+          {
+            "term": "PERT",
+            "def": "Tecnica de estimacion de tres puntos. Te = (O + 4M + P) / 6."
+          },
+          {
+            "term": "CPM",
+            "def": "Critical Path Method. Secuencia mas larga de actividades dependientes que define la duracion minima."
+          },
+          {
+            "term": "COCOMO",
+            "def": "Modelo de estimacion de esfuerzo de Boehm basado en KLOC con tres modos: organico, semilibre y empotrado."
+          },
+          {
+            "term": "KLOC",
+            "def": "Miles de lineas de codigo (Kilo Lines Of Code). Unidad de medida de tamano en COCOMO."
+          },
+          {
+            "term": "RACI",
+            "def": "Matriz de asignacion: Responsible, Accountable, Consulted, Informed."
+          },
+          {
+            "term": "FODA",
+            "def": "Fortalezas, Oportunidades, Debilidades, Amenazas. Diagnostico estrategico."
+          },
+          {
+            "term": "EVM",
+            "def": "Earned Value Management. Integra alcance, tiempo y costo con PV, EV, AC, CV, SV, CPI, SPI."
+          },
+          {
+            "term": "EMV",
+            "def": "Valor Monetario Esperado = Probabilidad x Impacto. Base de la reserva de contingencia."
+          },
+          {
+            "term": "Milestone",
+            "def": "Hito sin duracion que marca un evento significativo (entrega, aprobacion, go-live)."
+          },
+          {
+            "term": "Deliverable",
+            "def": "Producto verificable, tangible y medible que debe entregar el proyecto."
+          },
+          {
+            "term": "Riesgo residual",
+            "def": "Riesgo que queda despues de aplicar una estrategia de respuesta."
+          }
         ]
       }
     },
@@ -115,11 +263,26 @@
       "title": "Referencias",
       "metadata": {
         "refs": [
-          { "title": "PMBOK Guide — 7a edicion (PMI, 2021)", "url": "https://www.pmi.org/pmbok-guide-standards/foundational/pmbok" },
-          { "title": "Boehm — Software Cost Estimation with COCOMO II", "url": "https://csse.usc.edu/csse/research/COCOMOII/cocomo_main.html" },
-          { "title": "ISO 31000:2018 — Risk management Guidelines", "url": "https://www.iso.org/iso-31000-risk-management.html" },
-          { "title": "IFPUG — Function Point Counting Practices Manual", "url": "https://www.ifpug.org/" },
-          { "title": "Pressman — Ingenieria de Software (Cap. 23 Gestion de proyectos)", "url": "https://www.mheducation.com.mx/" }
+          {
+            "title": "PMBOK Guide — 7a edicion (PMI, 2021)",
+            "url": "https://www.pmi.org/pmbok-guide-standards/foundational/pmbok"
+          },
+          {
+            "title": "Boehm — Software Cost Estimation with COCOMO II",
+            "url": "https://csse.usc.edu/csse/research/COCOMOII/cocomo_main.html"
+          },
+          {
+            "title": "ISO 31000:2018 — Risk management Guidelines",
+            "url": "https://www.iso.org/iso-31000-risk-management.html"
+          },
+          {
+            "title": "IFPUG — Function Point Counting Practices Manual",
+            "url": "https://www.ifpug.org/"
+          },
+          {
+            "title": "Pressman — Ingenieria de Software (Cap. 23 Gestion de proyectos)",
+            "url": "https://www.mheducation.com.mx/"
+          }
         ]
       }
     }

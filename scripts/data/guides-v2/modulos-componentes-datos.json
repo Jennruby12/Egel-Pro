@@ -15,29 +15,126 @@
     "published": true
   },
   "concepts": [
-    { "concept": "SRP (Single Responsibility Principle)", "definition_md": "Una clase debe tener una sola razon para cambiar. Cada modulo encapsula una responsabilidad cohesiva del negocio o tecnica.", "importance": "alta" },
-    { "concept": "OCP (Open/Closed Principle)", "definition_md": "Los modulos deben estar abiertos a extension pero cerrados a modificacion. Se logra con polimorfismo o composicion en lugar de editar codigo existente.", "importance": "alta" },
-    { "concept": "LSP (Liskov Substitution Principle)", "definition_md": "Los objetos de una subclase deben poder reemplazar a los de su superclase sin romper el comportamiento esperado del sistema.", "importance": "alta" },
-    { "concept": "ISP (Interface Segregation Principle)", "definition_md": "Es preferible muchas interfaces pequenas y especificas a una interfaz grande que obligue a implementar metodos que no se usan.", "importance": "alta" },
-    { "concept": "DIP (Dependency Inversion Principle)", "definition_md": "Los modulos de alto nivel no deben depender de los de bajo nivel; ambos dependen de abstracciones. Las abstracciones no dependen de detalles.", "importance": "alta" },
-    { "concept": "Acoplamiento", "definition_md": "Grado de dependencia entre modulos. Niveles de peor a mejor: contenido, comun, externo, control, sello (stamp), datos. Buscar acoplamiento de datos.", "importance": "alta" },
-    { "concept": "Cohesion", "definition_md": "Grado en que las responsabilidades de un modulo estan relacionadas. Niveles de peor a mejor: coincidental, logica, temporal, procedural, comunicacional, secuencial, funcional. Buscar cohesion funcional.", "importance": "alta" },
-    { "concept": "Patron GoF", "definition_md": "Catalogo de 23 patrones de diseno (Gamma, Helm, Johnson, Vlissides, 1994) agrupados en creacionales, estructurales y conductuales.", "importance": "alta" },
-    { "concept": "Singleton", "definition_md": "Patron creacional. Garantiza una unica instancia global de una clase. Util para registros, caches, configuracion. Riesgo: acoplamiento oculto y dificultad de testeo.", "importance": "media" },
-    { "concept": "Factory Method", "definition_md": "Patron creacional. Define una interfaz para crear objetos pero delega a subclases la decision del tipo concreto.", "importance": "alta" },
-    { "concept": "Strategy", "definition_md": "Patron conductual. Encapsula una familia de algoritmos intercambiables tras una misma interfaz. Aplica OCP.", "importance": "alta" },
-    { "concept": "Observer", "definition_md": "Patron conductual. Define una dependencia uno-a-muchos: cuando un sujeto cambia, todos sus observadores son notificados automaticamente.", "importance": "alta" },
-    { "concept": "Adapter", "definition_md": "Patron estructural. Traduce la interfaz de una clase existente a otra esperada por el cliente. Util para integrar codigo legacy o librerias externas.", "importance": "alta" },
-    { "concept": "Decorator", "definition_md": "Patron estructural. Agrega responsabilidades a un objeto en tiempo de ejecucion envolviendolo en otro que comparte su interfaz.", "importance": "media" },
-    { "concept": "1FN", "definition_md": "Primera Forma Normal. Cada celda contiene un valor atomico; no hay grupos repetitivos ni atributos multivaluados.", "importance": "alta" },
-    { "concept": "2FN", "definition_md": "Segunda Forma Normal. Cumple 1FN y todo atributo no clave depende de la clave primaria completa (sin dependencias parciales).", "importance": "alta" },
-    { "concept": "3FN", "definition_md": "Tercera Forma Normal. Cumple 2FN y no existen dependencias transitivas entre atributos no clave.", "importance": "alta" },
-    { "concept": "BCNF", "definition_md": "Boyce-Codd Normal Form. Refinamiento de 3FN: para toda dependencia funcional no trivial, el lado izquierdo debe ser superclave.", "importance": "media" },
-    { "concept": "Modelo Entidad-Relacion (ER)", "definition_md": "Tecnica de modelado conceptual de Chen (1976) con entidades, atributos, relaciones y cardinalidades. Se traduce a tablas relacionales.", "importance": "alta" },
-    { "concept": "Cardinalidad", "definition_md": "Numero de instancias de una entidad que pueden asociarse con otra: 1:1, 1:N, N:M. Determina llaves foraneas y tablas puente.", "importance": "alta" },
-    { "concept": "Fragmentacion horizontal", "definition_md": "Particionar una tabla por filas segun un criterio (region, fecha, hash) para distribuir carga en varios nodos.", "importance": "alta" },
-    { "concept": "Fragmentacion vertical", "definition_md": "Particionar una tabla por columnas separando atributos accedidos juntos (ej. perfil vs datos de auditoria).", "importance": "media" },
-    { "concept": "Indice B-tree", "definition_md": "Estructura de arbol balanceado que acelera busquedas por rango y por igualdad. Indice por defecto en PostgreSQL, MySQL y Oracle.", "importance": "alta" }
+    {
+      "concept": "SRP (Single Responsibility Principle)",
+      "definition_md": "Una clase debe tener una sola razon para cambiar. Cada modulo encapsula una responsabilidad cohesiva del negocio o tecnica.",
+      "importance": "alta"
+    },
+    {
+      "concept": "OCP (Open/Closed Principle)",
+      "definition_md": "Los modulos deben estar abiertos a extension pero cerrados a modificacion. Se logra con polimorfismo o composicion en lugar de editar codigo existente.",
+      "importance": "alta"
+    },
+    {
+      "concept": "LSP (Liskov Substitution Principle)",
+      "definition_md": "Los objetos de una subclase deben poder reemplazar a los de su superclase sin romper el comportamiento esperado del sistema.",
+      "importance": "alta"
+    },
+    {
+      "concept": "ISP (Interface Segregation Principle)",
+      "definition_md": "Es preferible muchas interfaces pequenas y especificas a una interfaz grande que obligue a implementar metodos que no se usan.",
+      "importance": "alta"
+    },
+    {
+      "concept": "DIP (Dependency Inversion Principle)",
+      "definition_md": "Los modulos de alto nivel no deben depender de los de bajo nivel; ambos dependen de abstracciones. Las abstracciones no dependen de detalles.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Acoplamiento",
+      "definition_md": "Grado de dependencia entre modulos. Niveles de peor a mejor: contenido, comun, externo, control, sello (stamp), datos. Buscar acoplamiento de datos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Cohesion",
+      "definition_md": "Grado en que las responsabilidades de un modulo estan relacionadas. Niveles de peor a mejor: coincidental, logica, temporal, procedural, comunicacional, secuencial, funcional. Buscar cohesion funcional.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Patron GoF",
+      "definition_md": "Catalogo de 23 patrones de diseno (Gamma, Helm, Johnson, Vlissides, 1994) agrupados en creacionales, estructurales y conductuales.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Singleton",
+      "definition_md": "Patron creacional. Garantiza una unica instancia global de una clase. Util para registros, caches, configuracion. Riesgo: acoplamiento oculto y dificultad de testeo.",
+      "importance": "media"
+    },
+    {
+      "concept": "Factory Method",
+      "definition_md": "Patron creacional. Define una interfaz para crear objetos pero delega a subclases la decision del tipo concreto.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Strategy",
+      "definition_md": "Patron conductual. Encapsula una familia de algoritmos intercambiables tras una misma interfaz. Aplica OCP.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Observer",
+      "definition_md": "Patron conductual. Define una dependencia uno-a-muchos: cuando un sujeto cambia, todos sus observadores son notificados automaticamente.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Adapter",
+      "definition_md": "Patron estructural. Traduce la interfaz de una clase existente a otra esperada por el cliente. Util para integrar codigo legacy o librerias externas.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Decorator",
+      "definition_md": "Patron estructural. Agrega responsabilidades a un objeto en tiempo de ejecucion envolviendolo en otro que comparte su interfaz.",
+      "importance": "media"
+    },
+    {
+      "concept": "1FN",
+      "definition_md": "Primera Forma Normal. Cada celda contiene un valor atomico; no hay grupos repetitivos ni atributos multivaluados.",
+      "importance": "alta"
+    },
+    {
+      "concept": "2FN",
+      "definition_md": "Segunda Forma Normal. Cumple 1FN y todo atributo no clave depende de la clave primaria completa (sin dependencias parciales).",
+      "importance": "alta"
+    },
+    {
+      "concept": "3FN",
+      "definition_md": "Tercera Forma Normal. Cumple 2FN y no existen dependencias transitivas entre atributos no clave.",
+      "importance": "alta"
+    },
+    {
+      "concept": "BCNF",
+      "definition_md": "Boyce-Codd Normal Form. Refinamiento de 3FN: para toda dependencia funcional no trivial, el lado izquierdo debe ser superclave.",
+      "importance": "media"
+    },
+    {
+      "concept": "Modelo Entidad-Relacion (ER)",
+      "definition_md": "Tecnica de modelado conceptual de Chen (1976) con entidades, atributos, relaciones y cardinalidades. Se traduce a tablas relacionales.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Cardinalidad",
+      "definition_md": "Numero de instancias de una entidad que pueden asociarse con otra: 1:1, 1:N, N:M. Determina llaves foraneas y tablas puente.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Fragmentacion horizontal",
+      "definition_md": "Particionar una tabla por filas segun un criterio (region, fecha, hash) para distribuir carga en varios nodos.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Fragmentacion vertical",
+      "definition_md": "Particionar una tabla por columnas separando atributos accedidos juntos (ej. perfil vs datos de auditoria).",
+      "importance": "media"
+    },
+    {
+      "concept": "Indice B-tree",
+      "definition_md": "Estructura de arbol balanceado que acelera busquedas por rango y por igualdad. Indice por defecto en PostgreSQL, MySQL y Oracle.",
+      "importance": "alta"
+    },
+    {
+      "concept": "Patrones estructurales (GoF)",
+      "definition_md": "Patrones que componen clases y objetos en estructuras mayores: **Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy**. Decorator anade responsabilidades en tiempo de ejecucion sin herencia.",
+      "importance": "alta"
+    }
   ],
   "sections": [
     {
@@ -46,7 +143,12 @@
       "title": null,
       "body_md": "Esta subarea concentra **16 reactivos** y es la mas pesada de toda Area 2. Cubre tres bloques distintos pero relacionados: **principios SOLID** y metricas (acoplamiento, cohesion), **patrones de diseno GoF** y **diseno de datos** (modelo ER, normalizacion, fragmentacion, indices).\n\nLos errores tipicos del EGEL en esta subarea son:\n\n- Confundir **SRP** con \"una clase, un metodo\" (no es eso: es una sola razon de cambio).\n- Mezclar **cohesion** con **acoplamiento** (cohesion es interna al modulo, acoplamiento es entre modulos).\n- Decir que **Singleton** y **Factory** son lo mismo (Singleton garantiza una instancia; Factory crea objetos polimorficos).\n- Saltarse pasos de normalizacion: ir de 1FN a 3FN sin pasar por 2FN o detectar dependencias parciales.\n- Asumir que un indice siempre mejora el rendimiento (no: encarece escrituras y consume espacio).\n\nDomina cada uno de los tres bloques y esta subarea te da casi 8% del examen total."
     },
-    { "type": "concept", "order": 2, "title": "Conceptos clave", "metadata": null },
+    {
+      "type": "concept",
+      "order": 2,
+      "title": "Conceptos clave",
+      "metadata": null
+    },
     {
       "type": "example",
       "order": 3,
@@ -64,13 +166,43 @@
       "order": 5,
       "title": "Los 5 principios SOLID",
       "metadata": {
-        "headers": ["Sigla", "Nombre completo", "Definicion en una linea", "Violacion comun"],
+        "headers": [
+          "Sigla",
+          "Nombre completo",
+          "Definicion en una linea",
+          "Violacion comun"
+        ],
         "rows": [
-          ["SRP", "Single Responsibility Principle", "Una clase = una unica razon para cambiar", "Una clase 'UsuarioService' que registra, envia email, calcula impuestos y exporta PDF"],
-          ["OCP", "Open/Closed Principle", "Abierto a extension, cerrado a modificacion", "Agregar un nuevo tipo de pago editando un switch gigante en lugar de subclase/strategy"],
-          ["LSP", "Liskov Substitution Principle", "Las subclases son sustituibles por la base", "Una clase 'Cuadrado' que hereda de 'Rectangulo' y rompe setLargo/setAncho"],
-          ["ISP", "Interface Segregation Principle", "Muchas interfaces pequenas mejor que una grande", "Una interfaz 'Trabajador' con cocinar(), soldar() y conducir() que obliga a implementar todo"],
-          ["DIP", "Dependency Inversion Principle", "Depender de abstracciones, no de implementaciones", "Una clase 'Reporte' que instancia 'MySQLConnection' directamente con new"]
+          [
+            "SRP",
+            "Single Responsibility Principle",
+            "Una clase = una unica razon para cambiar",
+            "Una clase 'UsuarioService' que registra, envia email, calcula impuestos y exporta PDF"
+          ],
+          [
+            "OCP",
+            "Open/Closed Principle",
+            "Abierto a extension, cerrado a modificacion",
+            "Agregar un nuevo tipo de pago editando un switch gigante en lugar de subclase/strategy"
+          ],
+          [
+            "LSP",
+            "Liskov Substitution Principle",
+            "Las subclases son sustituibles por la base",
+            "Una clase 'Cuadrado' que hereda de 'Rectangulo' y rompe setLargo/setAncho"
+          ],
+          [
+            "ISP",
+            "Interface Segregation Principle",
+            "Muchas interfaces pequenas mejor que una grande",
+            "Una interfaz 'Trabajador' con cocinar(), soldar() y conducir() que obliga a implementar todo"
+          ],
+          [
+            "DIP",
+            "Dependency Inversion Principle",
+            "Depender de abstracciones, no de implementaciones",
+            "Una clase 'Reporte' que instancia 'MySQLConnection' directamente con new"
+          ]
         ]
       }
     },
@@ -80,11 +212,31 @@
       "title": "Herramientas de modelado y disenio de datos",
       "metadata": {
         "tools": [
-          { "name": "MySQL Workbench", "url": "https://www.mysql.com/products/workbench/", "description": "Editor visual de modelos ER con ingenieria directa e inversa contra MySQL/MariaDB." },
-          { "name": "dbdiagram.io", "url": "https://dbdiagram.io/", "description": "Editor de diagramas ER mediante DSL textual. Exporta a SQL, PNG y PDF." },
-          { "name": "ERwin Data Modeler", "url": "https://www.erwin.com/", "description": "Suite empresarial para modelado conceptual, logico y fisico con gobierno de datos." },
-          { "name": "Visual Paradigm", "url": "https://www.visual-paradigm.com/", "description": "Modelado UML y ER con generacion de codigo y trazabilidad de requerimientos." },
-          { "name": "Lucidchart", "url": "https://www.lucidchart.com/", "description": "SaaS colaborativo de diagramas con plantillas ER, UML y arquitectura." }
+          {
+            "name": "MySQL Workbench",
+            "url": "https://www.mysql.com/products/workbench/",
+            "description": "Editor visual de modelos ER con ingenieria directa e inversa contra MySQL/MariaDB."
+          },
+          {
+            "name": "dbdiagram.io",
+            "url": "https://dbdiagram.io/",
+            "description": "Editor de diagramas ER mediante DSL textual. Exporta a SQL, PNG y PDF."
+          },
+          {
+            "name": "ERwin Data Modeler",
+            "url": "https://www.erwin.com/",
+            "description": "Suite empresarial para modelado conceptual, logico y fisico con gobierno de datos."
+          },
+          {
+            "name": "Visual Paradigm",
+            "url": "https://www.visual-paradigm.com/",
+            "description": "Modelado UML y ER con generacion de codigo y trazabilidad de requerimientos."
+          },
+          {
+            "name": "Lucidchart",
+            "url": "https://www.lucidchart.com/",
+            "description": "SaaS colaborativo de diagramas con plantillas ER, UML y arquitectura."
+          }
         ]
       }
     },
@@ -94,36 +246,101 @@
       "title": "Glosario",
       "metadata": {
         "terms": [
-          { "term": "SOLID", "def": "Acronimo de Robert C. Martin que agrupa cinco principios de diseno orientado a objetos: SRP, OCP, LSP, ISP, DIP." },
-          { "term": "GoF", "def": "Gang of Four: Gamma, Helm, Johnson y Vlissides, autores del catalogo de 23 patrones de diseno (1994)." },
-          { "term": "ACID", "def": "Atomicity, Consistency, Isolation, Durability. Garantias de las transacciones relacionales." },
-          { "term": "BASE", "def": "Basically Available, Soft state, Eventual consistency. Modelo de consistencia en sistemas distribuidos NoSQL." },
-          { "term": "1FN", "def": "Atomicidad: cada celda tiene un solo valor." },
-          { "term": "2FN", "def": "Cumple 1FN y elimina dependencias parciales de la clave compuesta." },
-          { "term": "3FN", "def": "Cumple 2FN y elimina dependencias transitivas." },
-          { "term": "BCNF", "def": "Para toda dependencia funcional no trivial, el lado izquierdo es superclave." },
-          { "term": "Foreign key", "def": "Llave foranea: atributo de una tabla que referencia la clave primaria de otra." },
-          { "term": "Indice", "def": "Estructura auxiliar que acelera busquedas en una tabla a costa de escrituras y espacio." },
-          { "term": "View", "def": "Vista: consulta SQL nombrada que se comporta como tabla virtual." },
-          { "term": "Materialized view", "def": "Vista materializada: resultado de una consulta persistido fisicamente y refrescado bajo demanda." },
-          { "term": "Cohesion", "def": "Que tan relacionadas estan las responsabilidades dentro de un modulo. Mas cohesion = mejor diseno." },
-          { "term": "Acoplamiento", "def": "Que tan dependientes son los modulos entre si. Menos acoplamiento = mejor diseno." }
+          {
+            "term": "SOLID",
+            "def": "Acronimo de Robert C. Martin que agrupa cinco principios de diseno orientado a objetos: SRP, OCP, LSP, ISP, DIP."
+          },
+          {
+            "term": "GoF",
+            "def": "Gang of Four: Gamma, Helm, Johnson y Vlissides, autores del catalogo de 23 patrones de diseno (1994)."
+          },
+          {
+            "term": "ACID",
+            "def": "Atomicity, Consistency, Isolation, Durability. Garantias de las transacciones relacionales."
+          },
+          {
+            "term": "BASE",
+            "def": "Basically Available, Soft state, Eventual consistency. Modelo de consistencia en sistemas distribuidos NoSQL."
+          },
+          {
+            "term": "1FN",
+            "def": "Atomicidad: cada celda tiene un solo valor."
+          },
+          {
+            "term": "2FN",
+            "def": "Cumple 1FN y elimina dependencias parciales de la clave compuesta."
+          },
+          {
+            "term": "3FN",
+            "def": "Cumple 2FN y elimina dependencias transitivas."
+          },
+          {
+            "term": "BCNF",
+            "def": "Para toda dependencia funcional no trivial, el lado izquierdo es superclave."
+          },
+          {
+            "term": "Foreign key",
+            "def": "Llave foranea: atributo de una tabla que referencia la clave primaria de otra."
+          },
+          {
+            "term": "Indice",
+            "def": "Estructura auxiliar que acelera busquedas en una tabla a costa de escrituras y espacio."
+          },
+          {
+            "term": "View",
+            "def": "Vista: consulta SQL nombrada que se comporta como tabla virtual."
+          },
+          {
+            "term": "Materialized view",
+            "def": "Vista materializada: resultado de una consulta persistido fisicamente y refrescado bajo demanda."
+          },
+          {
+            "term": "Cohesion",
+            "def": "Que tan relacionadas estan las responsabilidades dentro de un modulo. Mas cohesion = mejor diseno."
+          },
+          {
+            "term": "Acoplamiento",
+            "def": "Que tan dependientes son los modulos entre si. Menos acoplamiento = mejor diseno."
+          }
         ]
       }
     },
-    { "type": "quick_quiz", "order": 8, "title": "Quick Quiz", "metadata": null },
+    {
+      "type": "quick_quiz",
+      "order": 8,
+      "title": "Quick Quiz",
+      "metadata": null
+    },
     {
       "type": "references",
       "order": 9,
       "title": "Referencias",
       "metadata": {
         "refs": [
-          { "title": "Gamma, Helm, Johnson, Vlissides — Design Patterns: Elements of Reusable OO Software (1994)", "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns/P200000009480" },
-          { "title": "Robert C. Martin — Clean Architecture", "url": "https://www.pearson.com/en-us/subject-catalog/p/clean-architecture/P200000009450" },
-          { "title": "Codd — A Relational Model of Data for Large Shared Data Banks (CACM, 1970)", "url": "https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf" },
-          { "title": "Hibernate ORM Documentation", "url": "https://hibernate.org/orm/documentation/" },
-          { "title": "PostgreSQL — Indexes Documentation", "url": "https://www.postgresql.org/docs/current/indexes.html" },
-          { "title": "Refactoring Guru — Design Patterns (catalogo visual)", "url": "https://refactoring.guru/design-patterns" }
+          {
+            "title": "Gamma, Helm, Johnson, Vlissides — Design Patterns: Elements of Reusable OO Software (1994)",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns/P200000009480"
+          },
+          {
+            "title": "Robert C. Martin — Clean Architecture",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/clean-architecture/P200000009450"
+          },
+          {
+            "title": "Codd — A Relational Model of Data for Large Shared Data Banks (CACM, 1970)",
+            "url": "https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf"
+          },
+          {
+            "title": "Hibernate ORM Documentation",
+            "url": "https://hibernate.org/orm/documentation/"
+          },
+          {
+            "title": "PostgreSQL — Indexes Documentation",
+            "url": "https://www.postgresql.org/docs/current/indexes.html"
+          },
+          {
+            "title": "Refactoring Guru — Design Patterns (catalogo visual)",
+            "url": "https://refactoring.guru/design-patterns"
+          }
         ]
       }
     }
