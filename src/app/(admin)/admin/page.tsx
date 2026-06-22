@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileQuestion, BookOpen, Users, Upload, Plus, Sparkles } from 'lucide-react'
+import { FileQuestion, BookOpen, Users, Upload, Plus, Sparkles, GraduationCap } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -46,6 +46,7 @@ export default async function AdminHomePage() {
           <ActionCard href="/admin/questions/new" icon={Plus} title="Nueva pregunta" description="Crear una pregunta nueva en el banco." />
           <ActionCard href="/admin/questions/import" icon={Upload} title="Importar XLSX" description="Cargar preguntas desde archivo Excel." />
           <ActionCard href="/admin/guides/new" icon={BookOpen} title="Nueva guia" description="Escribir una guia de estudio en Markdown." />
+          <ActionCard href="/admin/exams/new" icon={GraduationCap} title="Nuevo examen" description="Crear un EGEL nuevo con sus areas y subareas." />
         </div>
       </section>
     </div>

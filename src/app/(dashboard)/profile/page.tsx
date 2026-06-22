@@ -11,6 +11,7 @@ import { ChangePasswordForm } from '@/modules/auth/components/ChangePasswordForm
 import { DangerZone } from '@/modules/auth/components/DangerZone'
 import { NotificationPrefsForm } from '@/modules/auth/components/NotificationPrefsForm'
 import { ExportQuestionsButton } from '@/modules/auth/components/ExportQuestionsButton'
+import { ExamSwitcher } from '@/modules/auth/components/ExamSwitcher'
 
 export const metadata = { title: 'Perfil' }
 
@@ -30,6 +31,13 @@ export default async function ProfilePage() {
   // Posicion en ranking (XP)
   const { data: rankData } = await supabase.rpc('get_my_rank', { p_user_id: user.id, p_sort_by: 'xp' })
   const myRank = (rankData?.[0] as { rank: number; total_players: number } | undefined) ?? { rank: 0, total_players: 0 }
+
+  // Examenes disponibles para el selector de examen activo
+  const { data: activeExams } = await supabase
+    .from('exams')
+    .select('id, name, code')
+    .eq('is_active', true)
+    .order('created_at', { ascending: true })
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -76,6 +84,14 @@ export default async function ProfilePage() {
         <h2 className="mb-1 text-lg font-semibold">Datos personales</h2>
         <p className="mb-5 text-sm text-muted-foreground">Tu nombre, universidad y meta de estudio.</p>
         <ProfileForm profile={profile} />
+      </GlassCard>
+
+      <GlassCard variant="elevated" padding="lg">
+        <h2 className="mb-1 flex items-center gap-2 text-lg font-semibold">Examen objetivo</h2>
+        <p className="mb-5 text-sm text-muted-foreground">
+          Elige el examen que estas preparando. Determina tus preguntas, simulacro y progreso.
+        </p>
+        <ExamSwitcher exams={activeExams ?? []} activeExamId={profile.active_exam_id} />
       </GlassCard>
 
       <GlassCard variant="elevated" padding="lg">
