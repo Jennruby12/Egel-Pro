@@ -56,6 +56,7 @@ export type Database = {
         Row: {
           area: number
           area_name: string
+          exam_id: string | null
           expected_questions: number
           section: string
           subarea: number
@@ -64,6 +65,7 @@ export type Database = {
         Insert: {
           area: number
           area_name: string
+          exam_id?: string | null
           expected_questions: number
           section: string
           subarea: number
@@ -72,12 +74,21 @@ export type Database = {
         Update: {
           area?: number
           area_name?: string
+          exam_id?: string | null
           expected_questions?: number
           section?: string
           subarea?: number
           subarea_name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "areas_catalog_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       email_logs: {
         Row: {
@@ -111,11 +122,136 @@ export type Database = {
           },
         ]
       }
+      exam_areas: {
+        Row: {
+          area_num: number
+          color: string | null
+          color_class: string | null
+          exam_id: string
+          id: string
+          name: string
+          section: string
+          total_questions: number
+        }
+        Insert: {
+          area_num: number
+          color?: string | null
+          color_class?: string | null
+          exam_id: string
+          id?: string
+          name: string
+          section: string
+          total_questions?: number
+        }
+        Update: {
+          area_num?: number
+          color?: string | null
+          color_class?: string | null
+          exam_id?: string
+          id?: string
+          name?: string
+          section?: string
+          total_questions?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exam_areas_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exam_subareas: {
+        Row: {
+          exam_area_id: string
+          id: string
+          name: string
+          questions: number
+          subarea_num: number
+        }
+        Insert: {
+          exam_area_id: string
+          id?: string
+          name: string
+          questions?: number
+          subarea_num: number
+        }
+        Update: {
+          exam_area_id?: string
+          id?: string
+          name?: string
+          questions?: number
+          subarea_num?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exam_subareas_exam_area_id_fkey"
+            columns: ["exam_area_id"]
+            isOneToOne: false
+            referencedRelation: "exam_areas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exams: {
+        Row: {
+          code: string
+          created_at: string | null
+          disciplinar_questions: number
+          id: string
+          is_active: boolean
+          name: string
+          options_per_question: number
+          pilot_pct: number
+          session_seconds: number
+          sessions: number
+          slug: string
+          thresholds: Json
+          total_questions: number
+          transversal_questions: number
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          disciplinar_questions?: number
+          id?: string
+          is_active?: boolean
+          name: string
+          options_per_question?: number
+          pilot_pct?: number
+          session_seconds?: number
+          sessions?: number
+          slug: string
+          thresholds?: Json
+          total_questions?: number
+          transversal_questions?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          disciplinar_questions?: number
+          id?: string
+          is_active?: boolean
+          name?: string
+          options_per_question?: number
+          pilot_pct?: number
+          session_seconds?: number
+          sessions?: number
+          slug?: string
+          thresholds?: Json
+          total_questions?: number
+          transversal_questions?: number
+        }
+        Relationships: []
+      }
       flashcards: {
         Row: {
           area: number
           back: string
           created_at: string | null
+          exam_id: string | null
           front: string
           id: string
           is_active: boolean | null
@@ -127,6 +263,7 @@ export type Database = {
           area: number
           back: string
           created_at?: string | null
+          exam_id?: string | null
           front: string
           id?: string
           is_active?: boolean | null
@@ -138,6 +275,7 @@ export type Database = {
           area?: number
           back?: string
           created_at?: string | null
+          exam_id?: string | null
           front?: string
           id?: string
           is_active?: boolean | null
@@ -146,6 +284,13 @@ export type Database = {
           subarea?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "flashcards_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "flashcards_study_guide_id_fkey"
             columns: ["study_guide_id"]
@@ -245,6 +390,7 @@ export type Database = {
           created_at: string | null
           difficulty: string | null
           estimated_minutes: number | null
+          exam_id: string | null
           id: string
           order_in_area: number | null
           published: boolean | null
@@ -264,6 +410,7 @@ export type Database = {
           created_at?: string | null
           difficulty?: string | null
           estimated_minutes?: number | null
+          exam_id?: string | null
           id?: string
           order_in_area?: number | null
           published?: boolean | null
@@ -283,6 +430,7 @@ export type Database = {
           created_at?: string | null
           difficulty?: string | null
           estimated_minutes?: number | null
+          exam_id?: string | null
           id?: string
           order_in_area?: number | null
           published?: boolean | null
@@ -295,7 +443,15 @@ export type Database = {
           updated_at?: string | null
           weight_in_exam?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "guides_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -385,6 +541,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          active_exam_id: string | null
           avatar_url: string | null
           created_at: string | null
           diagnostic_score: Json | null
@@ -410,6 +567,7 @@ export type Database = {
           xp_total: number | null
         }
         Insert: {
+          active_exam_id?: string | null
           avatar_url?: string | null
           created_at?: string | null
           diagnostic_score?: Json | null
@@ -435,6 +593,7 @@ export type Database = {
           xp_total?: number | null
         }
         Update: {
+          active_exam_id?: string | null
           avatar_url?: string | null
           created_at?: string | null
           diagnostic_score?: Json | null
@@ -460,6 +619,13 @@ export type Database = {
           xp_total?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "profiles_active_exam_id_fkey"
+            columns: ["active_exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profiles_organization_id_fkey"
             columns: ["organization_id"]
@@ -565,6 +731,7 @@ export type Database = {
           created_by: string | null
           diagram: string | null
           difficulty: string | null
+          exam_id: string | null
           explanation: string | null
           id: string
           image_url: string | null
@@ -599,6 +766,7 @@ export type Database = {
           created_by?: string | null
           diagram?: string | null
           difficulty?: string | null
+          exam_id?: string | null
           explanation?: string | null
           id?: string
           image_url?: string | null
@@ -633,6 +801,7 @@ export type Database = {
           created_by?: string | null
           diagram?: string | null
           difficulty?: string | null
+          exam_id?: string | null
           explanation?: string | null
           id?: string
           image_url?: string | null
@@ -665,6 +834,13 @@ export type Database = {
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "questions_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
             referencedColumns: ["id"]
           },
           {
@@ -732,6 +908,7 @@ export type Database = {
           areas: number[] | null
           correct_answers: number | null
           estimated_level: string | null
+          exam_id: string | null
           finished_at: string | null
           id: string
           last_question_index: number | null
@@ -755,6 +932,7 @@ export type Database = {
           areas?: number[] | null
           correct_answers?: number | null
           estimated_level?: string | null
+          exam_id?: string | null
           finished_at?: string | null
           id?: string
           last_question_index?: number | null
@@ -778,6 +956,7 @@ export type Database = {
           areas?: number[] | null
           correct_answers?: number | null
           estimated_level?: string | null
+          exam_id?: string | null
           finished_at?: string | null
           id?: string
           last_question_index?: number | null
@@ -799,6 +978,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "quiz_sessions_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "quiz_sessions_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -812,6 +998,7 @@ export type Database = {
           body: string
           created_at: string | null
           created_by: string | null
+          exam_id: string | null
           id: string
           is_active: boolean | null
           subarea_context: string
@@ -822,6 +1009,7 @@ export type Database = {
           body: string
           created_at?: string | null
           created_by?: string | null
+          exam_id?: string | null
           id?: string
           is_active?: boolean | null
           subarea_context: string
@@ -832,6 +1020,7 @@ export type Database = {
           body?: string
           created_at?: string | null
           created_by?: string | null
+          exam_id?: string | null
           id?: string
           is_active?: boolean | null
           subarea_context?: string
@@ -844,6 +1033,13 @@ export type Database = {
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stimuli_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
             referencedColumns: ["id"]
           },
         ]
@@ -890,6 +1086,7 @@ export type Database = {
           content: string
           created_at: string | null
           created_by: string | null
+          exam_id: string | null
           id: string
           is_deleted: boolean | null
           is_published: boolean | null
@@ -907,6 +1104,7 @@ export type Database = {
           content: string
           created_at?: string | null
           created_by?: string | null
+          exam_id?: string | null
           id?: string
           is_deleted?: boolean | null
           is_published?: boolean | null
@@ -924,6 +1122,7 @@ export type Database = {
           content?: string
           created_at?: string | null
           created_by?: string | null
+          exam_id?: string | null
           id?: string
           is_deleted?: boolean | null
           is_published?: boolean | null
@@ -941,6 +1140,13 @@ export type Database = {
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_guides_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
             referencedColumns: ["id"]
           },
         ]
@@ -1083,6 +1289,7 @@ export type Database = {
         Row: {
           accuracy_percent: number | null
           area: number
+          exam_id: string | null
           id: string
           last_practiced: string | null
           mastery_level: string | null
@@ -1094,6 +1301,7 @@ export type Database = {
         Insert: {
           accuracy_percent?: number | null
           area: number
+          exam_id?: string | null
           id?: string
           last_practiced?: string | null
           mastery_level?: string | null
@@ -1105,6 +1313,7 @@ export type Database = {
         Update: {
           accuracy_percent?: number | null
           area?: number
+          exam_id?: string | null
           id?: string
           last_practiced?: string | null
           mastery_level?: string | null
@@ -1114,6 +1323,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "user_progress_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "user_progress_user_id_fkey"
             columns: ["user_id"]
