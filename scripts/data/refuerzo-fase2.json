@@ -1,0 +1,221 @@
+[
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2, "subarea_name": "Calidad de software",
+    "question_text": "En el modelo de calidad de McCall, los factores se agrupan en tres perspectivas. ¿En cual de ellas se ubica la mantenibilidad?",
+    "option_a": "Operacion del producto", "option_b": "Revision del producto", "option_c": "Transicion del producto",
+    "correct_answer": "b",
+    "explanation": "McCall agrupa los factores en Operacion (correccion, fiabilidad, eficiencia, integridad, usabilidad), Revision (mantenibilidad, flexibilidad, facilidad de prueba) y Transicion (portabilidad, reusabilidad, interoperabilidad). La mantenibilidad pertenece a la Revision del producto.",
+    "difficulty": "medium", "tags": ["mccall", "calidad", "modelo-calidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2, "subarea_name": "Calidad de software",
+    "question_text": "¿Cual de los siguientes factores de calidad del modelo de McCall corresponde a la perspectiva de Operacion del producto?",
+    "option_a": "Portabilidad", "option_b": "Reusabilidad", "option_c": "Usabilidad",
+    "correct_answer": "c",
+    "explanation": "La usabilidad (facilidad de uso) es un factor de Operacion del producto. La portabilidad y la reusabilidad pertenecen a la perspectiva de Transicion.",
+    "difficulty": "easy", "tags": ["mccall", "calidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2, "subarea_name": "Calidad de software",
+    "question_text": "Six Sigma busca reducir la variabilidad de los procesos hasta un nivel de defectos no mayor a:",
+    "option_a": "3.4 defectos por millon de oportunidades (DPMO)", "option_b": "34 defectos por millon de oportunidades", "option_c": "3.4 defectos por cada mil unidades",
+    "correct_answer": "a",
+    "explanation": "Un proceso Six Sigma opera con un maximo de 3.4 defectos por millon de oportunidades (DPMO), equivalente a un nivel de calidad del 99.99966%.",
+    "difficulty": "medium", "tags": ["six-sigma", "calidad", "dpmo"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2, "subarea_name": "Calidad de software",
+    "question_text": "¿Cual es la secuencia correcta de fases de la metodologia DMAIC de Six Sigma?",
+    "option_a": "Disenar-Medir-Analizar-Implementar-Controlar", "option_b": "Definir-Medir-Analizar-Mejorar-Controlar", "option_c": "Definir-Modelar-Auditar-Mejorar-Cerrar",
+    "correct_answer": "b",
+    "explanation": "DMAIC = Definir, Medir, Analizar, Mejorar (Improve) y Controlar. Es el ciclo de mejora de procesos existentes en Six Sigma.",
+    "difficulty": "medium", "tags": ["six-sigma", "dmaic", "calidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 2, "subarea_name": "Calidad de software",
+    "question_text": "El modelo de calidad de Boehm organiza las caracteristicas en torno a la utilidad general del software. ¿Cual de estas es una de sus caracteristicas de alto nivel?",
+    "option_a": "Facilidad de mantenimiento (maintainability)", "option_b": "Cobertura de pruebas unitarias", "option_c": "Numero de lineas de codigo",
+    "correct_answer": "a",
+    "explanation": "Boehm define caracteristicas de alto nivel como utilidad tal cual (as-is utility), facilidad de mantenimiento (maintainability) y portabilidad, descompuestas en caracteristicas intermedias y primitivas.",
+    "difficulty": "hard", "tags": ["boehm", "calidad", "modelo-calidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "Un proyecto pequeno, con un equipo experimentado y requisitos poco rigidos, se estima mejor con COCOMO en su modo:",
+    "option_a": "Organico", "option_b": "Semiacoplado (semidetached)", "option_c": "Empotrado (embedded)",
+    "correct_answer": "a",
+    "explanation": "El modo organico de COCOMO aplica a proyectos relativamente pequenos, con equipos experimentados y requisitos flexibles. El empotrado es para sistemas con restricciones rigidas de hardware/software.",
+    "difficulty": "medium", "tags": ["cocomo", "estimacion", "costos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "En COCOMO basico, el esfuerzo del proyecto se calcula como E = a*(KLDC)^b y se expresa en:",
+    "option_a": "Lineas de codigo", "option_b": "Personas-mes (persona-mes)", "option_c": "Dias calendario",
+    "correct_answer": "b",
+    "explanation": "COCOMO estima el esfuerzo en personas-mes a partir de los miles de lineas de codigo (KLDC). El tiempo de desarrollo se calcula despues con otra ecuacion.",
+    "difficulty": "medium", "tags": ["cocomo", "estimacion", "persona-mes"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "¿Cual de los siguientes NO es un componente del conteo de Puntos de Funcion?",
+    "option_a": "Entradas externas (EI)", "option_b": "Archivos logicos internos (ILF)", "option_c": "Lineas de codigo fuente (SLOC)",
+    "correct_answer": "c",
+    "explanation": "Los puntos de funcion miden la funcionalidad con cinco componentes: entradas externas (EI), salidas externas (EO), consultas externas (EQ), archivos logicos internos (ILF) y archivos de interfaz externos (EIF). Las lineas de codigo son una metrica distinta (LDC/SLOC).",
+    "difficulty": "medium", "tags": ["puntos-de-funcion", "estimacion", "metricas"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "En PERT, el tiempo esperado de una actividad con tiempo optimista O=2, mas probable M=5 y pesimista P=14 es:",
+    "option_a": "6", "option_b": "7", "option_c": "5",
+    "correct_answer": "a",
+    "explanation": "PERT usa te = (O + 4M + P) / 6 = (2 + 20 + 14) / 6 = 36/6 = 6 unidades de tiempo.",
+    "difficulty": "medium", "tags": ["pert", "estimacion", "tiempos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "Observa la red de actividades (con su duracion en dias). ¿Cual es la duracion de la ruta critica?",
+    "diagram": "flowchart LR\n  A[Inicio] --> B[B: 3d]\n  A --> C[C: 2d]\n  B --> D[D: 5d]\n  C --> D\n  D --> E[E: 8d]\n  C --> F[F: 4d]\n  F --> E\n  E --> G[Fin]",
+    "option_a": "16 dias", "option_b": "14 dias", "option_c": "13 dias",
+    "correct_answer": "a",
+    "explanation": "Rutas: A-B-D-E = 3+5+8 = 16; A-C-D-E = 2+5+8 = 15; A-C-F-E = 2+4+8 = 14. La ruta critica es la mas larga: 16 dias (A-B-D-E).",
+    "difficulty": "hard", "tags": ["pert", "ruta-critica", "tiempos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "Si la productividad del equipo es de 500 lineas de codigo por persona-mes y el proyecto se estima en 30,000 lineas a entregar en 10 meses, ¿cuantas personas se requieren aproximadamente?",
+    "option_a": "6 personas", "option_b": "3 personas", "option_c": "60 personas",
+    "correct_answer": "a",
+    "explanation": "Esfuerzo = 30,000 / 500 = 60 personas-mes. Personas = 60 personas-mes / 10 meses = 6 personas.",
+    "difficulty": "hard", "tags": ["estimacion", "lineas-de-codigo", "recursos-humanos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 4, "area_name": "Gestion de Proyectos de Software",
+    "subarea": 1, "subarea_name": "Gestion de tiempos, costos, recursos humanos y de riesgo",
+    "question_text": "Un equipo de 5 personas produjo 20,000 lineas de codigo en 4 meses. ¿Cual es su productividad por persona-mes?",
+    "option_a": "1,000 LDC por persona-mes", "option_b": "4,000 LDC por persona-mes", "option_c": "5,000 LDC por persona-mes",
+    "correct_answer": "a",
+    "explanation": "Esfuerzo = 5 personas x 4 meses = 20 personas-mes. Productividad = 20,000 / 20 = 1,000 lineas por persona-mes.",
+    "difficulty": "medium", "tags": ["estimacion", "productividad", "lineas-de-codigo"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 2, "area_name": "Diseno de Sistemas de Software",
+    "subarea": 2, "subarea_name": "Diseno de modulos, componentes y de datos",
+    "question_text": "¿Cual de los siguientes patrones GoF es un patron ESTRUCTURAL?",
+    "option_a": "Observer", "option_b": "Adapter", "option_c": "Factory Method",
+    "correct_answer": "b",
+    "explanation": "Adapter es estructural (junto a Bridge, Composite, Decorator, Facade, Flyweight, Proxy). Observer es de comportamiento y Factory Method es creacional.",
+    "difficulty": "medium", "tags": ["patrones", "gof", "estructural"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 2, "area_name": "Diseno de Sistemas de Software",
+    "subarea": 2, "subarea_name": "Diseno de modulos, componentes y de datos",
+    "question_text": "¿Que patron estructural permite agregar responsabilidades a un objeto de forma dinamica, sin alterar su clase ni usar herencia?",
+    "option_a": "Decorator", "option_b": "Singleton", "option_c": "Strategy",
+    "correct_answer": "a",
+    "explanation": "Decorator envuelve un objeto para anadirle comportamiento en tiempo de ejecucion, respetando la misma interfaz. Singleton es creacional y Strategy es de comportamiento.",
+    "difficulty": "medium", "tags": ["patrones", "gof", "decorator", "estructural"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 2, "area_name": "Diseno de Sistemas de Software",
+    "subarea": 1, "subarea_name": "Diseno arquitectonico de software",
+    "question_text": "¿Cual es el proposito principal del metodo ATAM (Architecture Tradeoff Analysis Method)?",
+    "option_a": "Evaluar una arquitectura frente a sus atributos de calidad e identificar riesgos y puntos de compromiso (tradeoffs)", "option_b": "Generar automaticamente el codigo a partir del diagrama de clases", "option_c": "Medir la cobertura de pruebas del sistema",
+    "correct_answer": "a",
+    "explanation": "ATAM evalua decisiones arquitectonicas contra escenarios de atributos de calidad (rendimiento, modificabilidad, seguridad...) y expone sensibilidades, tradeoffs y riesgos.",
+    "difficulty": "hard", "tags": ["atam", "arquitectura", "atributos-calidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 2, "area_name": "Diseno de Sistemas de Software",
+    "subarea": 1, "subarea_name": "Diseno arquitectonico de software",
+    "question_text": "En el patron arquitectonico MVC, ¿cual es la responsabilidad del Controlador?",
+    "option_a": "Almacenar los datos y la logica de negocio", "option_b": "Recibir la entrada del usuario y coordinar el Modelo y la Vista", "option_c": "Renderizar la interfaz que ve el usuario",
+    "correct_answer": "b",
+    "explanation": "El Controlador interpreta la entrada del usuario, actualiza el Modelo y selecciona la Vista. El Modelo guarda datos/logica y la Vista presenta la informacion.",
+    "difficulty": "easy", "tags": ["mvc", "arquitectura", "patrones"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 3, "area_name": "Desarrollo de Sistemas de Software",
+    "subarea": 1, "subarea_name": "Lenguajes de desarrollo de software",
+    "question_text": "¿Cual es la complejidad temporal del acceso a un elemento por su indice en un arreglo (array)?",
+    "option_a": "O(1)", "option_b": "O(n)", "option_c": "O(log n)",
+    "correct_answer": "a",
+    "explanation": "El acceso por indice en un arreglo es O(1) (tiempo constante) porque la direccion se calcula directamente. La busqueda de un valor no indexado si seria O(n).",
+    "difficulty": "easy", "tags": ["arreglos", "estructuras-de-datos", "complejidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 3, "area_name": "Desarrollo de Sistemas de Software",
+    "subarea": 1, "subarea_name": "Lenguajes de desarrollo de software",
+    "question_text": "En un arbol binario de busqueda balanceado, la complejidad promedio de buscar un elemento es:",
+    "option_a": "O(n)", "option_b": "O(log n)", "option_c": "O(1)",
+    "correct_answer": "b",
+    "explanation": "En un ABB balanceado la altura es logaritmica, por lo que la busqueda promedio es O(log n). Si el arbol se degenera (no balanceado) puede caer a O(n).",
+    "difficulty": "medium", "tags": ["arboles", "estructuras-de-datos", "complejidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 3, "area_name": "Desarrollo de Sistemas de Software",
+    "subarea": 4, "subarea_name": "Gestion de datos",
+    "question_text": "¿Que tipo de dependencias elimina la Tercera Forma Normal (3FN)?",
+    "option_a": "Dependencias parciales de la clave", "option_b": "Dependencias transitivas entre atributos no clave", "option_c": "Dependencias multivaluadas",
+    "correct_answer": "b",
+    "explanation": "La 3FN exige que ningun atributo no clave dependa transitivamente de la clave primaria. La 2FN es la que elimina las dependencias parciales; las multivaluadas las trata la 4FN.",
+    "difficulty": "medium", "tags": ["normalizacion", "bases-de-datos", "3fn"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 3, "area_name": "Desarrollo de Sistemas de Software",
+    "subarea": 4, "subarea_name": "Gestion de datos",
+    "question_text": "Dividir una tabla muy grande en fragmentos por rangos de filas (por ejemplo, por anio) corresponde a un particionamiento:",
+    "option_a": "Horizontal", "option_b": "Vertical", "option_c": "Funcional",
+    "correct_answer": "a",
+    "explanation": "El particionamiento horizontal divide por filas (cada particion tiene el mismo esquema, distinto subconjunto de registros). El vertical divide por columnas/atributos.",
+    "difficulty": "medium", "tags": ["particionamiento", "bases-de-datos", "escalabilidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 1, "area_name": "Analisis de Sistemas de Software",
+    "subarea": 3, "subarea_name": "Tecnicas y herramientas de documentacion de requerimientos",
+    "question_text": "Observa el diagrama de clases. ¿Que indica la relacion entre Cliente y Pedido?",
+    "diagram": "classDiagram\n  class Cliente {\n    +String nombre\n    +String email\n    +registrar()\n  }\n  class Pedido {\n    +int folio\n    +Date fecha\n    +calcularTotal() float\n  }\n  Cliente \"1\" --> \"*\" Pedido : realiza",
+    "option_a": "Un pedido pertenece exactamente a un cliente y un cliente no puede tener pedidos", "option_b": "Un cliente puede realizar muchos pedidos (asociacion uno a muchos)", "option_c": "Cliente hereda de Pedido",
+    "correct_answer": "b",
+    "explanation": "La multiplicidad 1 --> * indica una asociacion uno a muchos: un Cliente puede realizar muchos Pedidos. No es herencia (seria una flecha con triangulo) ni composicion.",
+    "difficulty": "medium", "tags": ["uml", "diagrama-de-clases", "multiplicidad"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 1, "area_name": "Analisis de Sistemas de Software",
+    "subarea": 3, "subarea_name": "Tecnicas y herramientas de documentacion de requerimientos",
+    "question_text": "En el diagrama de clases anterior, calcularTotal() float representa:",
+    "diagram": "classDiagram\n  class Pedido {\n    +int folio\n    +Date fecha\n    +calcularTotal() float\n  }",
+    "option_a": "Un atributo de la clase Pedido", "option_b": "Un metodo (operacion) que devuelve un float", "option_c": "Una relacion de herencia",
+    "correct_answer": "b",
+    "explanation": "Los elementos con parentesis () en un diagrama de clases UML son metodos/operaciones; el tipo despues del parentesis es el valor de retorno. folio y fecha son atributos.",
+    "difficulty": "easy", "tags": ["uml", "diagrama-de-clases", "metodos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 1, "area_name": "Analisis de Sistemas de Software",
+    "subarea": 2, "subarea_name": "Tecnicas y herramientas para obtencion, analisis, priorizacion y validacion",
+    "question_text": "En la tecnica de priorizacion MoSCoW, clasificar un requisito como 'Must have' significa que:",
+    "option_a": "Es deseable pero puede quedar para una version futura", "option_b": "Es imprescindible para esta entrega; sin el, la entrega fracasa", "option_c": "Solo se incluira si sobra tiempo",
+    "correct_answer": "b",
+    "explanation": "MoSCoW: Must (imprescindible para esta entrega), Should (importante pero no critico), Could (deseable si hay tiempo) y Won't (fuera de alcance por ahora).",
+    "difficulty": "easy", "tags": ["moscow", "priorizacion", "requerimientos"], "is_pilot": true, "is_active": false
+  },
+  {
+    "section": "disciplinar", "area": 1, "area_name": "Analisis de Sistemas de Software",
+    "subarea": 1, "subarea_name": "Tipos de requerimientos",
+    "question_text": "Un requisito redactado de forma que pueda comprobarse objetivamente mediante una prueba o medicion cumple la caracteristica de ser:",
+    "option_a": "Verificable", "option_b": "Ambiguo", "option_c": "Volatil",
+    "correct_answer": "a",
+    "explanation": "Un buen requisito es verificable: existe un metodo finito y objetivo (prueba, inspeccion, medicion) para confirmar que el sistema lo cumple. La ambiguedad y la volatilidad son propiedades indeseables.",
+    "difficulty": "easy", "tags": ["caracteristicas-requerimientos", "verificable", "calidad-requerimientos"], "is_pilot": true, "is_active": false
+  }
+]

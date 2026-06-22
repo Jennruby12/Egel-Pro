@@ -126,6 +126,9 @@ const toInsert = data
     is_pilot: q.is_pilot || false,
     is_active: q.is_active !== false,
     stimulus_id: q.stimulus_id || null,
+    image_url: q.image_url || null,
+    diagram: q.diagram || null,
+    tags: Array.isArray(q.tags) ? q.tags : [],
   }))
 
 console.log(`  ${toInsert.length} nuevas (${data.length - toInsert.length} duplicadas omitidas)`)
