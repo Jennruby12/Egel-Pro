@@ -9,6 +9,7 @@ import { InstallPWABanner } from '@/components/shared/InstallPWABanner'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { XPGainPortal } from '@/modules/gamification/components/XPGainFloater'
 import { StreakTouch } from '@/modules/gamification/components/StreakTouch'
+import { OfflineSyncManager } from '@/modules/quiz/components/OfflineSyncManager'
 import type { Role } from '@/types/global'
 
 export default async function DashboardLayout({
@@ -70,6 +71,8 @@ export default async function DashboardLayout({
           <XPGainPortal />
           {/* Racha estilo TikTok: cada visita diaria mantiene viva la racha. */}
           <StreakTouch />
+          {/* Sube sesiones hechas offline y auto-actualiza el banco al reconectar. */}
+          <OfflineSyncManager />
         </div>
       </div>
     </div>

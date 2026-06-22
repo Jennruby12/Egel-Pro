@@ -62,6 +62,10 @@ export function offlineSessionsCount(): number {
   return readOfflineSessions().length
 }
 
+export function removeOfflineSession(id: string): void {
+  writeOfflineSessions(readOfflineSessions().filter((s) => s.id !== id))
+}
+
 export function clearOfflineSessions(): void {
   writeOfflineSessions([])
 }
