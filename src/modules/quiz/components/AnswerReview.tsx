@@ -6,6 +6,7 @@ import { Check, X, MinusCircle, ChevronDown } from 'lucide-react'
 import { GlassCard } from '@/components/ui/glass-card'
 import { cn } from '@/lib/utils/cn'
 import { QuestionFeedbackChips } from './QuestionFeedbackChips'
+import { OptionMedia } from './OptionMedia'
 
 export type ReviewItem = {
   questionId: string
@@ -17,6 +18,12 @@ export type ReviewItem = {
   optionA: string
   optionB: string
   optionC: string
+  optionAImage?: string | null
+  optionBImage?: string | null
+  optionCImage?: string | null
+  optionADiagram?: string | null
+  optionBDiagram?: string | null
+  optionCDiagram?: string | null
   correctAnswer: 'a' | 'b' | 'c'
   userAnswer: 'a' | 'b' | 'c' | null
   isCorrect: boolean | null
@@ -46,10 +53,15 @@ export function AnswerReview({ items }: AnswerReviewProps) {
 function ReviewRow({ item, index }: { item: ReviewItem; index: number }) {
   const [open, setOpen] = useState(false)
 
-  const options: Array<{ label: 'a' | 'b' | 'c'; text: string }> = [
-    { label: 'a', text: item.optionA },
-    { label: 'b', text: item.optionB },
-    { label: 'c', text: item.optionC },
+  const options: Array<{
+    label: 'a' | 'b' | 'c'
+    text: string
+    image?: string | null
+    diagram?: string | null
+  }> = [
+    { label: 'a', text: item.optionA, image: item.optionAImage, diagram: item.optionADiagram },
+    { label: 'b', text: item.optionB, image: item.optionBImage, diagram: item.optionBDiagram },
+    { label: 'c', text: item.optionC, image: item.optionCImage, diagram: item.optionCDiagram },
   ]
 
   const status: 'skipped' | 'correct' | 'incorrect' =
@@ -164,7 +176,10 @@ function ReviewRow({ item, index }: { item: ReviewItem; index: number }) {
                       >
                         {opt.label}
                       </span>
-                      <span className="flex-1 leading-relaxed">{opt.text}</span>
+                      <span className="min-w-0 flex-1 leading-relaxed">
+                        {opt.text}
+                        <OptionMedia image={opt.image} diagram={opt.diagram} />
+                      </span>
                       {isCorrectOpt ? (
                         <span className="ml-auto text-xs font-medium text-success">
                           Correcta

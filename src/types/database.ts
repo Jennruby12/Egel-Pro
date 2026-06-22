@@ -572,8 +572,14 @@ export type Database = {
           is_deleted: boolean | null
           is_pilot: boolean | null
           option_a: string
+          option_a_diagram: string | null
+          option_a_image: string | null
           option_b: string
+          option_b_diagram: string | null
+          option_b_image: string | null
           option_c: string
+          option_c_diagram: string | null
+          option_c_image: string | null
           question_text: string
           section: string
           stimulus_id: string | null
@@ -600,8 +606,14 @@ export type Database = {
           is_deleted?: boolean | null
           is_pilot?: boolean | null
           option_a: string
+          option_a_diagram?: string | null
+          option_a_image?: string | null
           option_b: string
+          option_b_diagram?: string | null
+          option_b_image?: string | null
           option_c: string
+          option_c_diagram?: string | null
+          option_c_image?: string | null
           question_text: string
           section: string
           stimulus_id?: string | null
@@ -628,8 +640,14 @@ export type Database = {
           is_deleted?: boolean | null
           is_pilot?: boolean | null
           option_a?: string
+          option_a_diagram?: string | null
+          option_a_image?: string | null
           option_b?: string
+          option_b_diagram?: string | null
+          option_b_image?: string | null
           option_c?: string
+          option_c_diagram?: string | null
+          option_c_image?: string | null
           question_text?: string
           section?: string
           stimulus_id?: string | null

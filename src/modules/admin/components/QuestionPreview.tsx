@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils/cn'
 import { MermaidDiagram } from '@/components/ui/MermaidDiagram'
+import { OptionMedia } from '@/modules/quiz/components/OptionMedia'
 
 type Props = {
   area: number
@@ -17,6 +18,12 @@ type Props = {
   explanation?: string | null
   diagram?: string | null
   imageUrl?: string | null
+  optionAImage?: string | null
+  optionBImage?: string | null
+  optionCImage?: string | null
+  optionADiagram?: string | null
+  optionBDiagram?: string | null
+  optionCDiagram?: string | null
 }
 
 const DIFFICULTY_VARIANT: Record<string, 'success' | 'warning' | 'destructive'> = {
@@ -26,10 +33,15 @@ const DIFFICULTY_VARIANT: Record<string, 'success' | 'warning' | 'destructive'> 
 }
 
 export function QuestionPreview(props: Props) {
-  const options: Array<{ label: 'a' | 'b' | 'c'; text: string }> = [
-    { label: 'a', text: props.optionA },
-    { label: 'b', text: props.optionB },
-    { label: 'c', text: props.optionC },
+  const options: Array<{
+    label: 'a' | 'b' | 'c'
+    text: string
+    image?: string | null
+    diagram?: string | null
+  }> = [
+    { label: 'a', text: props.optionA, image: props.optionAImage, diagram: props.optionADiagram },
+    { label: 'b', text: props.optionB, image: props.optionBImage, diagram: props.optionBDiagram },
+    { label: 'c', text: props.optionC, image: props.optionCImage, diagram: props.optionCDiagram },
   ]
 
   return (
@@ -75,8 +87,11 @@ export function QuestionPreview(props: Props) {
                 >
                   {opt.label}
                 </span>
-                <span className="leading-relaxed">
-                  {opt.text || <span className="text-muted-foreground">[opcion {opt.label}]</span>}
+                <span className="min-w-0 leading-relaxed">
+                  {opt.text || (!opt.image && !opt.diagram ? (
+                    <span className="text-muted-foreground">[opcion {opt.label}]</span>
+                  ) : null)}
+                  <OptionMedia image={opt.image} diagram={opt.diagram} />
                 </span>
                 {isCorrect ? (
                   <span className="ml-auto text-xs font-medium text-success">Correcta</span>

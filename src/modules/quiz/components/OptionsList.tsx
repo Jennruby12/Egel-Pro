@@ -6,6 +6,7 @@ import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import type { CorrectAnswer } from '@/types/global'
 import type { QuizQuestionForClient } from '@/modules/quiz/types'
+import { OptionMedia } from './OptionMedia'
 import {
   QuizAnswerFeedback,
   type AnswerFeedbackStatus,
@@ -33,10 +34,15 @@ export function OptionsList({
   feedbackStatus,
   onFeedbackComplete,
 }: OptionsListProps) {
-  const options: { label: CorrectAnswer; text: string }[] = [
-    { label: 'a', text: question.option_a },
-    { label: 'b', text: question.option_b },
-    { label: 'c', text: question.option_c },
+  const options: {
+    label: CorrectAnswer
+    text: string
+    image: string | null
+    diagram: string | null
+  }[] = [
+    { label: 'a', text: question.option_a, image: question.option_a_image, diagram: question.option_a_diagram },
+    { label: 'b', text: question.option_b, image: question.option_b_image, diagram: question.option_b_diagram },
+    { label: 'c', text: question.option_c, image: question.option_c_image, diagram: question.option_c_diagram },
   ]
 
   // Estado local para auto-limpiar el feedback (en caso de no recibir
@@ -93,7 +99,10 @@ export function OptionsList({
               >
                 {opt.label}
               </span>
-              <span className="flex-1 pt-1 leading-relaxed">{opt.text}</span>
+              <span className="min-w-0 flex-1 pt-1 leading-relaxed">
+                {opt.text}
+                <OptionMedia image={opt.image} diagram={opt.diagram} />
+              </span>
 
               <AnimatePresence>
                 {isSelected && (

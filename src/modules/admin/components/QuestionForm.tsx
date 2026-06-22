@@ -52,6 +52,12 @@ const EMPTY_DEFAULTS: QuestionFormInput = {
   is_pilot: false,
   diagram: '',
   image_url: '',
+  option_a_image: '',
+  option_b_image: '',
+  option_c_image: '',
+  option_a_diagram: '',
+  option_b_diagram: '',
+  option_c_diagram: '',
 }
 
 function fromExisting(q: Tables<'questions'>): QuestionFormInput {
@@ -75,6 +81,12 @@ function fromExisting(q: Tables<'questions'>): QuestionFormInput {
     is_pilot: q.is_pilot ?? false,
     diagram: q.diagram ?? '',
     image_url: q.image_url ?? '',
+    option_a_image: q.option_a_image ?? '',
+    option_b_image: q.option_b_image ?? '',
+    option_c_image: q.option_c_image ?? '',
+    option_a_diagram: q.option_a_diagram ?? '',
+    option_b_diagram: q.option_b_diagram ?? '',
+    option_c_diagram: q.option_c_diagram ?? '',
   }
 }
 
@@ -233,22 +245,60 @@ export function QuestionForm({ initialData }: Props) {
             )}
           />
 
-          {/* Opciones */}
+          {/* Opciones — texto + media opcional (imagen/diagrama) por opcion */}
           {(['a', 'b', 'c'] as const).map((letter) => (
-            <FormField
-              key={letter}
-              control={form.control}
-              name={`option_${letter}` as const}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Opcion {letter.toUpperCase()}</FormLabel>
-                  <FormControl>
-                    <Textarea rows={2} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div key={letter} className="space-y-2 rounded-md border border-bg-border p-3">
+              <FormField
+                control={form.control}
+                name={`option_${letter}` as const}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Opcion {letter.toUpperCase()}</FormLabel>
+                    <FormControl>
+                      <Textarea rows={2} {...field} value={field.value ?? ''} />
+                    </FormControl>
+                    <FormDescription>
+                      Texto de la opcion. Puede quedar vacio si la opcion es una imagen o diagrama.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid gap-2 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name={`option_${letter}_image` as const}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs text-muted-foreground">Imagen (URL)</FormLabel>
+                      <FormControl>
+                        <Input type="url" placeholder="https://..." {...field} value={field.value ?? ''} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`option_${letter}_diagram` as const}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs text-muted-foreground">Diagrama (Mermaid)</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          rows={2}
+                          placeholder={'classDiagram\n  class A'}
+                          className="font-mono text-xs"
+                          {...field}
+                          value={field.value ?? ''}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           ))}
 
           {/* Respuesta + dificultad + active */}
@@ -403,14 +453,20 @@ export function QuestionForm({ initialData }: Props) {
             area={values.area}
             subarea={values.subarea}
             questionText={values.question_text}
-            optionA={values.option_a}
-            optionB={values.option_b}
-            optionC={values.option_c}
+            optionA={values.option_a ?? ''}
+            optionB={values.option_b ?? ''}
+            optionC={values.option_c ?? ''}
             correctAnswer={values.correct_answer}
             difficulty={values.difficulty}
             explanation={values.explanation}
             diagram={values.diagram}
             imageUrl={values.image_url}
+            optionAImage={values.option_a_image}
+            optionBImage={values.option_b_image}
+            optionCImage={values.option_c_image}
+            optionADiagram={values.option_a_diagram}
+            optionBDiagram={values.option_b_diagram}
+            optionCDiagram={values.option_c_diagram}
           />
         </div>
       ) : null}

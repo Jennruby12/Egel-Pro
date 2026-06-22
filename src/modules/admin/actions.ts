@@ -26,13 +26,27 @@ async function requireAdmin() {
   return { error: null, supabase, user }
 }
 
+// Convierte '' / undefined a null para columnas opcionales.
+const emptyToNull = (v: string | null | undefined): string | null =>
+  v && v !== '' ? v : null
+
 function normalizeInput(input: QuestionFormInput) {
   return {
     ...input,
-    stimulus_id: input.stimulus_id && input.stimulus_id !== '' ? input.stimulus_id : null,
-    explanation: input.explanation && input.explanation !== '' ? input.explanation : null,
-    diagram: input.diagram && input.diagram !== '' ? input.diagram : null,
-    image_url: input.image_url && input.image_url !== '' ? input.image_url : null,
+    // Columnas NOT NULL: una opcion puramente visual puede no tener texto → ''.
+    option_a: input.option_a ?? '',
+    option_b: input.option_b ?? '',
+    option_c: input.option_c ?? '',
+    stimulus_id: emptyToNull(input.stimulus_id),
+    explanation: emptyToNull(input.explanation),
+    diagram: emptyToNull(input.diagram),
+    image_url: emptyToNull(input.image_url),
+    option_a_image: emptyToNull(input.option_a_image),
+    option_b_image: emptyToNull(input.option_b_image),
+    option_c_image: emptyToNull(input.option_c_image),
+    option_a_diagram: emptyToNull(input.option_a_diagram),
+    option_b_diagram: emptyToNull(input.option_b_diagram),
+    option_c_diagram: emptyToNull(input.option_c_diagram),
   }
 }
 
