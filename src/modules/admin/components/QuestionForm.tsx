@@ -25,11 +25,20 @@ import {
 } from '@/lib/validations/question.schema'
 import { createQuestion, updateQuestion } from '@/modules/admin/actions'
 import { QuestionPreview } from './QuestionPreview'
-import { DISCIPLINAR_AREAS, TRANSVERSAL_AREAS } from '@/lib/constants/egel'
 import type { Tables } from '@/types/database'
+
+/** Forma minima de area que necesita el form para autocompletar nombres. */
+export type QuestionFormArea = {
+  area: number
+  name: string
+  subareas: { subarea: number; name: string }[]
+}
 
 type Props = {
   initialData?: Tables<'questions'> | null
+  /** Areas del examen (para autocompletar nombre de area/subarea). */
+  disciplinarAreas: QuestionFormArea[]
+  transversalAreas: QuestionFormArea[]
 }
 
 const EMPTY_DEFAULTS: QuestionFormInput = {
@@ -90,7 +99,7 @@ function fromExisting(q: Tables<'questions'>): QuestionFormInput {
   }
 }
 
-export function QuestionForm({ initialData }: Props) {
+export function QuestionForm({ initialData, disciplinarAreas, transversalAreas }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const isEdit = Boolean(initialData)
@@ -105,7 +114,7 @@ export function QuestionForm({ initialData }: Props) {
 
   // Autocompletar area_name/subarea_name al cambiar section/area/subarea
   function syncAreaNames(section: 'disciplinar' | 'transversal', area: number, subarea: number) {
-    const source = section === 'disciplinar' ? DISCIPLINAR_AREAS : TRANSVERSAL_AREAS
+    const source = section === 'disciplinar' ? disciplinarAreas : transversalAreas
     const a = source.find((x) => x.area === area)
     if (a) form.setValue('area_name', a.name)
     const sub = a?.subareas.find((s) => s.subarea === subarea)

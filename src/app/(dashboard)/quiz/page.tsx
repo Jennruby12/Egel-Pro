@@ -11,6 +11,7 @@ import {
   cleanupEmptyInProgressSessions,
 } from '@/modules/quiz/actions'
 import { createClient } from '@/lib/supabase/server'
+import { getActiveExamConfig, ISOFT_EXAM_ID } from '@/lib/exams/exam-config'
 
 export const metadata: Metadata = { title: 'Practicar' }
 
@@ -19,10 +20,10 @@ type AvailableCounts = {
   transversal: Record<number, number>
 }
 
-async function getAvailableCounts(): Promise<AvailableCounts> {
+async function getAvailableCounts(examId: string): Promise<AvailableCounts> {
   const supabase = await createClient()
-  const disciplinar: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0 }
-  const transversal: Record<number, number> = { 1: 0, 2: 0 }
+  const disciplinar: Record<number, number> = {}
+  const transversal: Record<number, number> = {}
   // Paginar: PostgREST corta en 1000 filas por defecto, y el banco tiene >1000
   // activas. Sin paginar, el conteo del banco salia mal (1000 en vez de ~1238).
   const PAGE = 1000
@@ -31,6 +32,7 @@ async function getAvailableCounts(): Promise<AvailableCounts> {
     const { data, error } = await supabase
       .from('questions')
       .select('section, area')
+      .eq('exam_id', examId)
       .eq('is_deleted', false)
       .eq('is_active', true)
       .range(from, from + PAGE - 1)
@@ -87,8 +89,17 @@ export default async function QuizPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
+  const examConfig = user ? await getActiveExamConfig(user.id) : await getActiveExamConfig('')
+  const examId = examConfig?.id ?? ISOFT_EXAM_ID
+  const areaOptions = (examConfig?.disciplinarAreas ?? []).map((a) => ({
+    area: a.area,
+    name: a.name,
+    totalQuestions: a.totalQuestions,
+    subareaCount: a.subareas.length,
+  }))
+
   const [availableCounts, activeRes, seenCount] = await Promise.all([
-    getAvailableCounts(),
+    getAvailableCounts(examId),
     getActiveQuizSession(),
     user ? getUserSeenCount(user.id) : Promise.resolve(0),
   ])
@@ -164,7 +175,7 @@ export default async function QuizPage() {
         />
       ) : null}
 
-      <StartQuizForm availableCounts={availableCounts} unseenCount={unseenCount} />
+      <StartQuizForm areaOptions={areaOptions} availableCounts={availableCounts} unseenCount={unseenCount} />
     </div>
   )
 }

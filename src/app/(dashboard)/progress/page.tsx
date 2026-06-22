@@ -19,7 +19,7 @@ import {
   PredictionCard,
   CohortComparison,
 } from '@/modules/progress/components'
-import { DISCIPLINAR_AREAS, getAreaById, getSubareaById } from '@/lib/constants/egel'
+import { getActiveExamConfig, getAreaById, getSubareaById, ISOFT_EXAM_ID } from '@/lib/exams/exam-config'
 
 export const dynamic = 'force-dynamic'
 
@@ -62,9 +62,12 @@ export default async function ProgressPage() {
     return d.toISOString().slice(0, 10)
   })()
 
+  const examConfig = await getActiveExamConfig(user.id)
+  const examId = examConfig?.id ?? ISOFT_EXAM_ID
+
   const [profileRes, progressRes, streaksRes] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
-    supabase.from('user_progress').select('*').eq('user_id', user.id),
+    supabase.from('user_progress').select('*').eq('user_id', user.id).eq('exam_id', examId),
     supabase
       .from('streaks')
       .select('*')
@@ -120,7 +123,7 @@ export default async function ProgressPage() {
 
   const goal = goalFromProfile(profile?.goal_level)
 
-  const radarData: AreaRadarDatum[] = DISCIPLINAR_AREAS.map((area) => {
+  const radarData: AreaRadarDatum[] = (examConfig?.disciplinarAreas ?? []).map((area) => {
     const agg = progressByArea.get(area.area)
     const accuracy =
       agg && agg.attempted > 0 ? Math.round((agg.correct / agg.attempted) * 100) : 0
@@ -134,10 +137,13 @@ export default async function ProgressPage() {
   const heatmapDays = buildLast90Days(streaks)
 
   const subareaRows: SubareaBreakdownRow[] = progress.map((p) => {
-    const area = getAreaById(p.area, 'disciplinar') ?? getAreaById(p.area, 'transversal')
-    const sub =
-      getSubareaById(p.area, p.subarea, 'disciplinar') ??
-      getSubareaById(p.area, p.subarea, 'transversal')
+    const area = examConfig
+      ? getAreaById(examConfig, p.area, 'disciplinar') ?? getAreaById(examConfig, p.area, 'transversal')
+      : undefined
+    const sub = examConfig
+      ? getSubareaById(examConfig, p.area, p.subarea, 'disciplinar') ??
+        getSubareaById(examConfig, p.area, p.subarea, 'transversal')
+      : undefined
     return {
       area: p.area,
       areaName: area?.name ?? `Area ${p.area}`,

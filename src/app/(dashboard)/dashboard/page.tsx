@@ -11,7 +11,7 @@ import { RecentActivityCard, type RecentSession } from '@/modules/dashboard/comp
 import { TimelineCard, type TimelineDay } from '@/modules/dashboard/components/TimelineCard'
 import { DailyChallengeCard } from '@/modules/dashboard/components/DailyChallengeCard'
 import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
-import { DISCIPLINAR_AREAS } from '@/lib/constants/egel'
+import { getActiveExamConfig, getAreaById, ISOFT_EXAM_ID } from '@/lib/exams/exam-config'
 
 function buildLast7Days(streaks: Array<{ date: string; xp_earned: number | null; questions_answered: number | null }>): TimelineDay[] {
   const map = new Map(streaks.map((s) => [s.date, s]))
@@ -44,6 +44,9 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  const examConfig = await getActiveExamConfig(user.id)
+  const examId = examConfig?.id ?? ISOFT_EXAM_ID
+
   // Fetch en paralelo
   const todayISO = new Date().toISOString().slice(0, 10)
   const sevenDaysAgoISO = (() => {
@@ -61,7 +64,7 @@ export default async function DashboardPage() {
     completedCountRes,
   ] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
-    supabase.from('user_progress').select('*').eq('user_id', user.id),
+    supabase.from('user_progress').select('*').eq('user_id', user.id).eq('exam_id', examId),
     supabase
       .from('quiz_sessions')
       .select('id, mode, score_percent, estimated_level, xp_earned, finished_at')
@@ -103,7 +106,7 @@ export default async function DashboardPage() {
     .sort((a, b) => (a.accuracy_percent ?? 0) - (b.accuracy_percent ?? 0))
     .slice(0, 3)
     .map((p) => {
-      const area = DISCIPLINAR_AREAS.find((da) => da.area === p.area)
+      const area = examConfig ? getAreaById(examConfig, p.area, 'disciplinar') : undefined
       const sub = area?.subareas.find((s) => s.subarea === p.subarea)
       return {
         area: p.area,

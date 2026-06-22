@@ -3,11 +3,19 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
-import { DISCIPLINAR_AREAS } from '@/lib/constants/egel'
+
+export type AreaOption = {
+  area: number
+  name: string
+  totalQuestions: number
+  subareaCount: number
+}
 
 type AreaSelectorProps = {
   selected: number[]
   onChange: (areas: number[]) => void
+  /** Areas disciplinares del examen activo. */
+  areas: AreaOption[]
   availableCounts?: Record<number, number>
 }
 
@@ -50,7 +58,7 @@ const AREA_STYLES: Record<number, AreaStyle> = {
   },
 }
 
-export function AreaSelector({ selected, onChange, availableCounts }: AreaSelectorProps) {
+export function AreaSelector({ selected, onChange, areas, availableCounts }: AreaSelectorProps) {
   function toggle(areaId: number) {
     if (selected.includes(areaId)) {
       onChange(selected.filter((a) => a !== areaId))
@@ -60,7 +68,7 @@ export function AreaSelector({ selected, onChange, availableCounts }: AreaSelect
   }
 
   function selectAll() {
-    onChange(DISCIPLINAR_AREAS.map((a) => a.area))
+    onChange(areas.map((a) => a.area))
   }
 
   function clearAll() {
@@ -93,9 +101,9 @@ export function AreaSelector({ selected, onChange, availableCounts }: AreaSelect
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {DISCIPLINAR_AREAS.map((area) => {
+        {areas.map((area) => {
           const isSelected = selected.includes(area.area)
-          const style = AREA_STYLES[area.area]!
+          const style = AREA_STYLES[area.area] ?? AREA_STYLES[1]!
           return (
             <button
               key={area.area}
@@ -127,10 +135,10 @@ export function AreaSelector({ selected, onChange, availableCounts }: AreaSelect
                   <p className="mt-0.5 text-xs opacity-70">
                     {availableCounts?.[area.area] !== undefined ? (
                       <>
-                        <span className="font-semibold">{availableCounts[area.area]}</span> disponibles · {area.totalQuestions} oficiales · {area.subareas.length} subareas
+                        <span className="font-semibold">{availableCounts[area.area]}</span> disponibles · {area.totalQuestions} oficiales · {area.subareaCount} subareas
                       </>
                     ) : (
-                      <>{area.totalQuestions} reactivos · {area.subareas.length} subareas</>
+                      <>{area.totalQuestions} reactivos · {area.subareaCount} subareas</>
                     )}
                   </p>
                 </div>

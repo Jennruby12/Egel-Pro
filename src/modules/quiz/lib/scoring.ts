@@ -1,5 +1,4 @@
 import {
-  EXAM_CONFIG,
   getPerformanceLevel,
   type PerformanceLevel,
 } from '@/lib/constants/egel'
@@ -141,6 +140,3 @@ export function distributeQuestionsByArea(
 
   return distribution
 }
-
-// Re-export para conveniencia
-export { EXAM_CONFIG }

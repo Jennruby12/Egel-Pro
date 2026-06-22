@@ -12,14 +12,34 @@ import { SparklesText } from '@/components/ui/sparkles-text'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { startSimulacroFullExam } from '@/modules/quiz/actions'
 import { ROUTES } from '@/lib/constants/routes'
-import { EXAM_CONFIG } from '@/lib/constants/egel'
 
 function fmtHours(seconds: number): string {
   const h = seconds / 3600
   return Number.isInteger(h) ? `${h} horas` : `${h.toFixed(1)} horas`
 }
 
-export function SimulacroIntro() {
+export type SimulacroIntroProps = {
+  examName: string
+  totalQuestions: number
+  disciplinarQuestions: number
+  transversalQuestions: number
+  sessions: number
+  sessionDurationSeconds: number
+  /** Reactivos por sesion (longitud = sessions). */
+  sessionTotals: number[]
+}
+
+const SESSION_TILE_ICON_CLASS = ['text-area3', 'text-warning', 'text-area2', 'text-area4']
+
+export function SimulacroIntro({
+  examName,
+  totalQuestions,
+  disciplinarQuestions,
+  transversalQuestions,
+  sessions,
+  sessionDurationSeconds,
+  sessionTotals,
+}: SimulacroIntroProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -45,8 +65,8 @@ export function SimulacroIntro() {
           </h1>
         </SparklesText>
         <p className="mx-auto max-w-2xl text-sm text-muted-foreground md:text-base">
-          Replica fiel del examen oficial EGEL Plus ISOFT. {EXAM_CONFIG.sessions} sesiones de{' '}
-          {fmtHours(EXAM_CONFIG.sessionDurationSeconds)} cada una, distribucion oficial CENEVAL.
+          Replica fiel del examen oficial {examName}. {sessions} sesiones de{' '}
+          {fmtHours(sessionDurationSeconds)} cada una, distribucion oficial CENEVAL.
         </p>
 
         {/* Numero gigante 203 */}
@@ -57,7 +77,7 @@ export function SimulacroIntro() {
               className="absolute inset-0 -z-10 bg-aurora-mesh blur-2xl opacity-60"
             />
             <span className="font-mono text-5xl font-bold leading-none tabular-nums text-aurora sm:text-7xl md:text-[6rem] lg:text-[8rem]">
-              <AnimatedCounter value={EXAM_CONFIG.totalQuestions} duration={2} />
+              <AnimatedCounter value={totalQuestions} duration={2} />
             </span>
             <span className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
               reactivos totales
@@ -71,27 +91,24 @@ export function SimulacroIntro() {
         <InfoTile
           icon={<FileText className="h-5 w-5 text-aurora-1" />}
           label="Reactivos"
-          value={`${EXAM_CONFIG.totalQuestions}`}
-          hint={`${EXAM_CONFIG.disciplinarQuestions} disciplinar + ${EXAM_CONFIG.transversalQuestions} transversal`}
+          value={`${totalQuestions}`}
+          hint={`${disciplinarQuestions} disciplinar + ${transversalQuestions} transversal`}
         />
         <InfoTile
           icon={<Clock className="h-5 w-5 text-cyan-ice" />}
           label="Duracion por sesion"
-          value={fmtHours(EXAM_CONFIG.sessionDurationSeconds)}
-          hint={`${EXAM_CONFIG.sessionDurationSeconds.toLocaleString('es-MX')} segundos`}
+          value={fmtHours(sessionDurationSeconds)}
+          hint={`${sessionDurationSeconds.toLocaleString('es-MX')} segundos`}
         />
-        <InfoTile
-          icon={<ListChecks className="h-5 w-5 text-area3" />}
-          label="Sesion 1"
-          value="102 reactivos"
-          hint="Areas disciplinares y transversales mezcladas"
-        />
-        <InfoTile
-          icon={<ListChecks className="h-5 w-5 text-warning" />}
-          label="Sesion 2"
-          value="101 reactivos"
-          hint="Sin preguntas repetidas de la sesion 1"
-        />
+        {sessionTotals.map((count, i) => (
+          <InfoTile
+            key={i}
+            icon={<ListChecks className={`h-5 w-5 ${SESSION_TILE_ICON_CLASS[i % SESSION_TILE_ICON_CLASS.length]}`} />}
+            label={`Sesion ${i + 1}`}
+            value={`${count} reactivos`}
+            hint={i === 0 ? 'Areas disciplinares y transversales mezcladas' : 'Sin preguntas repetidas de sesiones previas'}
+          />
+        ))}
       </div>
 
       {/* Alert importante */}
@@ -103,7 +120,7 @@ export function SimulacroIntro() {
         <AlertTitle>Lee antes de empezar</AlertTitle>
         <AlertDescription className="space-y-2 text-sm">
           <p>
-            Cada sesion dura {fmtHours(EXAM_CONFIG.sessionDurationSeconds)} y no se puede
+            Cada sesion dura {fmtHours(sessionDurationSeconds)} y no se puede
             pausar dentro de la sesion. Tu progreso se guarda automaticamente, asi que puedes
             cerrar la pestana y volver, pero el cronometro sigue corriendo.
           </p>

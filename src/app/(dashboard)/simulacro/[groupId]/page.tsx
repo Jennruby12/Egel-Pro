@@ -5,7 +5,7 @@ import { getSimulacroState } from '@/modules/quiz/actions'
 import { SimulacroBreak } from '@/modules/quiz/components/SimulacroBreak'
 import { SimulacroSession } from '@/modules/quiz/components/SimulacroSession'
 import { ROUTES } from '@/lib/constants/routes'
-import { EXAM_CONFIG } from '@/lib/constants/egel'
+import { getActiveExamConfig } from '@/lib/exams/exam-config'
 import type { QuizQuestionForClient } from '@/modules/quiz/types'
 
 export const metadata: Metadata = { title: 'Simulacro EGEL' }
@@ -60,6 +60,10 @@ export default async function SimulacroGroupPage({
   }
   const state = stateResult.data
 
+  // Fallback de duracion por sesion si la sesion no la tuviera guardada.
+  const examConfig = await getActiveExamConfig(user.id)
+  const fallbackTimeLimit = examConfig?.exam.sessionDurationSeconds ?? 16200
+
   // Estado: simulacro terminado -> ir a resultados
   if (state.nextAction === 'viewResults') {
     redirect(ROUTES.simulacro.results(groupId))
@@ -77,7 +81,7 @@ export default async function SimulacroGroupPage({
           sessionNumber={1}
           questions={questions}
           timeLimitSeconds={
-            state.session1.time_limit_seconds ?? EXAM_CONFIG.sessionDurationSeconds
+            state.session1.time_limit_seconds ?? fallbackTimeLimit
           }
         />
       </div>
@@ -102,7 +106,7 @@ export default async function SimulacroGroupPage({
           sessionNumber={2}
           questions={questions}
           timeLimitSeconds={
-            state.session2.time_limit_seconds ?? EXAM_CONFIG.sessionDurationSeconds
+            state.session2.time_limit_seconds ?? fallbackTimeLimit
           }
         />
       </div>

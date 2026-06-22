@@ -20,7 +20,14 @@ import {
 import { distributeQuestionsByArea, calculateScore, type AnsweredQuestion } from './lib/scoring'
 import { shuffle } from './lib/shuffle'
 import { processQuizCompletion } from '@/modules/gamification/actions'
-import { getAreaById, EXAM_CONFIG } from '@/lib/constants/egel'
+import {
+  getActiveExamId,
+  getExamConfig,
+  getAreaById,
+  buildSimulacroSlots,
+  ISOFT_EXAM_ID,
+  type SimulacroSlot,
+} from '@/lib/exams/exam-config'
 import type {
   StartQuizResult,
   SubmitAnswerResult,
@@ -62,13 +69,17 @@ export async function startQuizSession(
   // Evita acumular sesiones zombi cuando el user inicia nueva.
   await markEmptyInProgressAsAbandoned(supabase, user.id)
 
-  // Determinar areas y pesos. Si no se especifican, usar todas las del section.
-  const areasToUse =
-    data.areas.length > 0
-      ? data.areas
-      : data.section === 'disciplinar'
-        ? [1, 2, 3, 4]
-        : [1, 2]
+  // Examen activo del usuario: todas las preguntas y la sesion se acotan a el.
+  const examId = await getActiveExamId(user.id)
+  const examConfig = await getExamConfig(examId)
+
+  // Determinar areas y pesos. Si no se especifican, usar todas las del examen.
+  const sectionAreas = examConfig
+    ? (data.section === 'disciplinar' ? examConfig.disciplinarAreas : examConfig.transversalAreas).map((a) => a.area)
+    : data.section === 'disciplinar'
+      ? [1, 2, 3, 4]
+      : [1, 2]
+  const areasToUse = data.areas.length > 0 ? data.areas : sectionAreas
 
   // MODO REVIEW: traer SOLO preguntas que el usuario ha fallado antes
   const selectedQuestions: QuizQuestionForClient[] = []
@@ -102,6 +113,7 @@ export async function startQuizSession(
       .from('questions')
       .select('*')
       .in('id', failedIds)
+      .eq('exam_id', examId)
       .eq('is_active', true)
       .eq('is_deleted', false)
     if (revErr) {
@@ -151,7 +163,7 @@ export async function startQuizSession(
     // Pesos para distribuir preguntas: cantidad oficial de reactivos por area
     const weights: Record<number, number> = {}
     for (const areaId of areasToUse) {
-      const area = getAreaById(areaId, data.section)
+      const area = examConfig ? getAreaById(examConfig, areaId, data.section) : undefined
       weights[areaId] = area?.totalQuestions ?? 1
     }
     const distribution = distributeQuestionsByArea(data.totalQuestions, weights)
@@ -164,6 +176,7 @@ export async function startQuizSession(
       let query = supabase
         .from('questions')
         .select('*')
+        .eq('exam_id', examId)
         .eq('section', data.section)
         .eq('area', areaId)
         .eq('is_active', true)
@@ -217,6 +230,7 @@ export async function startQuizSession(
     .from('quiz_sessions')
     .insert({
       user_id: user.id,
+      exam_id: examId,
       mode: data.mode,
       areas: areasToUse,
       subareas: data.subareas,
@@ -468,6 +482,10 @@ export async function completeSession(
       .upsert(
         {
           user_id: user.id,
+          // Etiquetamos el examen de la sesion. Nota: la restriccion unica sigue
+          // siendo (user_id, area, subarea) por compatibilidad con prod; el
+          // aislamiento total por examen requiere cambiarla en el cutover.
+          exam_id: session.exam_id ?? ISOFT_EXAM_ID,
           area: bucket.area,
           subarea: bucket.subarea,
           questions_attempted: newAttempted,
@@ -647,39 +665,10 @@ export async function cleanupEmptyInProgressSessions(): Promise<{ success: boole
 // SIMULACRO COMPLETO EGEL (2 sesiones de 4.5h)
 // =====================================================
 
-// Distribucion oficial CENEVAL EGEL Plus ISOFT:
-//   Disciplinar: 31 (Area 1) + 33 (Area 2) + 49 (Area 3) + 30 (Area 4) = 143
-//   Transversal: 30 (Area 1) + 30 (Area 2) = 60
-//   Total: 203 reactivos
-// Para el MVP repartimos cada area entre las dos sesiones (mitad y mitad,
-// redondeando para llegar a 102 + 101). El orden interno de las preguntas
-// es aleatorio dentro de cada sesion.
-//
-// Sesion 1 (102): area1=16, area2=17, area3=25, area4=15, trans1=15, trans2=14
-// Sesion 2 (101): area1=15, area2=16, area3=24, area4=15, trans1=15, trans2=16
-type SimulacroSlot = {
-  section: 'disciplinar' | 'transversal'
-  area: number
-  count: number
-}
-
-const SIMULACRO_SESSION_1_SLOTS: readonly SimulacroSlot[] = [
-  { section: 'disciplinar', area: 1, count: 16 },
-  { section: 'disciplinar', area: 2, count: 17 },
-  { section: 'disciplinar', area: 3, count: 25 },
-  { section: 'disciplinar', area: 4, count: 15 },
-  { section: 'transversal', area: 1, count: 15 },
-  { section: 'transversal', area: 2, count: 14 },
-] as const
-
-const SIMULACRO_SESSION_2_SLOTS: readonly SimulacroSlot[] = [
-  { section: 'disciplinar', area: 1, count: 15 },
-  { section: 'disciplinar', area: 2, count: 16 },
-  { section: 'disciplinar', area: 3, count: 24 },
-  { section: 'disciplinar', area: 4, count: 15 },
-  { section: 'transversal', area: 1, count: 15 },
-  { section: 'transversal', area: 2, count: 16 },
-] as const
+// Distribucion oficial por examen: se construye desde la config del examen
+// (exam_areas) repartiendo los reactivos de cada area entre las N sesiones.
+// Ver `buildSimulacroSlots` en @/lib/exams/exam-config. Para EGEL ISOFT esto
+// reproduce 143 disciplinar + 60 transversal = 203 reactivos en 2 sesiones.
 
 /**
  * Selecciona N preguntas al azar de las areas/secciones indicadas por los slots
@@ -694,6 +683,7 @@ async function pickAndPersistSimulacroQuestions(
   supabase: Awaited<ReturnType<typeof createClient>>,
   sessionId: string,
   slots: readonly SimulacroSlot[],
+  examId: string,
   excludeIds: readonly string[] = [],
 ): Promise<{ ok: true; questionIds: string[] } | { ok: false; error: string }> {
   const excluded = new Set(excludeIds)
@@ -707,6 +697,7 @@ async function pickAndPersistSimulacroQuestions(
     const { data, error } = await supabase
       .from('questions')
       .select('id')
+      .eq('exam_id', examId)
       .eq('section', slot.section)
       .eq('area', slot.area)
       .eq('is_active', true)
@@ -796,21 +787,32 @@ export async function startSimulacroFullExam(): Promise<ActionResult<StartSimula
     }
   }
 
+  // Estructura del examen activo: define los slots y la duracion por sesion.
+  const examId = await getActiveExamId(user.id)
+  const examConfig = await getExamConfig(examId)
+  if (!examConfig) {
+    return { success: false, error: 'No se pudo cargar la configuracion del examen' }
+  }
+  const sessionSlots = buildSimulacroSlots(examConfig)
+  const session1Slots = sessionSlots[0] ?? []
+  const disciplinarAreaNums = examConfig.disciplinarAreas.map((a) => a.area)
+
   const simulacroGroupId = randomUUID()
-  const totalSession1 = SIMULACRO_SESSION_1_SLOTS.reduce((acc, s) => acc + s.count, 0)
+  const totalSession1 = session1Slots.reduce((acc, s) => acc + s.count, 0)
 
   // Crear la sesion 1
   const { data: session, error: sessionError } = await supabase
     .from('quiz_sessions')
     .insert({
       user_id: user.id,
+      exam_id: examId,
       mode: 'full_simulacro',
       session_number: 1,
       simulacro_group_id: simulacroGroupId,
-      areas: [1, 2, 3, 4],
+      areas: disciplinarAreaNums,
       subareas: [],
       total_questions: totalSession1,
-      time_limit_seconds: EXAM_CONFIG.sessionDurationSeconds,
+      time_limit_seconds: examConfig.exam.sessionDurationSeconds,
       status: 'in_progress',
     })
     .select('id')
@@ -826,7 +828,8 @@ export async function startSimulacroFullExam(): Promise<ActionResult<StartSimula
   const picked = await pickAndPersistSimulacroQuestions(
     supabase,
     session.id,
-    SIMULACRO_SESSION_1_SLOTS,
+    session1Slots,
+    examId,
   )
   if (!picked.ok) {
     // Rollback simple: marcar la sesion como abandonada para no dejar basura
@@ -880,7 +883,7 @@ export async function startSimulacroSession2(
   // Cargar las sesiones existentes del grupo
   const { data: sessions, error: sessionsError } = await supabase
     .from('quiz_sessions')
-    .select('id, user_id, status, session_number')
+    .select('id, user_id, status, session_number, exam_id')
     .eq('simulacro_group_id', simulacroGroupId)
     .order('session_number', { ascending: true })
 
@@ -930,20 +933,31 @@ export async function startSimulacroSession2(
     .eq('session_id', session1.id)
   const usedIds = (usedAnswers ?? []).map((a) => a.question_id)
 
-  const totalSession2 = SIMULACRO_SESSION_2_SLOTS.reduce((acc, s) => acc + s.count, 0)
+  // La sesion 2 usa el MISMO examen que la sesion 1.
+  const examId = session1.exam_id ?? (await getActiveExamId(user.id))
+  const examConfig = await getExamConfig(examId)
+  if (!examConfig) {
+    return { success: false, error: 'No se pudo cargar la configuracion del examen' }
+  }
+  const sessionSlots = buildSimulacroSlots(examConfig)
+  const session2Slots = sessionSlots[1] ?? []
+  const disciplinarAreaNums = examConfig.disciplinarAreas.map((a) => a.area)
+
+  const totalSession2 = session2Slots.reduce((acc, s) => acc + s.count, 0)
 
   // Crear sesion 2
   const { data: newSession, error: createError } = await supabase
     .from('quiz_sessions')
     .insert({
       user_id: user.id,
+      exam_id: examId,
       mode: 'full_simulacro',
       session_number: 2,
       simulacro_group_id: simulacroGroupId,
-      areas: [1, 2, 3, 4],
+      areas: disciplinarAreaNums,
       subareas: [],
       total_questions: totalSession2,
-      time_limit_seconds: EXAM_CONFIG.sessionDurationSeconds,
+      time_limit_seconds: examConfig.exam.sessionDurationSeconds,
       status: 'in_progress',
     })
     .select('id')
@@ -959,7 +973,8 @@ export async function startSimulacroSession2(
   const picked = await pickAndPersistSimulacroQuestions(
     supabase,
     newSession.id,
-    SIMULACRO_SESSION_2_SLOTS,
+    session2Slots,
+    examId,
     usedIds,
   )
   if (!picked.ok) {

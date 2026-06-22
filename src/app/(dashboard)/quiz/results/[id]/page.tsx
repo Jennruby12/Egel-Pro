@@ -8,7 +8,7 @@ import { ResultsCard } from '@/modules/quiz/components/ResultsCard'
 import { AreaBreakdown, type AreaBreakdownRow } from '@/modules/quiz/components/AreaBreakdown'
 import { AnswerReview, type ReviewItem } from '@/modules/quiz/components/AnswerReview'
 import { getMyQuestionFeedback } from '@/modules/quiz/feedback-actions'
-import { DISCIPLINAR_AREAS } from '@/lib/constants/egel'
+import { getExamConfig, getAreaById } from '@/lib/exams/exam-config'
 import type { PerformanceLevel, CorrectAnswer } from '@/types/global'
 
 export const metadata: Metadata = { title: 'Resultados' }
@@ -107,7 +107,8 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
       feedbackReasons: feedbackMap[a.question_id] ?? [],
     }))
 
-  // Construir breakdown por area
+  // Construir breakdown por area (nombres desde el examen de la sesion)
+  const examConfig = await getExamConfig(session.exam_id ?? undefined)
   const buckets = new Map<number, { attempted: number; correct: number }>()
   for (const a of answers) {
     if (!a.questions) continue
@@ -118,7 +119,7 @@ export default async function ResultsPage({ params }: { params: Promise<Params> 
   }
   const breakdown: AreaBreakdownRow[] = Array.from(buckets.entries())
     .map(([area, { attempted, correct }]) => {
-      const meta = DISCIPLINAR_AREAS.find((a) => a.area === area)
+      const meta = examConfig ? getAreaById(examConfig, area, 'disciplinar') : undefined
       return {
         area,
         areaShortName: meta?.name.split(' ')[0] ?? `Area ${area}`,

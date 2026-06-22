@@ -9,7 +9,7 @@ import { Loader2, PlayCircle, Layers, Settings2, Hash } from 'lucide-react'
 import { GlassCard } from '@/components/ui/glass-card'
 import { MagicButton } from '@/components/ui/magic-button'
 import { ModeSelector, QUIZ_MODES } from './ModeSelector'
-import { AreaSelector } from './AreaSelector'
+import { AreaSelector, type AreaOption } from './AreaSelector'
 import { startQuizSession } from '@/modules/quiz/actions'
 import type { QuizMode } from '@/types/global'
 
@@ -18,6 +18,8 @@ type AvailableCountsShape =
   | { disciplinar: Record<number, number>; transversal: Record<number, number> }
 
 type StartQuizFormProps = {
+  /** Areas disciplinares del examen activo (para el selector y el max). */
+  areaOptions?: AreaOption[]
   availableCounts?: AvailableCountsShape
   /** Cantidad de preguntas que el user nunca ha tomado (para toggle "solo nuevas") */
   unseenCount?: number
@@ -36,7 +38,7 @@ const PRESETS = [10, 25, 50, 100] as const
 const MIN_QUESTIONS = 5
 const MAX_QUESTIONS = 250
 
-export function StartQuizForm({ availableCounts, unseenCount = 0 }: StartQuizFormProps = {}) {
+export function StartQuizForm({ areaOptions = [], availableCounts, unseenCount = 0 }: StartQuizFormProps = {}) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [mode, setMode] = useState<QuizMode | null>(null)
@@ -55,10 +57,11 @@ export function StartQuizForm({ availableCounts, unseenCount = 0 }: StartQuizFor
   // Max real basado en areas seleccionadas (o todas si areas vacio)
   const maxAvailable = useMemo(() => {
     if (!disciplinarCounts) return MAX_QUESTIONS
-    const relevant = areas.length > 0 ? areas : [1, 2, 3, 4]
+    const allAreaIds = areaOptions.map((a) => a.area)
+    const relevant = areas.length > 0 ? areas : allAreaIds
     const sum = relevant.reduce((acc, a) => acc + (disciplinarCounts[a] ?? 0), 0)
     return Math.min(sum || MAX_QUESTIONS, MAX_QUESTIONS)
-  }, [disciplinarCounts, areas])
+  }, [disciplinarCounts, areas, areaOptions])
 
   // Al cambiar de modo, sincroniza con el default del modo (clamped a max)
   useEffect(() => {
@@ -167,7 +170,7 @@ export function StartQuizForm({ availableCounts, unseenCount = 0 }: StartQuizFor
               </div>
 
               {allowAreaSelection ? (
-                <AreaSelector selected={areas} onChange={setAreas} availableCounts={disciplinarCounts} />
+                <AreaSelector selected={areas} onChange={setAreas} areas={areaOptions} availableCounts={disciplinarCounts} />
               ) : null}
 
               {allowOnlyUnseen ? (

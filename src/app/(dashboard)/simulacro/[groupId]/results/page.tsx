@@ -6,7 +6,6 @@ import {
   type SimulacroSessionSummary,
 } from '@/modules/quiz/components/SimulacroResults'
 import type { AreaBreakdownRow } from '@/modules/quiz/components/AreaBreakdown'
-import { DISCIPLINAR_AREAS, TRANSVERSAL_AREAS } from '@/lib/constants/egel'
 
 export const metadata: Metadata = { title: 'Resultados del simulacro' }
 
@@ -23,12 +22,7 @@ function areaKey(section: string, area: number): string {
 }
 
 function areaShortName(section: string, area: number): string {
-  if (section === 'disciplinar') {
-    const meta = DISCIPLINAR_AREAS.find((a) => a.area === area)
-    return meta ? `D${area}` : `Area ${area}`
-  }
-  const meta = TRANSVERSAL_AREAS.find((a) => a.area === area)
-  return meta ? `T${area}` : `Area ${area}`
+  return section === 'disciplinar' ? `D${area}` : `T${area}`
 }
 
 export default async function SimulacroResultsPage({
