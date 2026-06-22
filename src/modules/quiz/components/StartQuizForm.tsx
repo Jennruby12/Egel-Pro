@@ -84,6 +84,20 @@ export function StartQuizForm({ availableCounts, unseenCount = 0 }: StartQuizFor
       ? Math.min(Math.max(totalQuestions, MIN_QUESTIONS), maxAvailable)
       : selectedMode.defaults.total
 
+    // Sin conexion: el quiz se arma localmente desde IndexedDB (solo modos con
+    // seleccion de area: practica / examen rapido / contrarreloj).
+    const isOffline = typeof navigator !== 'undefined' && !navigator.onLine
+    if (isOffline) {
+      if (!allowAreaSelection) {
+        toast.error('Sin internet solo esta disponible la practica. Conectate para este modo.')
+        return
+      }
+      const params = new URLSearchParams({ n: String(finalTotal) })
+      if (areas.length > 0) params.set('areas', areas.join(','))
+      router.push(`/quiz/offline?${params.toString()}`)
+      return
+    }
+
     if (allowOnlyUnseen && onlyUnseen && unseenCount === 0) {
       toast.error('Ya tomaste todas las preguntas. Usa modo Repaso o desactiva "solo nuevas"')
       return
