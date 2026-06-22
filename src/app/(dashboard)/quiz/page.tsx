@@ -4,6 +4,7 @@ import { AuroraBackground } from '@/components/ui/aurora-background'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { StartQuizForm } from '@/modules/quiz/components/StartQuizForm'
 import { ResumeQuizBanner } from '@/modules/quiz/components/ResumeQuizBanner'
+import { OfflineDownloadCard } from '@/modules/quiz/components/OfflineDownloadCard'
 import {
   getActiveQuizSession,
   cleanupEmptyInProgressSessions,
@@ -129,6 +130,11 @@ export default async function QuizPage() {
           </div>
         </div>
       ) : null}
+
+      {/* Descargar banco para uso offline */}
+      <div className="mb-6">
+        <OfflineDownloadCard />
+      </div>
 
       {activeSession ? (
         <ResumeQuizBanner
