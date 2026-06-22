@@ -453,12 +453,16 @@ export async function completeSession(
     progressBuckets.set(key, bucket)
   }
 
+  // El progreso se acumula POR EXAMEN (índice único user_id,exam_id,area,subarea).
+  const progressExamId = session.exam_id ?? ISOFT_EXAM_ID
+
   for (const bucket of Array.from(progressBuckets.values())) {
-    // Leer el progreso previo (acumulativo)
+    // Leer el progreso previo (acumulativo) del examen de la sesion
     const { data: prev } = await supabase
       .from('user_progress')
       .select('questions_attempted, questions_correct')
       .eq('user_id', user.id)
+      .eq('exam_id', progressExamId)
       .eq('area', bucket.area)
       .eq('subarea', bucket.subarea)
       .maybeSingle()
@@ -482,10 +486,7 @@ export async function completeSession(
       .upsert(
         {
           user_id: user.id,
-          // Etiquetamos el examen de la sesion. Nota: la restriccion unica sigue
-          // siendo (user_id, area, subarea) por compatibilidad con prod; el
-          // aislamiento total por examen requiere cambiarla en el cutover.
-          exam_id: session.exam_id ?? ISOFT_EXAM_ID,
+          exam_id: progressExamId,
           area: bucket.area,
           subarea: bucket.subarea,
           questions_attempted: newAttempted,
@@ -494,7 +495,7 @@ export async function completeSession(
           mastery_level: mastery,
           last_practiced: new Date().toISOString(),
         },
-        { onConflict: 'user_id,area,subarea' },
+        { onConflict: 'user_id,exam_id,area,subarea' },
       )
   }
 
