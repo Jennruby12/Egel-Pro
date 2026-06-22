@@ -89,6 +89,13 @@ export default async function StudyV2Hub() {
           <BookOpen className="h-3.5 w-3.5" /> Visualizador de diagramas UML
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
+        <Link
+          href="/study/flashcards-uml"
+          className="ml-2 inline-flex items-center gap-1.5 rounded-full border border-aurora-3/40 bg-aurora-3/10 px-3 py-1 text-xs font-medium text-aurora-3 backdrop-blur-md transition-colors hover:bg-aurora-3/20"
+        >
+          <BookOpen className="h-3.5 w-3.5" /> Flashcards UML
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </header>
 
       {/* Resumen global */}
